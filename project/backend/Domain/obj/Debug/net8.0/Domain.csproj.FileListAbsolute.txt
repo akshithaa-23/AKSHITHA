@@ -1,0 +1,42 @@
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.deps.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\refint\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\ref\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.runtimeconfig.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.deps.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.runtimeconfig.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\refint\Domain.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\ref\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.deps.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.runtimeconfig.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\bin\Debug\net8.0\Domain.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\refint\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\Domain.genruntimeconfig.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Domain\obj\Debug\net8.0\ref\Domain.dll

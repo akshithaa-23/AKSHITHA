@@ -1,0 +1,51 @@
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.deps.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.AssemblyReference.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfoInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfo.cs
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.CoreCompileInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Applicat.44B5EDA2.Up2Date
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\refint\Application.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\ref\Application.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.runtimeconfig.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.deps.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.runtimeconfig.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.AssemblyReference.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfoInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfo.cs
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.CoreCompileInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Applicat.44B5EDA2.Up2Date
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\refint\Application.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\ref\Application.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.deps.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.runtimeconfig.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Application.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\bin\Debug\net8.0\Domain.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.AssemblyReference.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfoInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.AssemblyInfo.cs
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.csproj.CoreCompileInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Applicat.44B5EDA2.Up2Date
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\refint\Application.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\Application.genruntimeconfig.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Application\obj\Debug\net8.0\ref\Application.dll

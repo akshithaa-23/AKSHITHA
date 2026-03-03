@@ -1,0 +1,57 @@
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+D:\.Net\Capstone\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+D:\.Net\capstone-deets\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Application.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\bin\Debug\net8.0\Domain.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
