@@ -1,0 +1,40 @@
+/* Agent Dashboard standard styles */
+.badge-pending {
+  background-color: #F3F4F6;
+  /* gray-100 */
+  color: #6B7280;
+  /* gray-500 */
+}
+
+.badge-assigned {
+  background-color: #DBEAFE;
+  /* blue-100 */
+  color: #2563EB;
+  /* blue-600 */
+}
+
+.badge-recommendation {
+  background-color: #EFF6FF;
+  color: #3B82F6;
+}
+
+.badge-recommendation-sent {
+  background-color: #F3E8FF;
+  /* purple-100 */
+  color: #9333EA;
+  /* purple-600 */
+}
+
+.badge-quote {
+  background-color: #FFEDD5;
+  /* orange-100 */
+  color: #EA580C;
+  /* orange-600 */
+}
+
+.badge-completed {
+  background-color: #DCFCE7;
+  /* green-100 */
+  color: #16A34A;
+  /* green-600 */
+}

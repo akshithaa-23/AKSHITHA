@@ -1,0 +1,791 @@
+<!-- CorpSure Customer Dashboard — Tailwind CSS -->
+<div class="flex h-screen bg-gray-50 overflow-hidden">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="w-64 min-w-64 bg-slate-900 flex flex-col py-6 overflow-y-auto">
+    <div class="flex items-center gap-3 px-5 pb-6 border-b border-slate-700/50 mb-5">
+      <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <div class="text-white font-bold text-base">CorpSure</div>
+        <div class="text-slate-500 text-xs">Customer Portal</div>
+      </div>
+    </div>
+    <nav class="px-3 flex-1 flex flex-col gap-0.5">
+      <p class="text-slate-500 text-xs font-semibold tracking-widest px-2 mb-1 mt-1">MAIN</p>
+      <button (click)="navigate('home')" [class]="activeSection==='home' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home
+      </button>
+      <p class="text-slate-500 text-xs font-semibold tracking-widest px-2 mb-1 mt-4">INSURANCE</p>
+      <button (click)="navigate('policies')" [class]="activeSection==='policies' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Browse Policies
+      </button>
+      <button (click)="navigate('recommendations')" [class]="activeSection==='recommendations' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Recommendations
+        <span *ngIf="recNotifCount>0" class="ml-auto bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">{{recNotifCount}}</span>
+      </button>
+      <button (click)="navigate('myquote')" [class]="activeSection==='myquote' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>My Quote
+        <span *ngIf="quoteNotifCount>0" class="ml-auto bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">{{quoteNotifCount}}</span>
+      </button>
+      <p class="text-slate-500 text-xs font-semibold tracking-widest px-2 mb-1 mt-4">ACCOUNT</p>
+      <button (click)="navigate('employees')" [class]="activeSection==='employees' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Employees
+      </button>
+      <button (click)="navigate('profile')" [class]="activeSection==='profile' ? 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg bg-orange-500 text-white font-medium text-sm' : 'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white font-medium text-sm transition-colors'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile
+      </button>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN ─────────────────────────────────────────────── -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Topbar -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between flex-shrink-0">
+      <div>
+        <h1 class="text-xl font-bold text-slate-900">
+          <ng-container [ngSwitch]="activeSection">
+            <span *ngSwitchCase="'home'">Home</span>
+            <span *ngSwitchCase="'policies'">Browse Policies</span>
+            <span *ngSwitchCase="'recommendations'">Recommendations</span>
+            <span *ngSwitchCase="'myquote'">My Quote</span>
+            <span *ngSwitchCase="'employees'">Employees</span>
+            <span *ngSwitchCase="'profile'">My Profile</span>
+          </ng-container>
+        </h1>
+        <p class="text-slate-500 text-sm mt-0.5">
+          <ng-container [ngSwitch]="activeSection">
+            <span *ngSwitchCase="'home'">Welcome back, {{fullName}}</span>
+            <span *ngSwitchCase="'policies'">Find the right plan for your team</span>
+            <span *ngSwitchCase="'recommendations'">Policies recommended by your agent</span>
+            <span *ngSwitchCase="'myquote'">Review and purchase your quote</span>
+            <span *ngSwitchCase="'employees'">Manage your insured employees</span>
+            <span *ngSwitchCase="'profile'">Your company and insurance details</span>
+          </ng-container>
+        </p>
+      </div>
+      <div class="flex items-center gap-3">
+        <!-- Bell -->
+        <div class="relative">
+          <button (click)="toggleNotificationPanel()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200 transition-colors relative">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span *ngIf="totalNotifCount>0" class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">{{totalNotifCount}}</span>
+          </button>
+          <div *ngIf="showNotificationPanel" class="absolute top-12 right-0 bg-white border border-gray-200 rounded-2xl shadow-2xl w-80 z-50 overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-100 font-bold text-sm text-slate-900">Notifications</div>
+            <div *ngIf="visibleNotifications.length===0" class="px-4 py-8 text-center text-slate-400 text-sm">You're all caught up! 🎉</div>
+            <div *ngFor="let n of visibleNotifications" (click)="onNotificationClick(n)" class="flex items-start gap-3 px-4 py-3 hover:bg-orange-50 cursor-pointer border-b border-gray-50 transition-colors">
+              <span class="text-lg mt-0.5">{{n.type==='recommendation'?'📋':'💰'}}</span>
+              <div><p class="text-sm font-medium text-slate-800">{{n.message}}</p><p class="text-xs text-orange-500 font-semibold mt-0.5">{{n.type==='recommendation'?'Recommendation':'Quote'}}</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="w-9 h-9 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">{{initials}}</div>
+        <div>
+          <p class="text-sm font-bold text-slate-900 leading-tight">{{fullName}}</p>
+          <p class="text-xs text-slate-500">Customer</p>
+        </div>
+        <button (click)="logout()" class="flex items-center gap-2 px-3 py-2 bg-gray-100 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto">
+
+      <!-- ══ HOME ══════════════════════════════════════════ -->
+      <div *ngIf="activeSection==='home'" class="p-7">
+        <div class="relative rounded-2xl overflow-hidden mb-6 bg-slate-900" style="min-height:210px">
+          <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800/90 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=70" class="absolute inset-0 w-full h-full object-cover opacity-30" alt=""/>
+          <div class="relative z-20 p-10 max-w-xl">
+            <p class="text-orange-500 text-xs font-bold tracking-widest mb-3 uppercase">CorpSure Insurance</p>
+            <h2 class="text-white text-3xl font-extrabold leading-tight mb-3">Protect What Matters<br>Most — Your People.</h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">Comprehensive group insurance plans designed for modern businesses.</p>
+            <div class="flex gap-3">
+              <button (click)="navigate('policies')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-lg text-sm transition-colors">Browse Policies →</button>
+              <button (click)="navigate('policies')" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-lg text-sm transition-colors border border-white/20">Explore Plans</button>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-7">
+          <div *ngFor="let stat of homeStats" class="bg-white border border-gray-200 rounded-xl p-5 text-center">
+            <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mx-auto mb-3 text-xl">{{stat.icon}}</div>
+            <p class="text-2xl font-extrabold text-slate-900">{{stat.value}}</p>
+            <p class="text-xs text-slate-500 mt-1">{{stat.label}}</p>
+          </div>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-4">How It Works</h3>
+        <div class="grid grid-cols-4 gap-4 mb-7">
+          <div *ngFor="let step of howSteps" class="bg-white border border-gray-200 rounded-xl p-5 relative">
+            <span class="absolute top-4 right-4 text-3xl font-extrabold text-orange-100">{{step.num}}</span>
+            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center mb-3 text-lg">{{step.icon}}</div>
+            <h4 class="font-bold text-slate-900 text-sm mb-1">{{step.title}}</h4>
+            <p class="text-slate-500 text-xs leading-relaxed">{{step.desc}}</p>
+          </div>
+        </div>
+        <!-- Testimonials -->
+        <h3 class="text-lg font-bold text-slate-900 mb-4">What Our Clients Say</h3>
+        <div class="grid grid-cols-3 gap-4 mb-7">
+          <div *ngFor="let t of testimonials" class="bg-white border border-gray-200 rounded-xl p-5">
+            <div class="flex gap-0.5 mb-3">
+              <span *ngFor="let s of [1,2,3,4,5]" class="text-orange-400 text-sm">★</span>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4 italic">"{{t.quote}}"</p>
+            <div>
+              <p class="font-bold text-slate-900 text-sm">{{t.name}}</p>
+              <p class="text-slate-400 text-xs">{{t.role}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Why CorpSure -->
+        <h3 class="text-lg font-bold text-slate-900 mb-4">Why Companies Choose CorpSure</h3>
+        <div class="grid grid-cols-3 gap-4 mb-7">
+          <div *ngFor="let f of features" class="bg-white border border-gray-200 rounded-xl p-5">
+            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center mb-3 text-lg">{{f.icon}}</div>
+            <h4 class="font-bold text-slate-900 text-sm mb-2">{{f.title}}</h4>
+            <p class="text-slate-500 text-xs leading-relaxed">{{f.desc}}</p>
+          </div>
+        </div>
+        <div class="bg-slate-900 rounded-2xl p-8 flex items-center justify-between">
+          <div><h3 class="text-white font-bold text-lg mb-1">Ready to protect your team?</h3><p class="text-slate-400 text-sm">Explore our plans and find the perfect fit for your company.</p></div>
+          <button (click)="navigate('policies')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-lg text-sm transition-colors whitespace-nowrap">Explore Plans →</button>
+        </div>
+      </div>
+
+      <!-- ══ BROWSE POLICIES ═══════════════════════════════ -->
+      <div *ngIf="activeSection==='policies'" class="p-7">
+        <div *ngIf="!myCompany?.activePolicy" class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div><p class="font-bold text-slate-900 text-sm">Confused what to choose?</p><p class="text-slate-500 text-xs">Let your agent suggest the best policies based on your company's needs.</p></div>
+          </div>
+          <button (click)="openRecommendationForm()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-colors whitespace-nowrap">Request Recommendation →</button>
+        </div>
+        <div *ngIf="myCompany?.activePolicy" class="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3 mb-6 text-green-800 text-sm font-medium">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Active policy: <strong class="ml-1">{{myCompany.activePolicy.name}}</strong>
+        </div>
+        <div *ngIf="loadingPolicies" class="flex items-center gap-3 py-16 text-slate-400 text-sm">
+          <div class="w-5 h-5 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>Loading policies...
+        </div>
+        <div *ngIf="!loadingPolicies && policies.length===0" class="text-center py-16">
+          <p class="text-slate-500 text-sm">No policies available at the moment.</p>
+        </div>
+        <div *ngIf="!loadingPolicies && policies.length>0" class="grid grid-cols-3 gap-5">
+          <div *ngFor="let policy of policies" class="bg-white border-2 rounded-2xl p-5 relative hover:shadow-lg transition-all" [class.border-orange-400]="policy.isPopular" [class.border-gray-200]="!policy.isPopular">
+            <span *ngIf="policy.isPopular" class="absolute top-4 right-4 bg-orange-50 text-orange-500 text-xs font-bold px-2.5 py-1 rounded-full">★ Popular</span>
+            <h3 class="font-bold text-slate-900 text-base mb-3 pr-20">{{policy.name}}</h3>
+            <div class="flex flex-col gap-2 mb-3">
+              <div class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Health: {{formatCurrency(policy.healthCoverage)}}</div>
+              <div *ngIf="policy.lifeCoverageMultiplier" class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Life: {{policy.lifeCoverageMultiplier}}x</div>
+              <div *ngIf="policy.accidentCoverage" class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Accident: {{formatCurrency(policy.accidentCoverage)}}</div>
+            </div>
+            <p class="text-orange-500 text-2xl font-extrabold">{{formatCurrency(policy.premiumPerEmployee)}}</p>
+            <p class="text-slate-400 text-xs mt-0.5 mb-4">per employee / year · Min {{policy.minEmployees}} employees</p>
+            <button (click)="onInterestedClick(policy)" [disabled]="!!myCompany?.activePolicy" class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-lg text-sm transition-colors">I'm Interested</button>
+          </div>
+        </div>
+        <!-- Inline quote form -->
+        <div *ngIf="showDirectBuyForm && selectedPolicy" class="mt-6 bg-white border border-gray-200 rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div><h3 class="text-lg font-bold text-slate-900">Request Quote — {{selectedPolicy.name}}</h3><p class="text-slate-500 text-sm">Your agent will review and send a custom quote.</p></div>
+            <button (click)="cancelDirectBuy()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200 text-sm">✕</button>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Company Name</label><input type="text" [(ngModel)]="directBuyForm.companyName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Number of Employees</label><input type="number" [(ngModel)]="directBuyForm.numberOfEmployees" [min]="selectedPolicy.minEmployees" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label><input type="text" [(ngModel)]="directBuyForm.industryType" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label><input type="text" [(ngModel)]="directBuyForm.location" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Name</label><input type="text" [(ngModel)]="directBuyForm.contactName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Email</label><input type="email" [(ngModel)]="directBuyForm.contactEmail" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+            <div class="flex flex-col gap-1 col-span-2"><label class="text-xs font-semibold text-slate-700">Contact Phone</label><input type="text" [(ngModel)]="directBuyForm.contactPhone" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+          </div>
+          <div *ngIf="directBuyForm.numberOfEmployees>0" class="flex justify-between items-center bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 mb-5">
+            <span class="text-slate-600 text-sm font-medium">Estimated Premium</span>
+            <span class="text-orange-500 font-extrabold text-xl">{{formatCurrency(estimatedPremium)}}</span>
+          </div>
+          <div class="flex gap-3 justify-end">
+            <button (click)="cancelDirectBuy()" class="px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-50">Cancel</button>
+            <button (click)="submitDirectBuy()" [disabled]="submittingQuote" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">{{submittingQuote?'Submitting...':'Get Quote →'}}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ RECOMMENDATIONS ══════════════════════════════ -->
+      <div *ngIf="activeSection==='recommendations'" class="p-7">
+        <!-- Loading spinner -->
+        <div *ngIf="loadingRecommendations" class="flex items-center gap-3 py-16 text-slate-400 text-sm">
+          <div class="w-5 h-5 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>Loading recommendations...
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="!loadingRecommendations && recommendations.length===0 && ignoredRecommendations.length===0" class="text-center py-20">
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">💌</div>
+          <h3 class="text-slate-700 font-bold text-lg mb-2">No recommendations yet</h3>
+          <p class="text-slate-400 text-sm mb-5 max-w-xs mx-auto">Your agent hasn't sent any recommendations yet. You can request one below.</p>
+          <button (click)="openRecommendationForm()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-lg text-sm">Request Recommendation →</button>
+        </div>
+
+        <!-- Active recommendations -->
+        <div *ngIf="!loadingRecommendations && recommendations.length>0">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-bold text-slate-900">New Recommendations</h2>
+          </div>
+          <div *ngFor="let rec of recommendations" class="mb-8">
+            <div class="bg-white border border-gray-200 rounded-xl p-5 mb-4">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm text-slate-600 mb-1">Recommended by <strong class="text-slate-900">{{rec.agentName}}</strong></p>
+                  <p *ngIf="rec.agentMessage" class="text-sm text-slate-500 italic mb-2">"{{rec.agentMessage}}"</p>
+                  <p class="text-xs text-slate-400">{{rec.companyName}} · {{rec.numberOfEmployees}} employees · {{formatDate(rec.createdAt)}}</p>
+                </div>
+                <button (click)="ignoreRecommendation(rec)" [disabled]="ignoringRecId===rec.id" class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-semibold text-slate-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors disabled:opacity-50 whitespace-nowrap flex-shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                  {{ignoringRecId===rec.id ? 'Ignoring...' : 'Ignore'}}
+                </button>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-5">
+              <div *ngFor="let policy of rec.recommendedPolicies" class="bg-white border-2 border-gray-200 hover:border-orange-400 rounded-2xl p-5 hover:shadow-lg transition-all">
+                <h3 class="font-bold text-slate-900 text-base mb-3">{{policy.name}}</h3>
+                <div class="flex flex-col gap-2 mb-3">
+                  <div class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{{formatCurrency(policy.healthCoverage)}}</div>
+                  <div *ngIf="policy.lifeCoverageMultiplier" class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>{{policy.lifeCoverageMultiplier}}x Life</div>
+                  <div *ngIf="policy.accidentCoverage" class="flex items-center gap-2 text-slate-600 text-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>{{formatCurrency(policy.accidentCoverage)}} Accident</div>
+                </div>
+                <p class="text-orange-500 text-2xl font-extrabold">{{formatCurrency(policy.premiumPerEmployee)}}</p>
+                <p class="text-slate-400 text-xs mt-0.5 mb-4">per employee / year</p>
+                <button (click)="onInterestedClick(policy)" [disabled]="!!myCompany?.activePolicy" class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg text-sm transition-colors">I'm Interested</button>
+              </div>
+            </div>
+            <!-- Quote request form appears here when I'm Interested from recommendations -->
+            <div *ngIf="showDirectBuyForm && selectedPolicy" class="mt-4 bg-white border border-gray-200 rounded-2xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-slate-900">Request Quote — {{selectedPolicy.name}}</h3>
+                <button (click)="cancelDirectBuy()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200 text-sm">✕</button>
+              </div>
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Company Name</label><input type="text" [(ngModel)]="directBuyForm.companyName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Employees</label><input type="number" [(ngModel)]="directBuyForm.numberOfEmployees" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label><input type="text" [(ngModel)]="directBuyForm.industryType" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label><input type="text" [(ngModel)]="directBuyForm.location" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Name</label><input type="text" [(ngModel)]="directBuyForm.contactName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Email</label><input type="email" [(ngModel)]="directBuyForm.contactEmail" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+                <div class="flex flex-col gap-1 col-span-2"><label class="text-xs font-semibold text-slate-700">Contact Phone</label><input type="text" [(ngModel)]="directBuyForm.contactPhone" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+              </div>
+              <div *ngIf="directBuyForm.numberOfEmployees>0" class="flex justify-between items-center bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 mb-4">
+                <span class="text-slate-600 text-sm">Estimated Premium</span>
+                <span class="text-orange-500 font-extrabold text-xl">{{formatCurrency(estimatedPremium)}}</span>
+              </div>
+              <div class="flex gap-3 justify-end">
+                <button (click)="cancelDirectBuy()" class="px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-50">Cancel</button>
+                <button (click)="submitDirectBuy()" [disabled]="submittingQuote" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">{{submittingQuote?'Submitting...':'Get Quote →'}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No new recommendations, but there are ignored ones -->
+        <div *ngIf="!loadingRecommendations && recommendations.length===0 && ignoredRecommendations.length>0" class="bg-orange-50 border border-orange-100 rounded-xl p-5 flex items-center gap-3 mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <div>
+            <p class="font-bold text-slate-800 text-sm">No new recommendations</p>
+            <p class="text-slate-500 text-xs mt-0.5">Your agent hasn't sent any new recommendations yet.</p>
+          </div>
+          <button (click)="openRecommendationForm()" class="ml-auto bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition-colors whitespace-nowrap">Request New →</button>
+        </div>
+
+        <!-- Previous Recommendations Table -->
+        <div *ngIf="!loadingRecommendations && ignoredRecommendations.length>0" class="mt-6">
+          <div class="flex items-center gap-2 mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide">Previous Recommendations</h3>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100 bg-gray-50">
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Date</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Agent</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Policies Offered</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rec of ignoredRecommendations" class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  <td class="py-3 px-4 text-slate-500">{{formatDate(rec.createdAt)}}</td>
+                  <td class="py-3 px-4 font-medium text-slate-700">{{rec.agentName}}</td>
+                  <td class="py-3 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span *ngFor="let p of rec.recommendedPolicies" class="bg-slate-100 text-slate-600 text-xs font-medium px-2 py-0.5 rounded-full">{{p.name}}</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4"><span class="bg-gray-100 text-gray-500 text-xs font-bold px-2.5 py-1 rounded-full">Ignored</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MY QUOTE ════════════════════════════════════ -->
+      <div *ngIf="activeSection==='myquote'" class="p-7">
+        <div *ngIf="loadingQuotes" class="flex items-center gap-3 py-16 text-slate-400 text-sm">
+          <div class="w-5 h-5 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>Loading quotes...
+        </div>
+
+        <!-- Empty active quotes state -->
+        <div *ngIf="!loadingQuotes && myQuotes.length===0 && rejectedQuotes.length===0" class="text-center py-20">
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">📄</div>
+          <h3 class="text-slate-700 font-bold text-lg mb-2">No pending quotes</h3>
+          <p class="text-slate-400 text-sm mb-5 max-w-xs mx-auto">All caught up! Once your agent sends a new quote, it'll appear here.</p>
+          <button (click)="navigate('policies')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-lg text-sm">Browse Policies</button>
+        </div>
+
+        <!-- No new quotes but rejected history exists -->
+        <div *ngIf="!loadingQuotes && myQuotes.length===0 && rejectedQuotes.length>0" class="bg-orange-50 border border-orange-100 rounded-xl p-5 flex items-center gap-3 mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <div>
+            <p class="font-bold text-slate-800 text-sm">No new quotes</p>
+            <p class="text-slate-500 text-xs mt-0.5">Your agent hasn't sent any new quotes yet.</p>
+          </div>
+          <button (click)="navigate('policies')" class="ml-auto bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition-colors whitespace-nowrap">Browse Policies →</button>
+        </div>
+
+        <!-- Active quotes list -->
+        <div *ngIf="!loadingQuotes && myQuotes.length>0" class="flex flex-col gap-4 max-w-2xl mb-8">
+          <div *ngFor="let q of myQuotes" class="bg-white border-2 rounded-2xl p-6"
+            [class.border-green-300]="q.status==='Accepted'"
+            [class.border-gray-200]="q.status==='Pending'">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2 font-bold text-slate-900">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{{q.policyName}}
+              </div>
+              <span class="text-xs font-bold px-3 py-1 rounded-full"
+                [class.bg-yellow-100]="q.status==='Pending'" [class.text-yellow-800]="q.status==='Pending'"
+                [class.bg-green-100]="q.status==='Accepted'" [class.text-green-800]="q.status==='Accepted'">
+                {{q.status}}
+              </span>
+            </div>
+            <div class="flex flex-col gap-2 mb-4 text-sm">
+              <div class="flex justify-between border-b border-gray-50 pb-2"><span class="text-slate-500">Premium / employee</span><span class="font-medium">{{formatCurrency(q.premiumPerEmployee)}}</span></div>
+              <div class="flex justify-between border-b border-gray-50 pb-2"><span class="text-slate-500">Employees</span><span class="font-medium">{{q.employeeCount}}</span></div>
+              <div class="flex justify-between border-b border-gray-50 pb-2"><span class="text-slate-500">Agent</span><span class="font-medium">{{q.agentName}}</span></div>
+              <div class="flex justify-between border-b border-gray-50 pb-2"><span class="text-slate-500">Valid Until</span><span class="font-medium">{{formatDate(q.validUntil)}}</span></div>
+              <div class="flex justify-between font-bold text-base pt-1"><span class="text-slate-900">Total Premium</span><span class="text-orange-500">{{formatCurrency(q.totalPremium)}}</span></div>
+            </div>
+            <div *ngIf="q.status==='Pending'" class="flex gap-3">
+              <button (click)="rejectQuote(q)" class="flex-1 border border-gray-200 rounded-lg py-2.5 text-sm font-semibold text-slate-600 hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors">Reject</button>
+              <button (click)="acceptQuote(q)" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg text-sm transition-colors">Accept Quote</button>
+            </div>
+            <button *ngIf="q.status==='Accepted'" (click)="openPayment(q)" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg text-sm transition-colors">Buy Now →</button>
+          </div>
+        </div>
+
+        <!-- Previous (Rejected) Quotes Table -->
+        <div *ngIf="!loadingQuotes && rejectedQuotes.length>0" class="mt-2">
+          <div class="flex items-center gap-2 mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide">Previous Quotes</h3>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100 bg-gray-50">
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Policy</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Agent</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Total Premium</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Employees</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Date</th>
+                  <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let q of rejectedQuotes" class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  <td class="py-3 px-4 font-medium text-slate-700">{{q.policyName}}</td>
+                  <td class="py-3 px-4 text-slate-600">{{q.agentName}}</td>
+                  <td class="py-3 px-4 font-bold text-slate-700">{{formatCurrency(q.totalPremium)}}</td>
+                  <td class="py-3 px-4 text-slate-600">{{q.employeeCount}}</td>
+                  <td class="py-3 px-4 text-slate-500">{{formatDate(q.createdAt || q.validUntil)}}</td>
+                  <td class="py-3 px-4"><span class="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-1 rounded-full">Rejected</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ EMPLOYEES ══════════════════════════════════ -->
+      <div *ngIf="activeSection==='employees'" class="p-7">
+        <!-- No policy warning -->
+        <div *ngIf="!myCompany?.activePolicy" class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3 mb-6">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p class="text-amber-800 text-sm font-medium">You need an active insurance policy before adding employees. <button (click)="navigate('policies')" class="underline font-bold">Browse Policies →</button></p>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-white border border-gray-200 rounded-xl p-4 text-center">
+            <p class="text-3xl font-extrabold text-slate-900">{{employees.length}}</p>
+            <p class="text-xs text-slate-500 mt-1">Total Employees</p>
+          </div>
+          <div class="bg-white border border-green-200 rounded-xl p-4 text-center">
+            <p class="text-3xl font-extrabold text-green-600">{{activeCount}}</p>
+            <p class="text-xs text-slate-500 mt-1">Active / Covered</p>
+          </div>
+          <div class="bg-white border border-red-200 rounded-xl p-4 text-center">
+            <p class="text-3xl font-extrabold text-red-500">{{inactiveCount}}</p>
+            <p class="text-xs text-slate-500 mt-1">Inactive</p>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="flex items-center justify-between gap-4 mb-5">
+          <div class="relative flex-1 max-w-xs">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" [(ngModel)]="employeeSearch" placeholder="Search by name, code, email..." class="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-orange-400"/>
+          </div>
+          <button (click)="openAddEmployee()" [disabled]="!myCompany?.activePolicy" class="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-4 py-2.5 rounded-lg text-sm transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Employee
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div *ngIf="loadingEmployees" class="flex items-center gap-3 py-12 text-slate-400 text-sm">
+          <div class="w-5 h-5 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>Loading employees...
+        </div>
+
+        <!-- Empty -->
+        <div *ngIf="!loadingEmployees && employees.length===0" class="text-center py-16 bg-white border border-gray-200 rounded-2xl">
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">👥</div>
+          <h3 class="text-slate-700 font-bold text-lg mb-2">No employees added yet</h3>
+          <p class="text-slate-400 text-sm mb-5">Add your employees so they can be covered under the policy.</p>
+          <button (click)="openAddEmployee()" [disabled]="!myCompany?.activePolicy" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold px-5 py-2.5 rounded-lg text-sm">Add First Employee</button>
+        </div>
+
+        <!-- Table -->
+        <div *ngIf="!loadingEmployees && employees.length>0" class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-100 bg-gray-50">
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Employee</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Code</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Gender</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Salary</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Nominee</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Coverage From</th>
+                <th class="text-left py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-wide">Status</th>
+                <th class="py-3 px-4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of filteredEmployees" class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                <td class="py-3 px-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0" [class.bg-orange-500]="emp.isActive" [class.bg-gray-300]="!emp.isActive">
+                      {{emp.fullName?.charAt(0)?.toUpperCase()}}
+                    </div>
+                    <div>
+                      <p class="font-semibold text-slate-900">{{emp.fullName}}</p>
+                      <p class="text-xs text-slate-400">{{emp.email}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3 px-4 text-slate-600 font-mono text-xs">{{emp.employeeCode}}</td>
+                <td class="py-3 px-4 text-slate-600">{{emp.gender}}</td>
+                <td class="py-3 px-4 text-slate-700 font-medium">{{formatCurrency(emp.salary)}}</td>
+                <td class="py-3 px-4">
+                  <div *ngIf="emp.nomineeName" class="text-slate-700">{{emp.nomineeName}}<span class="text-slate-400 text-xs ml-1">({{emp.nomineeRelationship}})</span></div>
+                  <span *ngIf="!emp.nomineeName" class="text-slate-300">—</span>
+                </td>
+                <td class="py-3 px-4 text-slate-500">{{formatDate(emp.coverageStartDate)}}</td>
+                <td class="py-3 px-4">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-full" [class.bg-green-100]="emp.isActive" [class.text-green-700]="emp.isActive" [class.bg-red-100]="!emp.isActive" [class.text-red-600]="!emp.isActive">
+                    {{emp.isActive?'Active':'Inactive'}}
+                  </span>
+                </td>
+                <td class="py-3 px-4">
+                  <div class="flex items-center gap-2 justify-end">
+                    <button (click)="openEditEmployee(emp)" class="text-slate-400 hover:text-orange-500 transition-colors" title="Edit">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button *ngIf="emp.isActive" (click)="deactivateEmployee(emp)" class="text-slate-400 hover:text-red-500 transition-colors" title="Deactivate">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="filteredEmployees.length===0 && employeeSearch" class="text-center py-8 text-slate-400 text-sm">No employees match "{{employeeSearch}}"</div>
+        </div>
+      </div>
+
+      <!-- ══ PROFILE ══════════════════════════════════════ -->
+      <div *ngIf="activeSection==='profile'" class="p-7">
+        <div *ngIf="loadingProfile" class="flex items-center gap-3 py-16 text-slate-400 text-sm">
+          <div class="w-5 h-5 border-2 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>Loading profile...
+        </div>
+        <div *ngIf="!loadingProfile && !myCompany" class="text-center py-20">
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🏢</div>
+          <h3 class="text-slate-700 font-bold text-lg mb-2">No company registered</h3>
+          <p class="text-slate-400 text-sm mb-5">Your company profile hasn't been set up yet. Browse policies to get started.</p>
+          <button (click)="navigate('policies')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-lg text-sm">Browse Policies</button>
+        </div>
+        <div *ngIf="!loadingProfile && myCompany">
+          <!-- Company + Agent row -->
+          <div class="grid grid-cols-2 gap-5 mb-5">
+            <div class="bg-white border border-gray-200 rounded-2xl p-5">
+              <div class="flex items-center gap-2 font-bold text-slate-900 mb-4">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Company Info
+              </div>
+              <div class="flex flex-col gap-3 text-sm">
+                <div class="flex justify-between pb-2 border-b border-gray-50"><span class="text-slate-500">Company</span><span class="font-semibold text-slate-900">{{myCompany.companyName}}</span></div>
+                <div class="flex justify-between pb-2 border-b border-gray-50"><span class="text-slate-500">Employees</span><span class="font-semibold text-slate-900">{{myCompany.size}}</span></div>
+                <div class="flex justify-between pb-2 border-b border-gray-50"><span class="text-slate-500">Domain</span><span class="font-semibold text-slate-900">{{myCompany.domain||'—'}}</span></div>
+                <div class="flex justify-between pb-2 border-b border-gray-50"><span class="text-slate-500">Representative</span><span class="font-semibold text-slate-900">{{myCompany.representativeName}}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Member Since</span><span class="font-semibold text-slate-900">{{formatDate(myCompany.createdAt)}}</span></div>
+              </div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-2xl p-5">
+              <div class="flex items-center gap-2 font-bold text-slate-900 mb-4">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Assigned Agent
+              </div>
+              <div *ngIf="myCompany.agentName" class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">{{getAgentInitials(myCompany.agentName)}}</div>
+                <div>
+                  <p class="font-bold text-slate-900 text-base">{{myCompany.agentName}}</p>
+                  <p class="text-slate-500 text-sm mt-0.5">{{myCompany.agentEmail}}</p>
+                </div>
+              </div>
+              <div *ngIf="!myCompany.agentName" class="text-center py-6 text-slate-400 text-sm">No agent assigned yet.</div>
+            </div>
+          </div>
+
+          <!-- Active Policy -->
+          <div *ngIf="myCompany.activePolicy" class="bg-white border border-gray-200 rounded-2xl p-5 mb-5">
+            <div class="flex items-center gap-2 font-bold text-slate-900 mb-4">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Purchased Policy
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">● Active</span>
+              <strong class="text-slate-900 text-base">{{myCompany.activePolicy.name}}</strong>
+            </div>
+            <div class="grid grid-cols-4 gap-4 text-sm bg-gray-50 rounded-xl p-4">
+              <div><p class="text-slate-400 text-xs mb-1">Employees</p><p class="font-bold text-slate-900">{{myCompany.activePolicy.employeeCount}}</p></div>
+              <div><p class="text-slate-400 text-xs mb-1">Total Premium</p><p class="font-bold text-orange-500">{{formatCurrency(myCompany.activePolicy.totalPremium)}}</p></div>
+              <div><p class="text-slate-400 text-xs mb-1">Start Date</p><p class="font-bold text-slate-900">{{formatDate(myCompany.activePolicy.startDate)}}</p></div>
+              <div><p class="text-slate-400 text-xs mb-1">Expiry</p><p class="font-bold text-slate-900">{{formatDate(myCompany.activePolicy.endDate)}}</p></div>
+            </div>
+          </div>
+
+          <!-- Payment History -->
+          <div class="bg-white border border-gray-200 rounded-2xl p-5">
+            <div class="flex items-center gap-2 font-bold text-slate-900 mb-4">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payment History
+            </div>
+            <div *ngIf="myPayments.length===0" class="text-center py-8 text-slate-400 text-sm">No payments recorded yet.</div>
+            <table *ngIf="myPayments.length>0" class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100">
+                  <th class="text-left py-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wide">Invoice</th>
+                  <th class="text-left py-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wide">Policy</th>
+                  <th class="text-left py-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wide">Amount</th>
+                  <th class="text-left py-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wide">Date</th>
+                  <th class="text-left py-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-wide">Status</th>
+                  <th class="py-2 px-3"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of myPayments" class="border-b border-gray-50">
+                  <td class="py-3 px-3 font-mono text-slate-700 text-xs">{{p.invoiceNumber}}</td>
+                  <td class="py-3 px-3 text-slate-700">{{p.policyName}}</td>
+                  <td class="py-3 px-3 text-orange-500 font-bold">{{formatCurrency(p.amountPaid)}}</td>
+                  <td class="py-3 px-3 text-slate-500">{{formatDate(p.paidAt)}}</td>
+                  <td class="py-3 px-3"><span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-full">Paid</span></td>
+                  <td class="py-3 px-3"><button (click)="viewPaymentInvoice(p)" class="text-orange-500 hover:text-orange-600 text-xs font-bold flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ RECOMMENDATION MODAL ═════════════════════════════ -->
+<div *ngIf="showRecommendationForm" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4" (click)="showRecommendationForm=false">
+  <div class="bg-white rounded-2xl p-7 w-full max-w-xl shadow-2xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="text-lg font-bold text-slate-900">Request Recommendation</h3>
+      <button (click)="showRecommendationForm=false" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200">✕</button>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Company Name</label><input type="text" [(ngModel)]="recommendationForm.companyName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Number of Employees</label><input type="number" [(ngModel)]="recommendationForm.numberOfEmployees" min="1" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label><input type="text" [(ngModel)]="recommendationForm.industryType" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label><input type="text" [(ngModel)]="recommendationForm.location" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Name</label><input type="text" [(ngModel)]="recommendationForm.contactName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Email</label><input type="email" [(ngModel)]="recommendationForm.contactEmail" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="col-span-2 flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Phone</label><input type="text" [(ngModel)]="recommendationForm.contactPhone" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+    </div>
+    <div class="flex gap-3 justify-end">
+      <button (click)="showRecommendationForm=false" class="px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-50">Cancel</button>
+      <button (click)="submitRecommendation()" [disabled]="submittingQuote" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">{{submittingQuote?'Sending...':'Send Request →'}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD EMPLOYEE MODAL ════════════════════════════════ -->
+<div *ngIf="showAddEmployeeForm" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4" (click)="cancelAddEmployee()">
+  <div class="bg-white rounded-2xl p-7 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <div><h3 class="text-lg font-bold text-slate-900">Add Employee</h3><p class="text-slate-500 text-sm">Employee will be covered under your active policy.</p></div>
+      <button (click)="cancelAddEmployee()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200">✕</button>
+    </div>
+    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">Basic Info</p>
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Full Name <span class="text-red-500">*</span></label><input type="text" [(ngModel)]="addEmployeeForm.fullName" placeholder="John Doe" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Employee Code <span class="text-red-500">*</span></label><input type="text" [(ngModel)]="addEmployeeForm.employeeCode" placeholder="EMP001" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Email <span class="text-red-500">*</span></label><input type="email" [(ngModel)]="addEmployeeForm.email" placeholder="john@company.com" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Gender</label>
+        <select [(ngModel)]="addEmployeeForm.gender" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Annual Salary (₹)</label><input type="number" [(ngModel)]="addEmployeeForm.salary" placeholder="500000" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Coverage Start Date</label><input type="date" [(ngModel)]="addEmployeeForm.coverageStartDate" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+    </div>
+    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">Nominee Details</p>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Nominee Name</label><input type="text" [(ngModel)]="addEmployeeForm.nomineeName" placeholder="Jane Doe" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Relationship</label>
+        <select [(ngModel)]="addEmployeeForm.nomineeRelationship" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="">Select...</option><option>Spouse</option><option>Father</option><option>Mother</option><option>Son</option><option>Daughter</option><option>Sibling</option><option>Other</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Nominee Phone</label><input type="text" [(ngModel)]="addEmployeeForm.nomineePhone" placeholder="9876543210" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+    </div>
+    <div class="flex gap-3 justify-end">
+      <button (click)="cancelAddEmployee()" class="px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-50">Cancel</button>
+      <button (click)="submitAddEmployee()" [disabled]="submittingEmployee" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">{{submittingEmployee?'Adding...':'Add Employee →'}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDIT EMPLOYEE MODAL ═══════════════════════════════ -->
+<div *ngIf="showEditEmployeeForm && editingEmployee" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4" (click)="cancelEditEmployee()">
+  <div class="bg-white rounded-2xl p-7 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <div><h3 class="text-lg font-bold text-slate-900">Edit Employee</h3><p class="text-slate-500 text-sm">{{editingEmployee.fullName}} · {{editingEmployee.employeeCode}}</p></div>
+      <button (click)="cancelEditEmployee()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200">✕</button>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Full Name</label><input type="text" [(ngModel)]="editEmployeeForm.fullName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Email</label><input type="email" [(ngModel)]="editEmployeeForm.email" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Gender</label>
+        <select [(ngModel)]="editEmployeeForm.gender" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Annual Salary (₹)</label><input type="number" [(ngModel)]="editEmployeeForm.salary" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+    </div>
+    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3">Nominee Details</p>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Nominee Name</label><input type="text" [(ngModel)]="editEmployeeForm.nomineeName" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Relationship</label>
+        <select [(ngModel)]="editEmployeeForm.nomineeRelationship" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="">Select...</option><option>Spouse</option><option>Father</option><option>Mother</option><option>Son</option><option>Daughter</option><option>Sibling</option><option>Other</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Nominee Phone</label><input type="text" [(ngModel)]="editEmployeeForm.nomineePhone" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+    </div>
+    <div class="flex gap-3 justify-end">
+      <button (click)="cancelEditEmployee()" class="px-5 py-2.5 border border-gray-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-50">Cancel</button>
+      <button (click)="submitEditEmployee()" [disabled]="submittingEmployee" class="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-colors">{{submittingEmployee?'Saving...':'Save Changes →'}}</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAYMENT MODAL ═════════════════════════════════════ -->
+<div *ngIf="showPaymentModal" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4" (click)="closePaymentModal()">
+  <div class="bg-white rounded-2xl p-7 w-full max-w-md shadow-2xl" (click)="$event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="text-lg font-bold text-slate-900">Complete Payment</h3>
+      <button (click)="closePaymentModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200">✕</button>
+    </div>
+    <div *ngIf="selectedQuote" class="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-5 flex flex-col gap-2 text-sm">
+      <div class="flex justify-between"><span class="text-slate-500">Policy</span><span class="font-medium text-slate-900">{{selectedQuote.policyName}}</span></div>
+      <div class="flex justify-between"><span class="text-slate-500">Employees</span><span class="font-medium text-slate-900">{{selectedQuote.employeeCount}}</span></div>
+      <div class="flex justify-between font-bold border-t border-gray-200 pt-2 mt-1 text-base"><span>Total</span><span class="text-orange-500">{{formatCurrency(selectedQuote.totalPremium)}}</span></div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <div class="col-span-2 flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Card Holder Name</label><input type="text" [(ngModel)]="paymentForm.cardHolderName" placeholder="Name on card" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="col-span-2 flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Card Number</label><input type="text" [(ngModel)]="paymentForm.cardNumber" placeholder="1234 5678 9012 3456" maxlength="16" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Expiry (MM/YY)</label><input type="text" [(ngModel)]="paymentForm.expiry" placeholder="MM/YY" maxlength="5" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">CVV</label><input type="password" [(ngModel)]="paymentForm.cvv" placeholder="•••" maxlength="4" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400"/></div>
+      <div class="col-span-2 flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Payment Method</label>
+        <select [(ngModel)]="paymentForm.paymentMethod" class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="CreditCard">Credit Card</option><option value="DebitCard">Debit Card</option><option value="NetBanking">Net Banking</option>
+        </select>
+      </div>
+    </div>
+    <button (click)="confirmPayment()" [disabled]="submittingPayment" class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl text-sm transition-colors">{{submittingPayment?'Processing...':'Confirm Payment →'}}</button>
+  </div>
+</div>
+
+<!-- ══ SUCCESS MODAL ════════════════════════════════════ -->
+<div *ngIf="showSuccessModal" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl p-8 w-full max-w-sm shadow-2xl text-center">
+    <div class="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">{{successModalIcon}}</div>
+    <h2 class="text-xl font-extrabold text-slate-900 mb-3">{{successModalTitle}}</h2>
+    <p class="text-slate-500 text-sm leading-relaxed mb-7">{{successModalMessage}}</p>
+    <button (click)="closeSuccessModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl text-sm transition-colors">Got it, take me home →</button>
+  </div>
+</div>
+
+<!-- ══ INVOICE MODAL ════════════════════════════════════ -->
+<div *ngIf="showInvoiceModal && invoiceData" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4" (click)="closeInvoiceModal()">
+  <div class="bg-white rounded-2xl p-7 w-full max-w-lg shadow-2xl" (click)="$event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div><h3 class="text-lg font-extrabold text-slate-900">Payment Successful!</h3><p class="text-xs text-slate-400">Invoice #{{invoiceData.invoiceNumber}}</p></div>
+      </div>
+      <button (click)="closeInvoiceModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-gray-200">✕</button>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-5 flex flex-col gap-3 text-sm">
+      <div class="flex justify-between"><span class="text-slate-500">Policy</span><span class="font-semibold text-slate-900">{{invoiceData.policyName}}</span></div>
+      <div class="flex justify-between" *ngIf="invoiceData.companyName"><span class="text-slate-500">Company</span><span class="font-semibold text-slate-900">{{invoiceData.companyName}}</span></div>
+      <div class="flex justify-between"><span class="text-slate-500">Employees</span><span class="font-semibold text-slate-900">{{invoiceData.employeeCount}}</span></div>
+      <div class="flex justify-between" *ngIf="invoiceData.agentName"><span class="text-slate-500">Agent</span><span class="font-semibold text-slate-900">{{invoiceData.agentName}}</span></div>
+      <div class="flex justify-between"><span class="text-slate-500">Payment</span><span class="font-semibold text-slate-900">{{invoiceData.paymentMethod}} · {{invoiceData.maskedCardNumber}}</span></div>
+      <div class="flex justify-between"><span class="text-slate-500">Date</span><span class="font-semibold text-slate-900">{{formatDate(invoiceData.paidAt)}}</span></div>
+      <div class="flex justify-between font-bold text-base border-t border-gray-200 pt-3 mt-1"><span>Total Amount</span><span class="text-orange-500">{{formatCurrency(invoiceData.amountPaid)}}</span></div>
+    </div>
+    <div class="flex gap-3">
+      <button (click)="closeInvoiceModal()" class="flex-1 border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-slate-600 hover:bg-gray-50">Close</button>
+      <button (click)="closeInvoiceModal(); navigate('profile')" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm">View in Profile →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ═════════════════════════════════════════════ -->
+<div class="fixed bottom-5 right-5 z-[60] transition-all duration-300"
+  [class.opacity-0]="!showToast" [class.translate-y-4]="!showToast"
+  [class.opacity-100]="showToast" [class.translate-y-0]="showToast"
+  [class.pointer-events-none]="!showToast">
+  <div class="px-5 py-3 rounded-xl text-white text-sm font-medium shadow-2xl flex items-center gap-2"
+    [class.bg-slate-900]="toastType==='success'" [class.bg-red-600]="toastType==='error'">
+    <span>{{toastType==='success'?'✓':'✕'}}</span>{{toastMessage}}
+  </div>
+</div>
