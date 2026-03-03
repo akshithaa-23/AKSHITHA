@@ -55,3 +55,23 @@ D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\
 D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 D:\test\Capstone - duplicate\Backend\GroupEmpInsurance\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Infrastructure.pdb
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Application.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Domain.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Application.pdb
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\bin\Debug\net8.0\Domain.pdb
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.AssemblyInfo.cs
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+C:\Users\akshi\OneDrive\Documents\Desktop\Akshitha\project\backend\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll

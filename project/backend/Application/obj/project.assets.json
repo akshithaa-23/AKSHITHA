@@ -3749,11 +3749,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\test\\Capstone - duplicate\\Backend\\GroupEmpInsurance\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "D:\\test\\Capstone - duplicate\\Backend\\GroupEmpInsurance\\Application\\Application.csproj",
+      "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj",
       "packagesPath": "C:\\Users\\akshi\\.nuget\\packages\\",
-      "outputPath": "D:\\test\\Capstone - duplicate\\Backend\\GroupEmpInsurance\\Application\\obj\\",
+      "outputPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3774,8 +3774,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\test\\Capstone - duplicate\\Backend\\GroupEmpInsurance\\Domain\\Domain.csproj": {
-              "projectPath": "D:\\test\\Capstone - duplicate\\Backend\\GroupEmpInsurance\\Domain\\Domain.csproj"
+            "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj"
             }
           }
         }
