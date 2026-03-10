@@ -95,6 +95,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DocumentUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -232,6 +235,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -718,7 +724,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
@@ -738,7 +744,7 @@ namespace Infrastructure.Migrations
                             Email = "admin@groupinsurance.com",
                             FullName = "System Admin",
                             IsActive = true,
-                            PasswordHash = "$2a$11$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.",
+                            PasswordHash = "$2a$11$UUu/cFfejo9bEL/Z00yDwO3lHVu6kaoAOd.ybxnANFItUiMAG1xvO",
                             Role = 1
                         });
                 });

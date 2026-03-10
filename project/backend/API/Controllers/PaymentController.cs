@@ -1,10 +1,11 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
-using Infrastructure.Data;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -13,113 +14,28 @@ namespace API.Controllers
     [Authorize]
     public class PaymentController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        public PaymentController(AppDbContext context) { _context = context; }
+        private readonly IPaymentService _paymentService;
+        public PaymentController(IPaymentService paymentService) { _paymentService = paymentService; }
 
         // POST api/payment — Customer pays for accepted quote
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> ProcessPayment([FromBody] Application.DTOs.ProcessPaymentDto dto)
+        public async Task<IActionResult> ProcessPayment([FromBody] ProcessPaymentDto dto)
         {
-            int customerId = GetUserId();
-
-            var quote = await _context.Quotes
-                .Include(q => q.Policy)
-                .Include(q => q.QuoteRequest)
-                .FirstOrDefaultAsync(q => q.Id == dto.QuoteId && q.CustomerId == customerId);
-
-            if (quote == null)
-                return NotFound(new { message = "Quote not found" });
-
-            if (quote.Status == "Pending")
-                return BadRequest(new { message = "Quote must be accepted before payment" });
-
-            if (quote.Status == "Rejected")
-                return BadRequest(new { message = "Rejected quote cannot be paid" });
-
-            if (quote.Status == "Paid")
-                return BadRequest(new { message = "Payment already completed for this quote" });
-
-            if (quote.Status != "Accepted")
-                return BadRequest(new { message = $"Invalid quote status: {quote.Status}" });
-
-            // Commission by policy id range:
-            // 1-3 (Essential) → 5%
-            // 4-6 (Enhanced)  → 7%
-            // 7-9 (Enterprise)→ 10%
-            // 10+ (new)       → 7% default
-            decimal commissionRate = GetCommissionRate(quote.PolicyId);
-            decimal commissionAmount = Math.Round(quote.TotalPremium * commissionRate / 100, 2);
-
-            string invoiceNumber = $"INV-{DateTime.UtcNow:yyyyMMdd}-{quote.Id:D5}";
-            string maskedCard = dto.CardNumber.Length >= 4
-                ? $"**** **** **** {dto.CardNumber[^4..]}"
-                : "****";
-
-            var payment = new Payment
+            try
             {
-                QuoteId = quote.Id,
-                CustomerId = customerId,
-                PolicyId = quote.PolicyId,
-                PaymentMethod = dto.PaymentMethod,
-                CardHolderName = dto.CardHolderName,
-                MaskedCardNumber = maskedCard,
-                AmountPaid = quote.TotalPremium,
-                Status = "Success",
-                InvoiceNumber = invoiceNumber,
-                PaidAt = DateTime.UtcNow,
-                AgentCommission = new AgentCommission
-                {
-                    AgentId = quote.AgentId,
-                    CommissionRate = commissionRate,
-                    CommissionAmount = commissionAmount,
-                    CreatedAt = DateTime.UtcNow
-                }
-            };
-
-            // Activate policy for company
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-
-            if (company != null)
-            {
-                _context.CompanyPolicies.Add(new CompanyPolicy
-                {
-                    CompanyId = company.Id,
-                    PolicyId = quote.PolicyId,
-                    Status = "Active",
-                    StartDate = DateTime.UtcNow,
-                    EndDate = DateTime.UtcNow.AddYears(quote.Policy.DurationYears),
-                    EmployeeCount = quote.EmployeeCount,
-                    TotalPremium = quote.TotalPremium,
-                    CreatedAt = DateTime.UtcNow
-                });
+                int customerId = GetUserId();
+                var paymentResponse = await _paymentService.ProcessPaymentAsync(customerId, dto);
+                return Ok(paymentResponse);
             }
-
-            quote.Status = "Paid";
-            quote.QuoteRequest.Status = "Completed";
-
-            _context.Payments.Add(payment);
-            await _context.SaveChangesAsync();
-
-            var agent = await _context.Users.FindAsync(quote.AgentId);
-
-            return Ok(new Application.DTOs.PaymentResponseDto
+            catch (KeyNotFoundException ex)
             {
-                Id = payment.Id,
-                InvoiceNumber = invoiceNumber,
-                PolicyName = quote.Policy.Name,
-                CompanyName = quote.QuoteRequest.CompanyName,
-                EmployeeCount = quote.EmployeeCount,
-                AmountPaid = quote.TotalPremium,
-                PaymentMethod = dto.PaymentMethod,
-                MaskedCardNumber = maskedCard,
-                CardHolderName = dto.CardHolderName,
-                PaidAt = payment.PaidAt,
-                CommissionRate = commissionRate,
-                CommissionAmount = commissionAmount,
-                AgentName = agent?.FullName ?? ""
-            });
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // GET api/payment/my — Customer views payment history & invoices
@@ -128,31 +44,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetMyPayments()
         {
             int customerId = GetUserId();
-
-            var payments = await _context.Payments
-                .Include(p => p.Policy)
-                .Include(p => p.Quote).ThenInclude(q => q.QuoteRequest)
-                .Include(p => p.Quote).ThenInclude(q => q.Agent)
-                .Include(p => p.AgentCommission)
-                .Where(p => p.CustomerId == customerId)
-                .OrderByDescending(p => p.PaidAt)
-                .Select(p => new Application.DTOs.PaymentResponseDto
-                {
-                    Id = p.Id,
-                    InvoiceNumber = p.InvoiceNumber,
-                    PolicyName = p.Policy.Name,
-                    CompanyName = p.Quote.QuoteRequest.CompanyName,
-                    EmployeeCount = p.Quote.EmployeeCount,
-                    AmountPaid = p.AmountPaid,
-                    PaymentMethod = p.PaymentMethod,
-                    MaskedCardNumber = p.MaskedCardNumber,
-                    CardHolderName = p.CardHolderName,
-                    PaidAt = p.PaidAt,
-                    CommissionRate = p.AgentCommission != null ? p.AgentCommission.CommissionRate : 0,
-                    CommissionAmount = p.AgentCommission != null ? p.AgentCommission.CommissionAmount : 0,
-                    AgentName = p.Quote.Agent.FullName
-                }).ToListAsync();
-
+            var payments = await _paymentService.GetMyPaymentsAsync(customerId);
             return Ok(payments);
         }
 
@@ -162,34 +54,8 @@ namespace API.Controllers
         public async Task<IActionResult> GetAgentCommissions()
         {
             int agentId = GetUserId();
-
-            var commissions = await _context.AgentCommissions
-                .Include(ac => ac.Payment).ThenInclude(p => p.Policy)
-                .Include(ac => ac.Payment).ThenInclude(p => p.Customer)
-                .Where(ac => ac.AgentId == agentId)
-                .OrderByDescending(ac => ac.CreatedAt)
-                .Select(ac => new
-                {
-                    ac.Id,
-                    ac.Payment.InvoiceNumber,
-                    PolicyName = ac.Payment.Policy.Name,
-                    CustomerName = ac.Payment.Customer.FullName,
-                    ac.Payment.AmountPaid,
-                    ac.CommissionRate,
-                    ac.CommissionAmount,
-                    EarnedAt = ac.CreatedAt
-                }).ToListAsync();
-
+            var commissions = await _paymentService.GetAgentCommissionsAsync(agentId);
             return Ok(commissions);
-        }
-
-        // Commission rate by policy id range
-        private static decimal GetCommissionRate(int policyId)
-        {
-            if (policyId >= 1 && policyId <= 3) return 5m;   // Essential
-            if (policyId >= 4 && policyId <= 6) return 7m;   // Enhanced
-            if (policyId >= 7 && policyId <= 9) return 10m;  // Enterprise
-            return 7m;                                         // New policies default
         }
 
         private int GetUserId() =>

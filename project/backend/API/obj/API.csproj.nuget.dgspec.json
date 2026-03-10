@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\API\\API.csproj": {}
+    "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\API\\API.csproj": {
+    "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\akshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\API\\obj\\",
+        "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\rohan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\akshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj"
+              "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj"
               },
-              "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -101,24 +101,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj": {
+    "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\akshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\obj\\",
+        "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\rohan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\akshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -133,8 +133,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj"
+              "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj"
               }
             }
           }
@@ -155,6 +155,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.24, )"
@@ -192,24 +196,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj": {
+    "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\akshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\rohan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\akshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -279,24 +283,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\akshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\rohan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\akshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rohan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -311,11 +315,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Application\\Application.csproj"
+              "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Application\\Application.csproj"
               },
-              "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\akshi\\OneDrive\\Documents\\Desktop\\Akshitha\\project\\backend\\Domain\\Domain.csproj"
+              "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Domain.csproj"
               }
             }
           }
@@ -377,7 +381,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

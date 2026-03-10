@@ -898,6 +898,7 @@
       },
       "Application/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.1.0",
           "Domain": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.24",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.24"

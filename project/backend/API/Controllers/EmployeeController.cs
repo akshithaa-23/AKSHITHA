@@ -1,10 +1,11 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
-using Infrastructure.Data;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -13,11 +14,11 @@ namespace API.Controllers
     [Authorize]
     public class EmployeeController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(AppDbContext context)
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _context = context;
+            _employeeService = employeeService;
         }
 
         // GET api/employee/my-company - Customer gets their employees
@@ -25,35 +26,24 @@ namespace API.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetMyEmployees()
         {
-            int customerId = GetUserId();
-
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-
-            if (company == null)
-                return NotFound(new { message = "No company registered yet" });
-
-            var employees = await _context.Employees
-                .Where(e => e.CompanyId == company.Id)
-                .OrderBy(e => e.FullName)
-                .Select(e => new EmployeeDto
-                {
-                    Id = e.Id,
-                    EmployeeCode = e.EmployeeCode,
-                    FullName = e.FullName,
-                    Email = e.Email,
-                    Gender = e.Gender,
-                    Salary = e.Salary,
-                    IsActive = e.IsActive,
-                    CoverageStartDate = e.CoverageStartDate,
-                    NomineeName = e.NomineeName,
-                    NomineeRelationship = e.NomineeRelationship,
-                    NomineePhone = e.NomineePhone,
-                    CreatedAt = e.CreatedAt
-                })
-                .ToListAsync();
-
-            return Ok(employees);
+            try
+            {
+                int customerId = GetUserId();
+                var employees = await _employeeService.GetMyEmployeesAsync(customerId);
+                return Ok(employees);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while processing your request.", details = ex.Message });
+            }
         }
 
         // POST api/employee - Customer adds employee to their company
@@ -61,40 +51,20 @@ namespace API.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeDto dto)
         {
-            int customerId = GetUserId();
-
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-
-            if (company == null)
-                return BadRequest(new { message = "Please register your company first" });
-
-            // Check duplicate employee code
-            var exists = await _context.Employees
-                .AnyAsync(e => e.CompanyId == company.Id && e.EmployeeCode == dto.EmployeeCode);
-            if (exists)
-                return BadRequest(new { message = "Employee code already exists in your company" });
-
-            var employee = new Employee
+            try
             {
-                EmployeeCode = dto.EmployeeCode,
-                FullName = dto.FullName,
-                Email = dto.Email,
-                Gender = dto.Gender,
-                Salary = dto.Salary,
-                CompanyId = company.Id,
-                IsActive = true,
-                CoverageStartDate = dto.CoverageStartDate,
-                NomineeName = dto.NomineeName,
-                NomineeRelationship = dto.NomineeRelationship,
-                NomineePhone = dto.NomineePhone,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Employee added successfully", employeeId = employee.Id });
+                int customerId = GetUserId();
+                var employeeId = await _employeeService.AddEmployeeAsync(customerId, dto);
+                return Ok(new { message = "Employee added successfully", employeeId = employeeId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while processing your request.", details = ex.Message });
+            }
         }
 
         // PUT api/employee/{id} - Customer updates employee
@@ -102,30 +72,20 @@ namespace API.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDto dto)
         {
-            int customerId = GetUserId();
-
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-
-            if (company == null) return NotFound(new { message = "Company not found" });
-
-            var employee = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id && e.CompanyId == company.Id);
-
-            if (employee == null)
-                return NotFound(new { message = "Employee not found" });
-
-            employee.FullName = dto.FullName;
-            employee.Email = dto.Email;
-            employee.Gender = dto.Gender;
-            employee.Salary = dto.Salary;
-            employee.NomineeName = dto.NomineeName;
-            employee.NomineeRelationship = dto.NomineeRelationship;
-            employee.NomineePhone = dto.NomineePhone;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Employee updated successfully" });
+             try
+            {
+                int customerId = GetUserId();
+                await _employeeService.UpdateEmployeeAsync(customerId, id, dto);
+                return Ok(new { message = "Employee updated successfully" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while processing your request.", details = ex.Message });
+            }
         }
 
         // PUT api/employee/{id}/deactivate - Customer deactivates employee
@@ -133,23 +93,20 @@ namespace API.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> DeactivateEmployee(int id)
         {
-            int customerId = GetUserId();
-
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-
-            if (company == null) return NotFound(new { message = "Company not found" });
-
-            var employee = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id && e.CompanyId == company.Id);
-
-            if (employee == null)
-                return NotFound(new { message = "Employee not found" });
-
-            employee.IsActive = false;
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Employee deactivated" });
+             try
+            {
+                int customerId = GetUserId();
+                await _employeeService.DeactivateEmployeeAsync(customerId, id);
+                return Ok(new { message = "Employee deactivated" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while processing your request.", details = ex.Message });
+            }
         }
 
         private int GetUserId()

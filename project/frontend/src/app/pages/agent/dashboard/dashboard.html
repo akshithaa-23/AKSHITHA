@@ -1,0 +1,618 @@
+<!-- CorpSure Agent Dashboard — Matching Admin Dashboard Theme -->
+<div class="flex h-screen bg-gray-100 overflow-hidden">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+  <div class="w-72 bg-[#1a2b4a] flex flex-col flex-shrink-0 z-20">
+    <div class="px-6 py-5 border-b border-[#2a3f6a]">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-white font-bold text-lg">CorpSure</p>
+          <p class="text-gray-400 text-xs">Agent Portal</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+      <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider px-3 mb-3">Main</p>
+
+      <button (click)="navigate('dashboard')" [class]="activeSection==='dashboard' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+        </svg>
+        Dashboard
+      </button>
+
+      <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider px-3 mt-5 mb-3">Work</p>
+
+      <button (click)="navigate('requests')" [class]="(activeSection==='requests' || activeSection==='sendquote' || activeSection==='sendrecommendation') ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        My Requests
+      </button>
+
+      <button (click)="navigate('recommendations')" [class]="activeSection==='recommendations' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="11" y2="13" />
+          <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        </svg>
+        Recommendations
+      </button>
+
+      <button (click)="navigate('quotes')" [class]="activeSection==='quotes' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        Quotes
+      </button>
+
+      <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider px-3 mt-5 mb-3">Earnings</p>
+
+      <button (click)="navigate('commissions')" [class]="activeSection==='commissions' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        My Commissions
+      </button>
+    </nav>
+  </div>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <div class="flex-1 flex flex-col overflow-hidden relative">
+
+    <!-- Topbar exactly matching Admin -->
+    <header
+      class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center flex-shrink-0 z-10 sticky top-0 shadow-sm">
+      <div>
+        <h1 class="text-2xl font-bold text-[#1a2b4a]">
+          <ng-container [ngSwitch]="activeSection">
+            <span *ngSwitchCase="'dashboard'">Dashboard</span>
+            <span *ngSwitchCase="'requests'">My Requests</span>
+            <span *ngSwitchCase="'sendquote'">Send Quote</span>
+            <span *ngSwitchCase="'sendrecommendation'">Send Recommendation</span>
+            <span *ngSwitchCase="'quotes'">Quotes</span>
+            <span *ngSwitchCase="'recommendations'">Recommendations</span>
+            <span *ngSwitchCase="'commissions'">My Commissions</span>
+          </ng-container>
+        </h1>
+        <p class="text-gray-500 text-sm mt-0.5">
+          <ng-container [ngSwitch]="activeSection">
+            <span *ngSwitchCase="'dashboard'">Welcome back, {{fullName}}</span>
+            <span *ngSwitchCase="'requests'">Manage your assigned requests</span>
+            <span *ngSwitchCase="'sendquote'">For {{selectedRequest?.companyName}}</span>
+            <span *ngSwitchCase="'sendrecommendation'">For {{selectedRecRequest?.companyName}}</span>
+            <span *ngSwitchCase="'quotes'">Records of sent quotes</span>
+            <span *ngSwitchCase="'recommendations'">Records of sent recommendations</span>
+            <span *ngSwitchCase="'commissions'">Track your earnings</span>
+          </ng-container>
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Admin-style user badge -->
+        <div class="flex items-center gap-3 bg-[#1a2b4a] text-white px-4 py-2 rounded-lg">
+          <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center font-bold text-sm">
+            {{initials}}
+          </div>
+          <div>
+            <p class="font-semibold text-sm leading-tight">{{fullName}}</p>
+            <p class="text-gray-400 text-xs">Agent</p>
+          </div>
+        </div>
+
+        <button (click)="logout()"
+          class="flex items-center gap-2 border border-orange-400 text-orange-500 hover:bg-orange-50 px-4 py-2 rounded-lg text-sm font-medium transition"
+          title="Logout">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+          </svg>
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 relative scroll-smooth bg-gray-100">
+
+      <!-- ══ DASHBOARD ══════════════════════════════════════ -->
+      <div *ngIf="activeSection==='dashboard'" class="max-w-[1200px] mx-auto animate-fade-up">
+
+        <!-- Stat cards exactly as admin UI -->
+        <div class="grid grid-cols-4 gap-5 mb-8">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center flex flex-col items-center">
+            <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Assigned Customers</p>
+            <p class="text-3xl font-bold text-[#1a2b4a] mt-1">{{statCustomers()}}</p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center flex flex-col items-center">
+            <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Pending Requests</p>
+            <p class="text-3xl font-bold text-[#1a2b4a] mt-1">{{statPending()}}</p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center flex flex-col items-center">
+            <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </div>
+            <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Quotes Sent</p>
+            <p class="text-3xl font-bold text-[#1a2b4a] mt-1">{{statQuotesSent()}}</p>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center flex flex-col items-center">
+            <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Total Commission</p>
+            <p class="text-3xl font-bold text-orange-500 mt-1">{{formatCurrency(statCommission())}}</p>
+          </div>
+        </div>
+
+        <!-- Recent Requests table matching Admin standard -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+          <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+            <h2 class="font-bold text-[#1a2b4a]">Recent Requests</h2>
+            <button (click)="navigate('requests')" class="text-orange-500 text-sm font-medium hover:underline">View All
+              →</button>
+          </div>
+
+          <table *ngIf="!loadingRequests() && allRequests().length>0" class="w-full text-sm text-left">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Company</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Employees</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr *ngFor="let r of recentRequests()" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-medium text-[#1a2b4a]">{{r.companyName}}</td>
+                <td class="px-6 py-4 text-gray-500">{{r.numberOfEmployees}}</td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold" [class]="getTypeClass(r.requestType)">
+                    {{getDisplayType(r.requestType)}}
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold"
+                    [class]="getStatusClass(r.status, r.requestType)">{{getDisplayStatus(r.status,
+                    r.requestType)}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!loadingRequests() && allRequests().length===0" class="text-center py-10 text-gray-400 text-sm">No
+            recent requests found.</div>
+          <div *ngIf="loadingRequests()" class="text-center py-10 text-gray-400 text-sm">Loading...</div>
+        </div>
+      </div>
+
+
+      <!-- ══ MY REQUESTS ════════════════════════════════════ -->
+      <div *ngIf="activeSection==='requests'" class="max-w-[1200px] mx-auto animate-fade-up">
+
+        <div *ngIf="!loadingRequests() && activeRequests().length===0"
+          class="text-center py-20 bg-white border border-gray-100 rounded-xl">
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">📋
+          </div>
+          <h3 class="text-[#1a2b4a] font-bold text-lg mb-2">No assigned requests</h3>
+          <p class="text-gray-500 text-sm max-w-xs mx-auto">There are currently no active requests requiring your
+            action.</p>
+        </div>
+
+        <div *ngIf="!loadingRequests() && activeRequests().length>0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div *ngFor="let req of activeRequests()"
+            class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md transition">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="font-bold text-[#1a2b4a] text-lg">{{req.companyName}}</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold" [class]="getTypeClass(req.requestType)">
+                {{getDisplayType(req.requestType)}}
+              </span>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-6">Employees: <strong
+                class="text-[#1a2b4a]">{{req.numberOfEmployees}}</strong></p>
+
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold badge-pending">{{getDisplayStatus(req.status,
+                req.requestType)}}</span>
+
+              <ng-container>
+                <button *ngIf="req.requestType === 'DirectBuy' || req.requestType === 'Quote'"
+                  (click)="openSendQuote(req)"
+                  class="bg-orange-500 text-white hover:bg-orange-600 rounded-lg px-5 py-2 text-sm font-semibold transition">
+                  Send Quote
+                </button>
+
+                <button *ngIf="req.requestType === 'Recommendation'" (click)="openSendRecommendation(req)"
+                  class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg px-5 py-2 text-sm font-semibold transition">
+                  View Details
+                </button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SEND RECOMMENDATION (FULL PAGE FORM) ════════════ -->
+      <div *ngIf="activeSection==='sendrecommendation' && selectedRecRequest"
+        class="max-w-[700px] mx-auto animate-fade-up">
+
+        <div class="mb-4">
+          <button (click)="cancelRecommendation()"
+            class="text-gray-500 hover:text-[#1a2b4a] text-sm font-semibold flex items-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back to requests
+          </button>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+          <div class="flex justify-between items-start mb-6 pb-6 border-b border-gray-100">
+            <div>
+              <h2 class="text-xl font-bold text-[#1a2b4a] mb-1">Send Recommendation</h2>
+              <p class="text-gray-500 text-sm">For {{selectedRecRequest.companyName}}</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold badge-recommendation">Recommendation</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-6 mb-8 text-sm bg-gray-50 rounded-xl p-5 border border-gray-100">
+            <div>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">Employees</p>
+              <p class="font-semibold text-[#1a2b4a]">{{selectedRecRequest.numberOfEmployees}}</p>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">Suggested Policy Tier</p>
+              <p class="font-semibold text-blue-600">{{autoTierLabel}} Package</p>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-[#1a2b4a] mb-4">Underwriting Recommended Policies</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div *ngFor="let policy of autoRecommendedPolicies"
+                class="bg-white border-2 border-orange-100 rounded-xl p-5 shadow-sm text-center relative hover:border-orange-300 transition-colors">
+                <span
+                  class="absolute top-3 right-3 bg-green-50 text-green-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Selected</span>
+                <div
+                  class="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-3 text-orange-500">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <h4 class="font-bold text-[#1a2b4a] text-sm mb-1">{{policy.name}}</h4>
+                <div class="text-xs text-gray-500 mb-3 flex flex-col gap-1">
+                  <span>{{formatCurrency(policy.healthCoverage)}} Health</span>
+                  <span *ngIf="policy.lifeCoverageMultiplier">{{policy.lifeCoverageMultiplier}}x Life Cover</span>
+                  <span *ngIf="policy.accidentCoverage">{{formatCurrency(policy.accidentCoverage)}} Accident</span>
+                </div>
+                <p class="text-orange-500 font-extrabold text-lg">{{formatCurrency(policy.premiumPerEmployee)}}<span
+                    class="text-xs text-gray-400 font-normal">/emp</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label class="block text-sm font-bold text-[#1a2b4a] mb-3">Add a Note for the Customer</label>
+            <textarea [(ngModel)]="recommendationMessage" rows="5"
+              placeholder="Explain why these plans are the right fit..."
+              class="w-full bg-white border border-gray-300 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"></textarea>
+          </div>
+
+          <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
+            <button (click)="cancelRecommendation()"
+              class="px-6 py-2.5 rounded-lg text-sm font-semibold text-gray-600 border border-gray-300 hover:bg-gray-50 transition">Cancel</button>
+            <button (click)="submitRecommendation()" [disabled]="submittingRecommendation"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition disabled:opacity-60">
+              {{submittingRecommendation ? 'Processing...' : 'Send Recommendation '}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SEND QUOTE (FULL PAGE FORM) ═════════════════════ -->
+      <div *ngIf="activeSection==='sendquote' && selectedRequest" class="max-w-[700px] mx-auto animate-fade-up">
+
+        <div class="mb-4">
+          <button (click)="cancelSendQuote()"
+            class="text-gray-500 hover:text-[#1a2b4a] text-sm font-semibold flex items-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back to requests
+          </button>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+          <div class="flex justify-between items-start mb-8 pb-6 border-b border-gray-100">
+            <div>
+              <h2 class="text-xl font-bold text-[#1a2b4a] mb-1">Calculate & Send Quote</h2>
+              <p class="text-gray-500 text-sm">For {{selectedRequest.companyName}}</p>
+            </div>
+            <span
+              class="px-3 py-1 rounded-full text-xs font-semibold badge-quote">{{getDisplayType(selectedRequest.requestType)}}</span>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Select Policy Level</label>
+            <div class="relative">
+              <select [(ngModel)]="sendQuoteForm.policyId"
+                class="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 appearance-none shadow-sm cursor-pointer">
+                <option value="0" disabled>Choose a policy plan...</option>
+                <option *ngFor="let p of availablePolicies" [value]="p.id">{{p.name}} —
+                  {{formatCurrency(p.premiumPerEmployee)}} / emp</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Confirm Employee Count</label>
+            <input type="number" [(ngModel)]="sendQuoteForm.employeeCount" [min]="1"
+              class="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm" />
+            <p class="text-[11px] text-gray-500 mt-2 italic">Pre-filled from request, modify if changes were discussed.
+            </p>
+          </div>
+
+          <!-- Live Calculation Block -->
+          <div *ngIf="sendQuoteForm.policyId && sendQuoteForm.employeeCount > 0"
+            class="bg-orange-50 border border-orange-200 rounded-xl p-6 mb-8 transition-all">
+            <h3 class="text-[11px] font-bold text-orange-600 uppercase tracking-widest mb-4">Quote Summary</h3>
+
+            <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+              <span>Rate per employee</span>
+              <span class="font-semibold text-[#1a2b4a]">{{formatCurrency(estimatedQuotePremiumPerEmployee)}}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+              <span>Number of employees</span>
+              <span class="font-semibold text-[#1a2b4a]">× {{sendQuoteForm.employeeCount}}</span>
+            </div>
+
+            <div class="h-px bg-orange-200/60 my-4"></div>
+
+            <div class="flex justify-between items-end">
+              <span class="text-sm font-bold text-[#1a2b4a]">Total Annual Premium</span>
+              <span class="text-3xl font-bold text-orange-600">{{formatCurrency(estimatedQuotePremium)}}</span>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
+            <button (click)="cancelSendQuote()"
+              class="px-6 py-2.5 rounded-lg text-sm font-semibold text-gray-600 border border-gray-300 hover:bg-gray-50 transition">Cancel</button>
+            <button (click)="submitSendQuote()" [disabled]="submittingQuote"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold transition disabled:opacity-60">
+              {{submittingQuote ? 'Sending...' : 'Send Final Quote'}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ QUOTES (List View) ═══════════════════ -->
+      <div *ngIf="activeSection==='quotes'" class="max-w-[1200px] mx-auto animate-fade-up">
+
+        <div *ngIf="!loadingQuotes() && quotes().length===0"
+          class="text-center py-20 bg-white border border-gray-100 rounded-xl">
+          <div
+            class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-orange-500 text-3xl">
+            📄</div>
+          <h3 class="text-[#1a2b4a] font-bold text-lg mb-2">No quotes sent yet</h3>
+          <p class="text-gray-500 text-[14px]">Quotes you send will appear here as records.</p>
+        </div>
+
+        <div *ngIf="!loadingQuotes() && quotes().length>0" class="space-y-4">
+          <div *ngFor="let q of quotes()"
+            class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 hover:shadow-md transition">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h3 class="font-bold text-[#1a2b4a] text-[16px]">{{q.domain || 'Customer'}}</h3>
+                <span class="text-xs text-gray-400">{{formatDate(q.createdAt || q.sentAt)}}</span>
+              </div>
+              <div class="text-gray-500 text-sm mb-4">
+                <p class="mb-1"><strong class="font-semibold text-[#1a2b4a]">Policy:</strong> {{q.policyName ||
+                  'Requested Policy'}}</p>
+                <p><strong class="font-semibold text-[#1a2b4a]">Employees:</strong> {{q.employeeCount || 0}} calculated
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold"
+                  [class]="getStatusClass(q.status, 'Quote')">{{getDisplayStatus(q.status, 'Quote')}}</span>
+                <span class="text-[13px] font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Cost:
+                  {{formatCurrency(q.totalPremium)}}</span>
+              </div>
+            </div>
+            <div class="text-right sm:min-w-[150px]">
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Premium</p>
+              <p class="text-2xl font-bold text-orange-500">{{formatCurrency(q.totalPremium)}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ RECOMMENDATIONS (List View) ═══════════════════ -->
+      <div *ngIf="activeSection==='recommendations'" class="max-w-[1200px] mx-auto animate-fade-up">
+
+        <div *ngIf="!loadingRecommendations() && recommendations().length===0"
+          class="text-center py-20 bg-white border border-gray-100 rounded-xl">
+          <div
+            class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-orange-500 text-3xl">
+            📨</div>
+          <h3 class="text-[#1a2b4a] font-bold text-lg mb-2">No recommendations sent yet</h3>
+          <p class="text-gray-500 text-[14px]">Recommendations you send will appear here as records.</p>
+        </div>
+
+        <div *ngIf="!loadingRecommendations() && recommendations().length>0" class="space-y-4">
+          <div *ngFor="let rec of recommendations()"
+            class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-start gap-6 hover:shadow-md transition">
+            <div
+              class="w-12 h-12 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center text-gray-500 font-bold">
+              {{rec.companyName?.charAt(0)}}
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-[#1a2b4a] text-[16px]">{{rec.companyName}}</h3>
+                <span class="text-xs text-gray-400">{{formatDate(rec.createdAt)}}</span>
+              </div>
+              <p class="text-gray-500 text-sm mb-3">You recommended <strong
+                  class="text-[#1a2b4a]">{{rec.recommendedPolicies?.length || 3}} policies</strong> to the customer:</p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span *ngFor="let p of rec.recommendedPolicies || [1,2,3]"
+                  class="px-2.5 py-1 bg-blue-50 text-blue-600 border border-blue-100 rounded text-xs font-semibold flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {{p.name || (autoTierLabel + ' Core Health ' + (p===1?'Base':p===2?'Plus':'Pro'))}}
+                </span>
+              </div>
+
+              <div *ngIf="rec.agentMessage"
+                class="bg-gray-50 border border-gray-100 rounded-lg p-3 text-sm text-gray-600 italic font-medium mb-4 shadow-sm">
+                "{{rec.agentMessage}}"
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold badge-recommendation">Recommendation Sent</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MY COMMISSIONS ═════════════════════════════════ -->
+      <div *ngIf="activeSection==='commissions'" class="max-w-[1200px] mx-auto animate-fade-up">
+
+        <div class="grid grid-cols-4 gap-5 mb-8">
+          <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Total Earned</p>
+            <p class="text-3xl font-bold text-orange-500">{{formatCurrency(statCommission())}}</p>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Essential (5%)</p>
+            <p class="text-2xl font-bold text-[#1a2b4a]">{{formatCurrency(commEssential())}}</p>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Enhanced (7%)</p>
+            <p class="text-2xl font-bold text-[#1a2b4a]">{{formatCurrency(commEnhanced())}}</p>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Enterprise (10%)</p>
+            <p class="text-2xl font-bold text-[#1a2b4a]">{{formatCurrency(commEnterprise())}}</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+          <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="font-bold text-[#1a2b4a] text-[17px]">Commission History</h2>
+          </div>
+
+          <table *ngIf="!loadingCommissions() && commissions().length>0" class="w-full text-sm text-left">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Invoice
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Policy</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Rate</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Commission
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr *ngFor="let c of commissions()" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 text-gray-500 text-[12px] font-mono">{{c.invoiceNumber}}</td>
+                <td class="px-6 py-4 text-gray-600 font-medium">{{c.customerName}}</td>
+                <td class="px-6 py-4 text-gray-500">{{c.policyName}}</td>
+                <td class="px-6 py-4 font-bold text-[#1a2b4a]">{{formatCurrency(c.amountPaid)}}</td>
+                <td class="px-6 py-4 font-bold" [class]="getRateColor(c.commissionRate)">{{c.commissionRate}}%</td>
+                <td class="px-6 py-4 font-bold text-green-500">{{formatCurrency(c.commissionAmount)}}</td>
+                <td class="px-6 py-4 text-gray-500">{{formatDate(c.earnedAt)}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!loadingCommissions() && commissions().length===0"
+            class="text-center py-10 text-gray-400 text-sm">No
+            commissions earned yet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SUCCESS MODAL ════════════════════════════════════ -->
+  <div *ngIf="showSuccessModal" class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-8 w-full max-w-sm shadow-2xl text-center">
+      <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">
+        <svg fill="none" class="w-10 h-10 text-green-500" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <h2 class="text-xl font-extrabold text-[#1a2b4a] mb-3">{{successModalTitle}}</h2>
+      <p class="text-gray-500 text-sm leading-relaxed mb-7">{{successModalMessage}}</p>
+      <button (click)="closeSuccessModal()"
+        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl text-sm transition-colors">Got
+        it, take me back →</button>
+    </div>
+  </div>
+
+  <!-- ══ TOAST NOTIFICATIONS (Pip Style, Bottom-Center) ═════ -->
+  <div
+    class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[200] transition-all duration-300 pointer-events-none"
+    [class.opacity-0]="!showToast" [class.translate-y-4]="!showToast" [class.opacity-100]="showToast"
+    [class.translate-y-0]="showToast">
+    <div
+      class="px-5 py-3.5 rounded-xl text-white text-sm font-semibold shadow-2xl flex items-center gap-3 border-l-4 bg-[#1a2b4a] min-w-[280px] max-w-sm justify-center"
+      [class.border-l-green-500]="toastType==='success'" [class.border-l-red-500]="toastType==='error'">
+      <span class="block relative tracking-wide">{{toastMessage}}</span>
+    </div>
+  </div>
+
+</div>

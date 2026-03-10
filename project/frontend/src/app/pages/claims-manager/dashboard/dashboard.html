@@ -1,0 +1,569 @@
+<!-- CorpSure Claims Manager Dashboard — Matching System Theme -->
+<div class="flex h-screen bg-gray-100 overflow-hidden font-sans">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+  <div class="w-72 bg-[#1a2b4a] flex flex-col flex-shrink-0 z-20 shadow-xl">
+    <div class="px-6 py-5 border-b border-[#2a3f6a]">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-white font-bold text-lg font-sora leading-tight tracking-tight">CorpSure</p>
+          <p class="text-gray-400 text-[11px] font-medium tracking-wide">Claims Manager</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+      <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] px-3 mb-3 mt-2">Main</p>
+
+      <button (click)="navigate('dashboard')"
+        [class]="activeSection() === 'dashboard' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-medium text-sm shadow-sm transition' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] hover:text-white font-medium text-sm transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+        </svg>
+        Dashboard
+      </button>
+
+      <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.15em] px-3 mt-6 mb-3">Claims</p>
+
+      <button (click)="navigate('claim-requests')"
+        [class]="activeSection() === 'claim-requests' ?
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-medium text-sm shadow-sm transition' :
+          'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] hover:text-white font-medium text-sm transition'">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          <path d="M9 14h6"></path>
+          <path d="M9 10h6"></path>
+        </svg>
+        Claim Requests
+      </button>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-t border-[#2a3f6a] mt-auto">
+      <div class="flex items-center gap-3 px-2 py-2">
+        <div
+          class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+          {{initials()}}
+        </div>
+        <div class="truncate">
+          <p class="text-sm font-semibold text-white truncate">{{fullName()}}</p>
+          <p class="text-[11px] text-gray-400 truncate">Claims Manager</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <div class="flex-1 flex flex-col overflow-hidden relative">
+
+    <!-- Topbar -->
+    <header
+      class="bg-white border-b border-gray-200 px-8 py-5 flex justify-between items-center z-10 sticky top-0 shadow-sm">
+      <div>
+        <h1 class="text-2xl font-bold font-sora text-[#1a2b4a] tracking-tight">
+          <ng-container [ngSwitch]="activeSection()">
+            <span *ngSwitchCase="'dashboard'">Claims Dashboard</span>
+            <span *ngSwitchCase="'claim-requests'">Claim Requests</span>
+          </ng-container>
+        </h1>
+        <p class="text-gray-500 text-[14px] mt-1">
+          <ng-container [ngSwitch]="activeSection()">
+            <span *ngSwitchCase="'dashboard'">Overview of all insurance claims</span>
+            <span *ngSwitchCase="'claim-requests'">Review and process insurance claims</span>
+          </ng-container>
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm ring-2 ring-orange-100">
+            {{initials()}}
+          </div>
+          <div class="text-right">
+            <p class="text-[13px] font-bold text-[#1a2b4a] leading-tight">{{fullName()}}</p>
+            <p class="text-[11px] text-gray-500">Claims Manager</p>
+          </div>
+        </div>
+        <div class="w-px h-8 bg-gray-200 mx-1"></div>
+        <button (click)="logout()"
+          class="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-500 hover:bg-gray-50 border border-gray-200 hover:text-[#1a2b4a] text-sm font-semibold transition-colors"
+          title="Logout">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 relative scroll-smooth">
+
+      <!-- ══ LOADER (Global) ══════════════════════════════════ -->
+      <div *ngIf="loading()" class="absolute inset-0 z-50 bg-gray-100/50 flex flex-col items-center justify-center">
+        <div class="w-8 h-8 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>
+        <p class="mt-4 text-sm font-semibold text-gray-500">Loading claims data...</p>
+      </div>
+
+      <!-- ══ DASHBOARD TAB ════════════════════════════════════ -->
+      <div *ngIf="activeSection() === 'dashboard'" class="max-w-[1400px] mx-auto animate-fade-up">
+
+        <!-- Stat cards -->
+        <div class="grid grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1.5">Total
+                  Claims</p>
+                <p class="text-3xl font-bold font-sora text-[#1a2b4a] leading-none">{{totalClaims()}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1.5">Pending</p>
+                <p class="text-3xl font-bold font-sora text-[#1a2b4a] leading-none">{{pendingClaims()}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1.5">Approved
+                </p>
+                <p class="text-3xl font-bold font-sora text-[#1a2b4a] leading-none">{{approvedClaims()}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="15" y1="9" x2="9" y2="15"></line>
+                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1.5">Rejected
+                </p>
+                <p class="text-3xl font-bold font-sora text-[#1a2b4a] leading-none">{{rejectedClaims()}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Claims Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-white">
+            <h2 class="font-bold font-sora text-[17px] text-[#1a2b4a]">Recent Claims</h2>
+            <button (click)="navigate('claim-requests')"
+              class="text-sm font-semibold text-orange-500 hover:text-orange-600">View All &rarr;</button>
+          </div>
+
+          <table *ngIf="recentClaims().length > 0" class="w-full text-sm text-left whitespace-nowrap">
+            <thead class="bg-white">
+              <tr class="border-b border-gray-100">
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Claim ID</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Company Name</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Employee Name</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Type of Claim</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Status</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest text-right">Action
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50 bg-white">
+              <tr *ngFor="let c of recentClaims().slice(0, 10)" class="hover:bg-gray-50/50 transition-colors group">
+                <td class="px-8 py-5 text-gray-500 font-medium">{{c.displayId}}</td>
+                <td class="px-8 py-5 text-gray-500">{{c.companyName}}</td>
+                <td class="px-8 py-5">
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm"
+                      [style.backgroundColor]="c.avatarColor">
+                      {{c.avatarInitials}}
+                    </div>
+                    <span class="font-semibold text-[#1a2b4a]">{{c.employeeName}}</span>
+                  </div>
+                </td>
+                <td class="px-8 py-5 text-gray-500">{{c.claimType || 'General'}}</td>
+                <td class="px-8 py-5">
+                  <span
+                    class="px-3 py-1 rounded-full text-xs font-bold leading-none inline-flex items-center justify-center"
+                    [class]="c.statusClass">
+                    {{c.status}}
+                  </span>
+                </td>
+                <td class="px-8 py-5 text-right w-32">
+                  <button *ngIf="c.status === 'Pending'" (click)="openReview(c)"
+                    class="px-4 py-2 bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white rounded-lg text-xs font-bold transition">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="!loading() && recentClaims().length === 0" class="text-center py-20 px-8">
+            <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-[#1a2b4a] font-bold text-lg mb-1">No claims found</h3>
+            <p class="text-gray-500 text-sm">There are no claims recorded in the system yet.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ ALL CLAIMS TAB ═══════════════════════════════════ -->
+      <div *ngIf="activeSection() === 'claim-requests'"
+        class="max-w-[1400px] mx-auto animate-fade-up flex flex-col h-full">
+
+        <div class="flex items-center gap-2 mb-6">
+          <button *ngFor="let tab of ['ALL', 'Pending', 'Approved', 'Rejected']" (click)="setFilter(tab)"
+            [class]="filterStatus() === tab ?
+              'px-5 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-bold shadow-sm transition' :
+              'px-5 py-2.5 bg-white text-gray-500 border border-gray-200 hover:text-[#1a2b4a] rounded-lg text-sm font-semibold transition'">
+            {{tab}}
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 flex-1 flex flex-col min-h-0 relative">
+
+          <div class="overflow-y-auto flex-1">
+            <table *ngIf="filteredClaims().length > 0" class="w-full text-sm text-left whitespace-nowrap">
+              <thead class="bg-white sticky top-0 z-10 shadow-sm">
+                <tr class="border-b border-gray-100">
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Claim ID</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Company Name</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Employee Name</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Type of Claim</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Status</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest text-right">Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-50 bg-white">
+                <tr *ngFor="let c of filteredClaims()" class="hover:bg-gray-50/50 transition-colors group">
+                  <td class="px-8 py-5 text-gray-500 font-medium">{{c.displayId}}</td>
+                  <td class="px-8 py-5 text-gray-500">{{c.companyName}}</td>
+                  <td class="px-8 py-5">
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm ring-2 ring-white"
+                        [style.backgroundColor]="c.avatarColor">
+                        {{c.avatarInitials}}
+                      </div>
+                      <span class="font-semibold text-[#1a2b4a]">{{c.employeeName}}</span>
+                    </div>
+                  </td>
+                  <td class="px-8 py-5 text-gray-500">{{c.claimType || 'General'}}</td>
+                  <td class="px-8 py-5 border-gray-100">
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold leading-none inline-flex items-center justify-center"
+                      [class]="c.statusClass">
+                      {{c.status}}
+                    </span>
+                  </td>
+                  <td class="px-8 py-5 text-right w-32">
+                    <button *ngIf="c.status === 'Pending'" (click)="openReview(c)"
+                      class="px-4 py-2 bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white rounded-lg text-xs font-bold transition">
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div *ngIf="!loading() && filteredClaims().length === 0"
+              class="text-center py-32 px-8 flex flex-col items-center justify-center">
+              <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-[#1a2b4a] font-bold text-lg mb-1">No claims in this category</h3>
+              <p class="text-gray-500 text-sm">Update the filter to see other claims.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ REVIEW CLAIM MODAL (Tailwind Only) ═════════════════ -->
+    <div *ngIf="selectedClaim()" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="closeModal()"></div>
+
+      <div
+        class="relative w-full max-w-[560px] bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-fade-in-up">
+
+        <!-- Header -->
+        <div
+          class="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10 shrink-0">
+          <h2 class="text-xl font-bold font-sora text-[#1a2b4a]">Review Claim <span
+              class="text-gray-400 font-medium ml-1">{{selectedClaim()!.displayId}}</span></h2>
+          <button (click)="closeModal()"
+            class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-8 overflow-y-auto">
+
+          <div class="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+            <div>
+              <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Employee</p>
+              <p class="text-[15px] font-semibold text-[#1a2b4a]">{{selectedClaim()!.employeeName}}</p>
+            </div>
+            <div>
+              <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Company</p>
+              <p class="text-[15px] font-semibold text-[#1a2b4a]">{{selectedClaim()!.companyName}}</p>
+            </div>
+
+            <div>
+              <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Claim Type</p>
+              <p class="text-[15px] font-semibold text-[#1a2b4a]">{{selectedClaim()!.claimType || 'General'}}</p>
+            </div>
+            <div>
+              <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Amount</p>
+              <p class="text-[15px] font-bold text-orange-600">{{selectedClaim()!.displayAmount}}</p>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-8" *ngIf="selectedClaim()!.description">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-2">Description</p>
+            <div
+              class="bg-gray-50 border border-gray-100 rounded-lg p-4 text-sm text-gray-600 leading-relaxed shadow-sm">
+              {{selectedClaim()!.description}}
+            </div>
+          </div>
+
+          <!-- Extra Employee Details if present -->
+          <div class="mb-8 p-5 bg-gray-50 rounded-xl border border-gray-100 shadow-sm"
+            *ngIf="selectedClaim()!.salary || selectedClaim()!.department || selectedClaim()!.nomineeDetails || selectedClaim()!.accidentType">
+            <p class="text-[11px] text-[#1a2b4a] font-bold uppercase tracking-widest mb-3">Employee Details</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex" *ngIf="selectedClaim()!.department">
+                <span class="w-1/3 text-gray-500">Department:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.department}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.salary">
+                <span class="w-1/3 text-gray-500">Salary:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatCurrency(selectedClaim()!.salary!)}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.nomineeDetails">
+                <span class="w-1/3 text-gray-500">Nominee:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.nomineeDetails}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.accidentType">
+                <span class="w-1/3 text-gray-500">Accident details:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.accidentType}}
+                  {{selectedClaim()!.accidentPercentage ? '(' + selectedClaim()!.accidentPercentage + '%)' : ''}}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents -->
+          <div class="mb-8" *ngIf="selectedClaim()!.documentUrl">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-2">Attached Document</p>
+            <div class="flex flex-wrap gap-2">
+              <a [href]="selectedClaim()!.documentUrl" target="_blank"
+                class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-[#1a2b4a] hover:bg-gray-50 hover:border-gray-300 cursor-pointer transition shadow-sm">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                View Uploaded Document
+              </a>
+            </div>
+          </div>
+
+          <div class="mb-6 flex items-center justify-between border-t border-gray-100 pt-6">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">Current Status</p>
+            <span class="px-3 py-1 rounded-full text-xs font-bold leading-none" [class]="selectedClaim()!.statusClass">
+              {{selectedClaim()!.status}}
+            </span>
+          </div>
+
+          <!-- Message box -->
+          <div class="mb-2">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-2">Message to Customer</p>
+            <textarea [(ngModel)]="managerMessage" rows="4" placeholder="Add remarks or reason for your decision..."
+              class="w-full bg-white border border-gray-200 rounded-xl p-4 text-sm text-[#1a2b4a] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-shadow resize-none shadow-sm placeholder:text-gray-400"
+              [class.border-red-300]="validationError()"></textarea>
+            <p *ngIf="validationError()" class="text-xs text-red-500 font-semibold mt-2 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              {{validationError()}}
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="px-8 py-5 border-t border-gray-100 bg-gray-50 grid grid-cols-2 gap-4 shrink-0">
+          <button (click)="confirmProcess('Approved')" [disabled]="submitting()"
+            class="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 disabled:opacity-60 shadow-sm">
+            <svg *ngIf="!submitting()" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 8v8"></path>
+              <path d="M8 12h8"></path>
+            </svg>
+            <div *ngIf="submitting()"
+              class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Approve
+          </button>
+          <button (click)="confirmProcess('Rejected')" [disabled]="submitting()"
+            class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 disabled:opacity-60 shadow-sm">
+            <svg *ngIf="!submitting()" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <div *ngIf="submitting()"
+              class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ══ CONFIRMATION MODAL ════════════════════════════════ -->
+    <div *ngIf="showConfirmModal()" class="fixed inset-0 z-[150] flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="cancelProcess()"></div>
+      <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center animate-fade-in-up">
+
+        <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
+          [class.bg-orange-100]="confirmAction() === 'Approved'"
+          [class.text-orange-600]="confirmAction() === 'Approved'" [class.bg-red-100]="confirmAction() === 'Rejected'"
+          [class.text-red-600]="confirmAction() === 'Rejected'">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-bold text-[#1a2b4a] font-sora mb-2">Confirm Action</h3>
+        <p class="text-gray-500 text-sm mb-8 px-2">Are you sure you want to <strong>{{confirmAction()}}</strong> this
+          claim?</p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <button (click)="cancelProcess()" [disabled]="submitting()"
+            class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition shadow-sm">
+            Cancel
+          </button>
+          <button (click)="executeProcess()" [disabled]="submitting()"
+            class="px-4 py-3 text-white font-bold rounded-xl transition shadow-sm flex items-center justify-center gap-2"
+            [class.bg-orange-500]="confirmAction() === 'Approved'"
+            [class.hover:bg-orange-600]="confirmAction() === 'Approved'"
+            [class.bg-red-500]="confirmAction() === 'Rejected'"
+            [class.hover:bg-red-600]="confirmAction() === 'Rejected'">
+            <div *ngIf="submitting()"
+              class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SUCCESS MODAL ═════════════════════════════════════ -->
+    <div *ngIf="showSuccessModal()" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
+      <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-8 text-center animate-fade-in-up">
+
+        <div class="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center border-4"
+          [class.bg-green-100]="confirmAction() === 'Approved'" [class.border-green-50]="confirmAction() === 'Approved'"
+          [class.text-green-500]="confirmAction() === 'Approved'" [class.bg-red-100]="confirmAction() === 'Rejected'"
+          [class.border-red-50]="confirmAction() === 'Rejected'" [class.text-red-500]="confirmAction() === 'Rejected'">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"
+              *ngIf="confirmAction() === 'Approved'" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"
+              *ngIf="confirmAction() === 'Rejected'" />
+          </svg>
+        </div>
+
+        <h3 class="text-2xl font-bold text-[#1a2b4a] font-sora mb-2">Claim {{confirmAction()}}!</h3>
+        <p class="text-gray-500 text-sm mb-8 px-4">
+          The claim has been successfully {{confirmAction() | lowercase}}. The status has been updated.
+        </p>
+
+        <button (click)="dismissSuccess()"
+          class="w-full px-4 py-3.5 bg-[#1a2b4a] hover:bg-[#2a3f6a] text-white font-bold rounded-xl transition shadow-sm">
+          Return to Dashboard
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ PIP TOAST (Bottom-Right aligned style per reference) ══ -->
+  <div class="fixed bottom-8 right-8 z-[200] transition-all duration-300 pointer-events-none"
+    [class.opacity-0]="!showToast()" [class.translate-y-4]="!showToast()" [class.opacity-100]="showToast()"
+    [class.translate-y-0]="showToast()">
+
+    <div
+      class="bg-white rounded-xl shadow-2xl border border-gray-100 border-l-[5px] p-5 min-w-[320px] max-w-sm flex flex-col gap-1"
+      [class.border-l-green-500]="toastType() === 'success'" [class.border-l-red-500]="toastType() === 'error'">
+      <span class="block font-bold text-[#1a2b4a] text-[15px]">{{toastTitle()}}</span>
+      <span class="block text-[13px] text-gray-500 font-medium tracking-wide">{{toastMessage()}}</span>
+    </div>
+
+  </div>
+
+</div>

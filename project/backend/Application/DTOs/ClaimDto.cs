@@ -13,6 +13,7 @@ namespace Application.DTOs
     {
         public int EmployeeId { get; set; }
         public decimal RequestedAmount { get; set; }   // must be <= HealthCoverageRemaining
+        public string? DocumentUrl { get; set; }
     }
 
     // Customer raises a TermLife claim (amount auto-calculated from salary × multiplier, capped)
@@ -20,6 +21,7 @@ namespace Application.DTOs
     {
         public int EmployeeId { get; set; }
         // No amount — backend calculates: salary × lifeCoverageMultiplier, capped at maxLifeCoverageLimit
+        public string? DocumentUrl { get; set; }
     }
 
     // Customer raises an Accident claim
@@ -28,6 +30,7 @@ namespace Application.DTOs
         public int EmployeeId { get; set; }
         public string AccidentType { get; set; } = string.Empty;  // "Complete" | "Partial"
         public decimal? AccidentPercentage { get; set; }           // only if Partial (0-100)
+        public string? DocumentUrl { get; set; }
     }
 
     // Claims Manager: approve or reject a claim
@@ -48,6 +51,7 @@ namespace Application.DTOs
         public decimal? AccidentPercentage { get; set; }
         public string Status { get; set; } = string.Empty;
         public string? ClaimsManagerNote { get; set; }
+        public string? DocumentUrl { get; set; }
 
         // Employee info
         public int EmployeeId { get; set; }

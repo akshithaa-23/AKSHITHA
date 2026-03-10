@@ -293,6 +293,38 @@
         }
       }
     },
+    "/api/Claim/upload-document": {
+      "post": {
+        "tags": [
+          "Claim"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Company/my": {
       "get": {
         "tags": [
@@ -804,7 +836,7 @@
         }
       }
     },
-    "/api/QuoteRequest/my": {
+    "/api/QuoteRequest/customer": {
       "get": {
         "tags": [
           "QuoteRequest"
@@ -871,7 +903,7 @@
         }
       }
     },
-    "/api/Recommendation/my": {
+    "/api/Recommendation/customer": {
       "get": {
         "tags": [
           "Recommendation"
@@ -1160,6 +1192,10 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          },
+          "documentUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1174,6 +1210,10 @@
           "requestedAmount": {
             "type": "number",
             "format": "double"
+          },
+          "documentUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1184,6 +1224,10 @@
           "employeeId": {
             "type": "integer",
             "format": "int32"
+          },
+          "documentUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -31,6 +31,8 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? ProcessedAt { get; set; }
 
+        public string? DocumentUrl { get; set; }
+
         // Navigation
         public CompanyPolicy CompanyPolicy { get; set; } = null!;
         public Employee Employee { get; set; } = null!;

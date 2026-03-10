@@ -1,9 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : DbContext, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -173,7 +174,7 @@ namespace Infrastructure.Data
                 Id = 1,
                 FullName = "System Admin",
                 Email = "admin@groupinsurance.com",
-                PasswordHash = "$2a$11$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.",
+                PasswordHash = "$2a$11$UUu/cFfejo9bEL/Z00yDwO3lHVu6kaoAOd.ybxnANFItUiMAG1xvO",
                 Role = Domain.Enums.UserRole.Admin,
                 IsActive = true,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)

@@ -1,11 +1,15 @@
 using Infrastructure.Data;
 using Infrastructure.Security;
+using Application.Interfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using BCrypt.Net;
+using API.Middleware;
+
 namespace API
 {
     public class Program
@@ -47,7 +51,19 @@ namespace API
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
+
             builder.Services.AddScoped<JwtTokenService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IPolicyService, PolicyService>();
+            builder.Services.AddScoped<ICompanyService, CompanyService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IQuoteService, QuoteService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IClaimService, ClaimService>();
+            builder.Services.AddScoped<IQuoteRequestService, QuoteRequestService>();
+            builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 
             builder.Services.AddCors(options =>
             {
@@ -77,6 +93,9 @@ namespace API
 
             builder.Services.AddAuthorization();
 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -85,16 +104,14 @@ namespace API
                 app.UseSwaggerUI();
             }
 
+            app.UseExceptionHandler();
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseCors("AllowAngular");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
 
-
-
-
-            //Console.WriteLine(BCrypt.Net.BCrypt.HashPassword("Admin@123"));
             app.Run();
         }
     }

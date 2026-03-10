@@ -167,6 +167,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.ClaimController",
+    "Method": "UploadClaimDocument",
+    "RelativePath": "api/Claim/upload-document",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.CompanyController",
     "Method": "GetAll",
     "RelativePath": "api/Company/all",
@@ -484,6 +500,16 @@
   },
   {
     "ContainingType": "API.Controllers.QuoteRequestController",
+    "Method": "GetMyRequests",
+    "RelativePath": "api/QuoteRequest/customer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.QuoteRequestController",
     "Method": "DirectBuy",
     "RelativePath": "api/QuoteRequest/direct-buy",
     "HttpMethod": "POST",
@@ -496,16 +522,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.QuoteRequestController",
-    "Method": "GetMyRequests",
-    "RelativePath": "api/QuoteRequest/my",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -553,7 +569,7 @@
   {
     "ContainingType": "API.Controllers.RecommendationController",
     "Method": "GetMyRecommendations",
-    "RelativePath": "api/Recommendation/my",
+    "RelativePath": "api/Recommendation/customer",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
