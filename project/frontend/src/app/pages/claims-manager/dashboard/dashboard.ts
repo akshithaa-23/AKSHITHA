@@ -197,12 +197,19 @@ export class Dashboard implements OnInit {
   }
 
   formatCurrency(val: number): string {
-    if (!val && val !== 0) return '₹0';
-    return '₹' + val.toLocaleString('en-IN');
+    if (!val && val !== 0) return 'INR 0';
+    return 'INR ' + val.toLocaleString('en-IN');
+  }
+
+  getOrdinal(n?: number): string {
+    if (!n) return '';
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
   }
 
   formatDate(d?: string): string {
-    if (!d) return '—';
+    if (!d) return '-';
     return new Date(d).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 

@@ -46,7 +46,7 @@ export class Dashboard implements OnInit {
     total: 0
   };
 
-  // Register User form (moved inline — no separate route)
+  // Register User form (moved inline - no separate route)
   registerForm = { fullName: '', email: '', password: '', role: 'Agent' };
   registerLoading = false;
   registerError = '';
@@ -90,7 +90,7 @@ export class Dashboard implements OnInit {
     this.loadClaims();
   }
 
-  // ── NAVIGATION ─────────────────────────────────────────────────
+  //  NAVIGATION 
 
   setMenu(menu: string) {
     this.activeMenu = menu;
@@ -104,7 +104,7 @@ export class Dashboard implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // ── USERS ──────────────────────────────────────────────────────
+  //  USERS 
 
   loadUsers() {
     this.adminService.getUsers().subscribe({
@@ -146,7 +146,7 @@ export class Dashboard implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // ── REGISTER USER (inline, no separate route) ──────────────────
+  //  REGISTER USER (inline, no separate route) 
 
   onRegisterUser() {
     this.registerError = '';
@@ -174,7 +174,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  // ── POLICIES ────────────────────────────────────────────────────
+  //  POLICIES 
 
   loadPolicies() {
     this.policyService.getAllPolicies().subscribe({
@@ -279,7 +279,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  // ── COMPANIES & AGENTS ─────────────────────────────────────────
+  //  COMPANIES & AGENTS 
 
   loadCompanies() {
     this.companyService.getAllCompanies().subscribe({
@@ -292,7 +292,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  // ── CLAIMS ─────────────────────────────────────────────────────
+  //  CLAIMS 
 
   loadClaims() {
     this.claimService.getAllClaims().subscribe({
@@ -318,7 +318,7 @@ export class Dashboard implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // ── SUCCESS POPUP ──────────────────────────────────────────────
+  //  SUCCESS POPUP 
 
   showPopup(msg: string) {
     this.successPopupMessage = msg;
@@ -339,7 +339,7 @@ export class Dashboard implements OnInit {
     }, 2000);
   }
 
-  // ── HELPERS ────────────────────────────────────────────────────
+  //  HELPERS 
 
   getInitials(name: string): string {
     if (!name) return '?';
@@ -373,11 +373,11 @@ export class Dashboard implements OnInit {
 
   formatCurrency(val: number | null | undefined): string {
     if (val == null) return 'N/A';
-    return '₹' + val.toLocaleString('en-IN');
+    return 'INR ' + val.toLocaleString('en-IN');
   }
 
   getExpiryDate(d: string | Date | undefined | null): string {
-    if (!d) return '—';
+    if (!d) return '-';
     const date = new Date(d);
     date.setFullYear(date.getFullYear() + 1);
     return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });

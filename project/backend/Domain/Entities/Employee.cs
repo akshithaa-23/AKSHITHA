@@ -12,6 +12,9 @@
         public bool IsActive { get; set; } = true;
         public DateTime CoverageStartDate { get; set; } = DateTime.UtcNow;
 
+        public DateTime DateOfBirth { get; set; }
+        public DateTime EmployeeJoinDate { get; set; }
+
         // Nominee info
         public string NomineeName { get; set; } = string.Empty;
         public string NomineeRelationship { get; set; } = string.Empty;

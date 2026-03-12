@@ -872,6 +872,18 @@
         }
       }
     },
+    "/api/QuoteRequest/debug/latest": {
+      "get": {
+        "tags": [
+          "QuoteRequest"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Recommendation": {
       "post": {
         "tags": [
@@ -1007,6 +1019,14 @@
           "coverageStartDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "employeeJoinDate": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1075,6 +1095,14 @@
             "format": "int32"
           },
           "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "locationCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "customIndustry": {
             "type": "string",
             "nullable": true
           },
@@ -1162,6 +1190,14 @@
             "type": "string",
             "nullable": true
           },
+          "locationCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "customIndustry": {
+            "type": "string",
+            "nullable": true
+          },
           "contactName": {
             "type": "string",
             "nullable": true
@@ -1193,7 +1229,15 @@
             "format": "double",
             "nullable": true
           },
-          "documentUrl": {
+          "accidentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "firDocumentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "hospitalReportUrl": {
             "type": "string",
             "nullable": true
           }
@@ -1224,6 +1268,18 @@
           "employeeId": {
             "type": "integer",
             "format": "int32"
+          },
+          "causeOfDeath": {
+            "type": "string",
+            "nullable": true
+          },
+          "causeOfDeathDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfDeath": {
+            "type": "string",
+            "format": "date-time"
           },
           "documentUrl": {
             "type": "string",

@@ -83,6 +83,10 @@ namespace Infrastructure.Data
             // QuoteRequest
             modelBuilder.Entity<QuoteRequest>(entity =>
             {
+                entity.Property(q => q.IndustryFactor).HasPrecision(18, 4);
+                entity.Property(q => q.GeographyFactor).HasPrecision(18, 4);
+                entity.Property(q => q.PlanRiskFactor).HasPrecision(18, 4);
+
                 entity.HasOne(q => q.Customer).WithMany()
                       .HasForeignKey(q => q.CustomerId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(q => q.AssignedAgent).WithMany()
@@ -117,6 +121,10 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Quote>(entity =>
             {
                 entity.Property(q => q.PremiumPerEmployee).HasPrecision(18, 2);
+                entity.Property(q => q.BaseQuote).HasPrecision(18, 2);
+                entity.Property(q => q.IndustryFactor).HasPrecision(18, 4);
+                entity.Property(q => q.GeographyFactor).HasPrecision(18, 4);
+                entity.Property(q => q.PlanRiskFactor).HasPrecision(18, 4);
                 entity.Property(q => q.TotalPremium).HasPrecision(18, 2);
                 entity.HasOne(q => q.Agent).WithMany()
                       .HasForeignKey(q => q.AgentId).OnDelete(DeleteBehavior.Restrict);

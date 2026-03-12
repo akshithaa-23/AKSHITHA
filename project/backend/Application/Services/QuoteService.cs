@@ -12,10 +12,12 @@ namespace Application.Services
     public class QuoteService : IQuoteService
     {
         private readonly IAppDbContext _context;
+        private readonly IPremiumCalculationService _premiumCalculationService;
 
-        public QuoteService(IAppDbContext context)
+        public QuoteService(IAppDbContext context, IPremiumCalculationService premiumCalculationService)
         {
             _context = context;
+            _premiumCalculationService = premiumCalculationService;
         }
 
         public async Task<object> SendQuoteAsync(int agentId, SendQuoteDto dto)
@@ -34,7 +36,13 @@ namespace Application.Services
             if (dto.EmployeeCount < policy.MinEmployees)
                 throw new ArgumentException($"Minimum {policy.MinEmployees} employees required for this policy");
 
-            decimal totalPremium = dto.EmployeeCount * policy.PremiumPerEmployee;
+            decimal baseQuote = dto.EmployeeCount * policy.PremiumPerEmployee;
+            decimal industryFactor = quoteRequest.IndustryFactor ?? 1.00m;
+            decimal geographyFactor = quoteRequest.GeographyFactor ?? 1.00m;
+            decimal planRiskFactor = _premiumCalculationService.GetPlanRiskFactor(dto.PolicyId);
+            decimal totalPremium = baseQuote * industryFactor * geographyFactor * planRiskFactor;
+
+            quoteRequest.PlanRiskFactor = planRiskFactor;
 
             var quote = new Quote
             {
@@ -44,6 +52,10 @@ namespace Application.Services
                 PolicyId = dto.PolicyId,
                 EmployeeCount = dto.EmployeeCount,
                 PremiumPerEmployee = policy.PremiumPerEmployee,
+                BaseQuote = baseQuote,
+                IndustryFactor = industryFactor,
+                GeographyFactor = geographyFactor,
+                PlanRiskFactor = planRiskFactor,
                 TotalPremium = totalPremium,
                 Status = "Pending",
                 ValidUntil = DateTime.UtcNow.AddDays(30),
@@ -61,7 +73,17 @@ namespace Application.Services
                 message = "Quote sent successfully",
                 quoteId = quote.Id,
                 totalPremium,
-                validUntil = quote.ValidUntil
+                validUntil = quote.ValidUntil,
+                breakdown = new PremiumBreakdownDto
+                {
+                    PerEmployeePremium = policy.PremiumPerEmployee,
+                    EmployeeCount = dto.EmployeeCount,
+                    BaseQuote = baseQuote,
+                    IndustryMultiplier = industryFactor,
+                    GeographyMultiplier = geographyFactor,
+                    PlanMultiplier = planRiskFactor,
+                    FinalPremium = totalPremium
+                }
             };
         }
 
@@ -81,7 +103,21 @@ namespace Application.Services
                     PolicyName = q.Policy.Name,
                     EmployeeCount = q.EmployeeCount,
                     PremiumPerEmployee = q.PremiumPerEmployee,
+                    BaseQuote = q.BaseQuote,
+                    IndustryFactor = q.IndustryFactor,
+                    GeographyFactor = q.GeographyFactor,
+                    PlanRiskFactor = q.PlanRiskFactor,
                     TotalPremium = q.TotalPremium,
+                    Breakdown = new PremiumBreakdownDto
+                    {
+                        PerEmployeePremium = q.PremiumPerEmployee,
+                        EmployeeCount = q.EmployeeCount,
+                        BaseQuote = q.BaseQuote,
+                        IndustryMultiplier = q.IndustryFactor,
+                        GeographyMultiplier = q.GeographyFactor,
+                        PlanMultiplier = q.PlanRiskFactor,
+                        FinalPremium = q.TotalPremium
+                    },
                     Status = q.Status,
                     AgentName = q.Agent.FullName,
                     ValidUntil = q.ValidUntil,
@@ -106,7 +142,21 @@ namespace Application.Services
                     PolicyName = q.Policy.Name,
                     EmployeeCount = q.EmployeeCount,
                     PremiumPerEmployee = q.PremiumPerEmployee,
+                    BaseQuote = q.BaseQuote,
+                    IndustryFactor = q.IndustryFactor,
+                    GeographyFactor = q.GeographyFactor,
+                    PlanRiskFactor = q.PlanRiskFactor,
                     TotalPremium = q.TotalPremium,
+                    Breakdown = new PremiumBreakdownDto
+                    {
+                        PerEmployeePremium = q.PremiumPerEmployee,
+                        EmployeeCount = q.EmployeeCount,
+                        BaseQuote = q.BaseQuote,
+                        IndustryMultiplier = q.IndustryFactor,
+                        GeographyMultiplier = q.GeographyFactor,
+                        PlanMultiplier = q.PlanRiskFactor,
+                        FinalPremium = q.TotalPremium
+                    },
                     Status = q.Status,
                     AgentName = q.Customer.FullName,
                     ValidUntil = q.ValidUntil,

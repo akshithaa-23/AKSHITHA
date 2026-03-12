@@ -219,7 +219,7 @@ export class Dashboard implements OnInit {
         this.openSuccessModal('Quote Sent Successfully!', `The quote has been sent to ${companyName}.`);
       },
       error: err => {
-        this.showToastMsg(err?.error?.message || '✕ Failed to send. Please try again.', 'error');
+        this.showToastMsg(err?.error?.message || ' Failed to send. Please try again.', 'error');
         this.submittingQuote = false;
         this.cdr.markForCheck();
       },
@@ -239,7 +239,26 @@ export class Dashboard implements OnInit {
   get estimatedQuotePremium(): number {
     const policy = this.availablePolicies.find(p => p.id === +this.sendQuoteForm.policyId);
     if (!policy || !this.sendQuoteForm.employeeCount) return 0;
-    return policy.premiumPerEmployee * this.sendQuoteForm.employeeCount;
+    const baseQuote = policy.premiumPerEmployee * this.sendQuoteForm.employeeCount;
+    const indFactor = this.selectedRequest?.industryRiskFactor || 1;
+    const geoFactor = this.selectedRequest?.geographyRiskFactor || 1;
+    const planFactor = this.getPlanRiskFactor(policy.id);
+    return baseQuote * indFactor * geoFactor * planFactor;
+  }
+
+  getPlanRiskFactor(policyId: number): number {
+    switch (policyId) {
+      case 1: return 1.00; // Essential Base
+      case 2: return 1.05; // Essential Plus
+      case 3: return 1.10; // Essential Pro
+      case 4: return 1.03; // Enhanced Base
+      case 5: return 1.08; // Enhanced Plus
+      case 6: return 1.13; // Enhanced Pro
+      case 7: return 1.05; // Enterprise Base
+      case 8: return 1.10; // Enterprise Plus
+      case 9: return 1.15; // Enterprise Pro
+      default: return 1.00;
+    }
   }
 
   get estimatedQuotePremiumPerEmployee(): number {
@@ -289,7 +308,7 @@ export class Dashboard implements OnInit {
         this.openSuccessModal('Recommendation Sent!', `The recommendation has been sent to ${companyName}.`);
       },
       error: err => {
-        this.showToastMsg(err?.error?.message || '✕ Failed to send. Please try again.', 'error');
+        this.showToastMsg(err?.error?.message || ' Failed to send. Please try again.', 'error');
         this.submittingRecommendation = false;
         this.cdr.markForCheck();
       },
@@ -322,12 +341,12 @@ export class Dashboard implements OnInit {
 
   // ==== FORMATTERS ====
   formatCurrency(val: number): string {
-    if (!val && val !== 0) return '₹0';
-    return '₹' + val.toLocaleString('en-IN');
+    if (!val && val !== 0) return 'INR 0';
+    return 'INR ' + val.toLocaleString('en-IN');
   }
 
   formatDate(d: string): string {
-    if (!d) return '—';
+    if (!d) return '-';
     return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 

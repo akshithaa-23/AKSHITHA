@@ -1,4 +1,4 @@
-<!-- CorpSure Claims Manager Dashboard — Matching System Theme -->
+<!-- WorkSure Claims Manager Dashboard - Matching System Theme -->
 <div class="flex h-screen bg-gray-100 overflow-hidden font-sans">
 
   <!-- ── SIDEBAR ──────────────────────────────────────────── -->
@@ -11,7 +11,7 @@
           </svg>
         </div>
         <div>
-          <p class="text-white font-bold text-lg font-sora leading-tight tracking-tight">CorpSure</p>
+          <p class="text-white font-bold text-lg font-sora leading-tight tracking-tight">WorkSure</p>
           <p class="text-gray-400 text-[11px] font-medium tracking-wide">Claims Manager</p>
         </div>
       </div>
@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <!-- "EUR "EUR  MAIN CONTENT "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR "EUR  -->
   <div class="flex-1 flex flex-col overflow-hidden relative">
 
     <!-- Topbar -->
@@ -112,13 +112,13 @@
 
     <div class="flex-1 overflow-y-auto p-8 relative scroll-smooth">
 
-      <!-- ══ LOADER (Global) ══════════════════════════════════ -->
+      <!-- &bull;&bull; LOADER (Global) &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="loading()" class="absolute inset-0 z-50 bg-gray-100/50 flex flex-col items-center justify-center">
         <div class="w-8 h-8 border-4 border-gray-200 border-t-orange-500 rounded-full animate-spin"></div>
         <p class="mt-4 text-sm font-semibold text-gray-500">Loading claims data...</p>
       </div>
 
-      <!-- ══ DASHBOARD TAB ════════════════════════════════════ -->
+      <!-- &bull;&bull; DASHBOARD TAB &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeSection() === 'dashboard'" class="max-w-[1400px] mx-auto animate-fade-up">
 
         <!-- Stat cards -->
@@ -207,6 +207,8 @@
                 <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Company Name</th>
                 <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Employee Name</th>
                 <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Type of Claim</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Req. Amount</th>
+                <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Appr. Amount</th>
                 <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Status</th>
                 <th class="px-8 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-widest text-right">Action
                 </th>
@@ -227,6 +229,12 @@
                   </div>
                 </td>
                 <td class="px-8 py-5 text-gray-500">{{c.claimType || 'General'}}</td>
+                <td class="px-8 py-5 text-gray-700 font-semibold">{{formatCurrency(c.requestedAmount || c.claimAmount ||
+                  c.amount || 0)}}</td>
+                <td class="px-8 py-5 text-orange-600 font-bold">
+                  {{c.status === 'Approved' ? formatCurrency(c.finalApprovedAmount || c.claimAmount || c.amount || 0) :
+                  '-'}}
+                </td>
                 <td class="px-8 py-5">
                   <span
                     class="px-3 py-1 rounded-full text-xs font-bold leading-none inline-flex items-center justify-center"
@@ -259,7 +267,7 @@
 
       </div>
 
-      <!-- ══ ALL CLAIMS TAB ═══════════════════════════════════ -->
+      <!-- &bull;&bull; ALL CLAIMS TAB &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeSection() === 'claim-requests'"
         class="max-w-[1400px] mx-auto animate-fade-up flex flex-col h-full">
 
@@ -282,6 +290,8 @@
                   <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Company Name</th>
                   <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Employee Name</th>
                   <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Type of Claim</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Req. Amount</th>
+                  <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Appr. Amount</th>
                   <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">Status</th>
                   <th class="px-8 py-5 text-[11px] font-bold text-gray-500 uppercase tracking-widest text-right">Action
                   </th>
@@ -302,6 +312,12 @@
                     </div>
                   </td>
                   <td class="px-8 py-5 text-gray-500">{{c.claimType || 'General'}}</td>
+                  <td class="px-8 py-5 text-gray-700 font-semibold">{{formatCurrency(c.requestedAmount || c.claimAmount
+                    || c.amount || 0)}}</td>
+                  <td class="px-8 py-5 text-orange-600 font-bold">
+                    {{c.status === 'Approved' ? formatCurrency(c.finalApprovedAmount || c.claimAmount || c.amount || 0)
+                    : '-'}}
+                  </td>
                   <td class="px-8 py-5 border-gray-100">
                     <span
                       class="px-3 py-1 rounded-full text-xs font-bold leading-none inline-flex items-center justify-center"
@@ -336,7 +352,7 @@
 
     </div>
 
-    <!-- ══ REVIEW CLAIM MODAL (Tailwind Only) ═════════════════ -->
+    <!-- &bull;&bull; REVIEW CLAIM MODAL (Tailwind Only) &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
     <div *ngIf="selectedClaim()" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="closeModal()"></div>
 
@@ -390,7 +406,7 @@
 
           <!-- Extra Employee Details if present -->
           <div class="mb-8 p-5 bg-gray-50 rounded-xl border border-gray-100 shadow-sm"
-            *ngIf="selectedClaim()!.salary || selectedClaim()!.department || selectedClaim()!.nomineeDetails || selectedClaim()!.accidentType">
+            *ngIf="selectedClaim()!.salary || selectedClaim()!.department || selectedClaim()!.nomineeDetails || selectedClaim()!.accidentType || selectedClaim()!.dateOfDeath || selectedClaim()!.causeOfDeath">
             <p class="text-[11px] text-[#1a2b4a] font-bold uppercase tracking-widest mb-3">Employee Details</p>
             <div class="space-y-2 text-sm">
               <div class="flex" *ngIf="selectedClaim()!.department">
@@ -410,10 +426,68 @@
                 <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.accidentType}}
                   {{selectedClaim()!.accidentPercentage ? '(' + selectedClaim()!.accidentPercentage + '%)' : ''}}</span>
               </div>
+              <div class="flex" *ngIf="selectedClaim()!.dateOfDeath">
+                <span class="w-1/3 text-gray-500">Date of Death:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatDate(selectedClaim()!.dateOfDeath!)}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.causeOfDeath">
+                <span class="w-1/3 text-gray-500">Cause of Death:</span>
+                <span
+                  class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.causeOfDeath}}{{selectedClaim()!.causeOfDeathDescription
+                  ? ' - ' + selectedClaim()!.causeOfDeathDescription : ''}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.daysInCompany">
+                <span class="w-1/3 text-gray-500">Days in Company:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.daysInCompany}}</span>
+              </div>
             </div>
           </div>
 
-          <!-- Documents -->
+          <!-- Accident Date Details (Accident claims only) -->
+          <div class="mb-8 p-5 bg-teal-50 rounded-xl border border-teal-100 shadow-sm"
+            *ngIf="selectedClaim()!.claimType === 'Accident' && selectedClaim()!.accidentDate">
+            <p class="text-[11px] text-teal-800 font-bold uppercase tracking-widest mb-3 border-b border-teal-200 pb-2">Accident Details</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex">
+                <span class="w-1/2 text-teal-700">Date of Accident:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatDate(selectedClaim()!.accidentDate!)}}</span>
+              </div>
+              <div class="flex">
+                <span class="w-1/2 text-teal-700">Days Since Accident:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{selectedClaim()!.daysSinceAccident}} days</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.claimDeadline">
+                <span class="w-1/2 text-teal-700">Claim Deadline:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatDate(selectedClaim()!.claimDeadline!)}}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accident Documents - FIR Copy + Hospital Report -->
+          <div class="mb-8"
+            *ngIf="selectedClaim()!.claimType === 'Accident' && (selectedClaim()!.firDocumentUrl || selectedClaim()!.hospitalReportUrl)">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-2">Documents</p>
+            <div class="flex flex-wrap gap-2">
+              <a *ngIf="selectedClaim()!.firDocumentUrl" [href]="selectedClaim()!.firDocumentUrl" target="_blank"
+                class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-[#1a2b4a] hover:bg-gray-50 hover:border-gray-300 cursor-pointer transition shadow-sm">
+                <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                View FIR Copy
+              </a>
+              <a *ngIf="selectedClaim()!.hospitalReportUrl" [href]="selectedClaim()!.hospitalReportUrl" target="_blank"
+                class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-[#1a2b4a] hover:bg-gray-50 hover:border-gray-300 cursor-pointer transition shadow-sm">
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                View Hospital Report
+              </a>
+            </div>
+          </div>
+
+          <!-- Documents - single doc (Health / TermLife) -->
           <div class="mb-8" *ngIf="selectedClaim()!.documentUrl">
             <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-2">Attached Document</p>
             <div class="flex flex-wrap gap-2">
@@ -426,6 +500,70 @@
                 </svg>
                 View Uploaded Document
               </a>
+            </div>
+          </div>
+
+          <!-- Claim Amount Breakdown for Health Claims -->
+          <div class="mb-8 p-5 bg-orange-50 rounded-xl border border-orange-100 shadow-sm"
+            *ngIf="selectedClaim()!.claimType === 'Health' && selectedClaim()!.requestedAmount">
+            <p
+              class="text-[11px] text-[#1a2b4a] font-bold uppercase tracking-widest mb-3 border-b border-orange-200 pb-2">
+              Claim Amount Breakdown</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex">
+                <span class="w-1/2 text-orange-800">Requested Amount:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatCurrency(selectedClaim()!.requestedAmount!)}}</span>
+              </div>
+              <div class="flex items-center">
+                <span class="w-1/2 text-orange-800">Age Factor Applied:</span>
+                <span class="font-medium text-[#1a2b4a]">x {{selectedClaim()!.ageFactor}} <span
+                    class="text-orange-600 text-[11px] ml-1">(Age: {{selectedClaim()!.employeeAge}})</span></span>
+              </div>
+              <div class="flex items-center">
+                <span class="w-1/2 text-orange-800">Frequency Factor Applied:</span>
+                <span class="font-medium text-[#1a2b4a]">x {{selectedClaim()!.frequencyFactor}} <span
+                    class="text-orange-600 text-[11px] ml-1">({{getOrdinal(selectedClaim()!.claimNumberInYear)}}
+                    claim)</span></span>
+              </div>
+              <div class="flex border-t border-orange-200 mt-3 pt-3">
+                <span class="w-1/2 text-orange-900 font-bold">Approved Amount:</span>
+                <span
+                  class="font-black text-orange-600 text-base">{{formatCurrency(selectedClaim()!.finalApprovedAmount!)}}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Claim Amount Breakdown for Term Life Claims -->
+          <div class="mb-8 p-5 bg-blue-50 rounded-xl border border-blue-100 shadow-sm"
+            *ngIf="selectedClaim()!.claimType === 'TermLife'">
+            <p
+              class="text-[11px] text-[#1a2b4a] font-bold uppercase tracking-widest mb-3 border-b border-blue-200 pb-2">
+              Term Life Payout Breakdown</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex">
+                <span class="w-1/2 text-blue-800">Employee Salary:</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatCurrency(selectedClaim()!.salary!)}}</span>
+              </div>
+              <div class="flex">
+                <span class="w-1/2 text-blue-800">Normal Payout (Capped):</span>
+                <span class="font-semibold text-[#1a2b4a]">{{formatCurrency(selectedClaim()!.normalPayout!)}}</span>
+              </div>
+              <div class="flex" *ngIf="selectedClaim()!.suicideExclusionFlag">
+                <span class="w-1/2 text-red-600 font-bold">Suicide Exclusion Applied:</span>
+                <span class="font-semibold text-red-600">-20% Reduction</span>
+              </div>
+              <div class="flex border-t border-blue-200 mt-3 pt-3">
+                <span class="w-1/2 text-blue-900 font-bold">Final Payout Amount:</span>
+                <span class="font-black text-blue-600 text-base">{{formatCurrency(selectedClaim()!.adjustedPayout ||
+                  selectedClaim()!.normalPayout!)}}</span>
+              </div>
+            </div>
+
+            <div *ngIf="selectedClaim()!.suicideExclusionFlag"
+              class="mt-4 bg-red-50 border border-red-100 rounded-lg p-3 text-red-800 text-xs shadow-sm">
+              <strong class="block mb-1"> Suicide Exclusion Active</strong>
+              <p>Employee was in the company for {{selectedClaim()!.daysInCompany}} days (less than 365 requires 20%
+                reduction).</p>
             </div>
           </div>
 
@@ -483,7 +621,7 @@
         </div>
       </div>
     </div>
-    <!-- ══ CONFIRMATION MODAL ════════════════════════════════ -->
+    <!-- &bull;&bull; CONFIRMATION MODAL &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
     <div *ngIf="showConfirmModal()" class="fixed inset-0 z-[150] flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="cancelProcess()"></div>
       <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center animate-fade-in-up">
@@ -521,7 +659,7 @@
       </div>
     </div>
 
-    <!-- ══ SUCCESS MODAL ═════════════════════════════════════ -->
+    <!-- &bull;&bull; SUCCESS MODAL &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
     <div *ngIf="showSuccessModal()" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
       <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-8 text-center animate-fade-in-up">
@@ -552,7 +690,7 @@
 
   </div>
 
-  <!-- ══ PIP TOAST (Bottom-Right aligned style per reference) ══ -->
+  <!-- &bull;&bull; PIP TOAST (Bottom-Right aligned style per reference) &bull;&bull; -->
   <div class="fixed bottom-8 right-8 z-[200] transition-all duration-300 pointer-events-none"
     [class.opacity-0]="!showToast()" [class.translate-y-4]="!showToast()" [class.opacity-100]="showToast()"
     [class.translate-y-0]="showToast()">

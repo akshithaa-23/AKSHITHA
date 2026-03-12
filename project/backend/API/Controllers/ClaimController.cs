@@ -64,6 +64,8 @@ namespace API.Controllers
             try
             {
                 var result = await _claimService.RaiseTermLifeClaimAsync(GetUserId(), dto);
+                var isAutoRejected = result.GetType().GetProperty("autoRejected")?.GetValue(result, null) as bool?;
+                if (isAutoRejected == true) return BadRequest(result);
                 return Ok(result);
             }
             catch (KeyNotFoundException ex)
@@ -83,6 +85,8 @@ namespace API.Controllers
             try
             {
                 var result = await _claimService.RaiseAccidentClaimAsync(GetUserId(), dto);
+                var isAutoRejected = result.GetType().GetProperty("autoRejected")?.GetValue(result, null) as bool?;
+                if (isAutoRejected == true) return BadRequest(result);
                 return Ok(result);
             }
             catch (KeyNotFoundException ex)

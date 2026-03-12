@@ -17,7 +17,26 @@ export interface Claim {
     nomineeDetails?: string;
     accidentType?: string;
     accidentPercentage?: number;
+    accidentDate?: string;
+    // Accident claim enriched fields
+    daysSinceAccident?: number;
+    claimDeadline?: string;
+    firDocumentUrl?: string;
+    hospitalReportUrl?: string;
     salary?: number;
     department?: string;
     claimsManagerName?: string;
+    ageFactor?: number;
+    frequencyFactor?: number;
+    finalApprovedAmount?: number;
+    employeeAge?: number;
+    claimNumberInYear?: number;
+    dateOfDeath?: string;
+    causeOfDeath?: string;
+    causeOfDeathDescription?: string;
+    normalPayout?: number;
+    adjustedPayout?: number;
+    suicideExclusionFlag?: boolean;
+    daysInCompany?: number;
 }
+

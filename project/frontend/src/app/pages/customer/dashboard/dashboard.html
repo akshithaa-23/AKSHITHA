@@ -129,7 +129,12 @@
               caught up! 🎉</div>
             <div *ngFor="let n of visibleNotifications" (click)="onNotificationClick(n)"
               class="flex items-start gap-3 px-4 py-3 hover:bg-orange-50 cursor-pointer border-b border-gray-50 transition-colors">
-              <span class="text-lg mt-0.5">{{n.type==='recommendation'?'📋':'💰'}}</span>
+                            <svg *ngIf="n.type==='recommendation'" class="w-5 h-5 text-orange-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <svg *ngIf="n.type!=='recommendation'" class="w-5 h-5 text-orange-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <div>
                 <p class="text-sm font-medium text-slate-800">{{n.message}}</p>
                 <p class="text-xs text-orange-500 font-semibold mt-0.5">
@@ -297,7 +302,7 @@
             <p class="text-orange-500 text-2xl font-extrabold">{{formatCurrency(policy.premiumPerEmployee)}}</p>
             <p class="text-slate-400 text-xs mt-0.5 mb-4">per employee / year · Min {{policy.minEmployees}} employees
             </p>
-            <button (click)="onInterestedClick(policy)"
+            <button (click)="onInterestedClick(policy)" [disabled]="!!myCompany?.activePolicy"
               class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-lg text-sm transition-colors mt-auto">I'm
               Interested</button>
           </div>
@@ -338,8 +343,7 @@
           </div>
         </div>
         <!-- Inline quote form -->
-        <div id="direct-buy-form" *ngIf="showDirectBuyForm && selectedPolicy"
-          class="mt-6 bg-white border border-gray-200 rounded-2xl p-6">
+        <div *ngIf="showDirectBuyForm && selectedPolicy" class="mt-6 bg-white border border-gray-200 rounded-2xl p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-lg font-bold text-slate-900">Request Quote — {{selectedPolicy.name}}</h3>
@@ -358,13 +362,32 @@
                 [min]="selectedPolicy.minEmployees"
                 class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
             </div>
-            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label><input
-                type="text" [(ngModel)]="directBuyForm.industryType"
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label>
+              <select [(ngModel)]="directBuyForm.industryType"
+                class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                <option value="">-- Select Industry --</option>
+                <option *ngFor="let ind of industries" [value]="ind">{{ind}}</option>
+              </select>
+            </div>
+            <div *ngIf="directBuyForm.industryType === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Specify Industry</label>
+              <input type="text" [(ngModel)]="directBuyForm.customIndustry"
                 class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
             </div>
-            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label><input
-                type="text" [(ngModel)]="directBuyForm.location"
-                class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+            <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label>
+              <select [(ngModel)]="directBuyForm.location" (change)="onLocationChange(directBuyForm)"
+                class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                <option value="">-- Select Location --</option>
+                <option *ngFor="let loc of locations" [value]="loc.name">{{loc.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="directBuyForm.location === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location Category</label>
+              <select [(ngModel)]="directBuyForm.locationCategory"
+                class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                <option value="">-- Select Category --</option>
+                <option value="Metropolitan">Metropolitan</option>
+                <option value="Urban">Urban</option>
+                <option value="Semi-Urban">Semi-Urban</option>
+              </select>
             </div>
             <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact
                 Name</label><input type="text" [(ngModel)]="directBuyForm.contactName"
@@ -376,12 +399,9 @@
             </div>
             <div class="flex flex-col gap-1 col-span-2">
               <label class="text-xs font-semibold text-slate-700">Contact Phone</label>
-              <p *ngIf="directBuyForm.contactPhone && directBuyForm.contactPhone.replace(/\D/g,'').length !== 10"
-                class="text-xs text-amber-600 font-medium">
-                ⚠ Phone number must be 10 digits
-              </p>
-              <input type="text" [(ngModel)]="directBuyForm.contactPhone" placeholder="9876543210" maxlength="10"
-                [class.border-amber-400]="directBuyForm.contactPhone && directBuyForm.contactPhone.replace(/\D/g,'').length !== 10"
+              <p *ngIf="phoneErrors.directBuy" class="text-xs text-red-500 font-semibold mb-1">{{phoneErrors.directBuy}}</p>
+              <input type="text" [(ngModel)]="directBuyForm.contactPhone"
+                (input)="onPhoneInput($event, directBuyForm, 'contactPhone', 'directBuy')"
                 class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
             </div>
           </div>
@@ -406,7 +426,10 @@
         <!-- Empty state -->
         <div *ngIf="!loadingRecommendations && recommendations.length===0 && ignoredRecommendations.length===0"
           class="text-center py-20">
-          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">💌
+          <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
           </div>
           <h3 class="text-slate-700 font-bold text-lg mb-2">No recommendations yet</h3>
           <p class="text-slate-400 text-sm mb-5 max-w-xs mx-auto">Your agent hasn't sent any recommendations yet. You
@@ -458,10 +481,9 @@
                 </div>
                 <p class="text-orange-500 text-2xl font-extrabold">{{formatCurrency(policy.premiumPerEmployee)}}</p>
                 <p class="text-slate-400 text-xs mt-0.5 mb-4">per employee / year</p>
-                <button (click)="onInterestedClick(policy)"
-                  class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-lg text-sm transition-colors">
-                  I'm Interested
-                </button>
+                <button (click)="onInterestedClick(policy)" [disabled]="!!myCompany?.activePolicy"
+                  class="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg text-sm transition-colors">I'm
+                  Interested</button>
               </div>
             </div>
             <!-- Quote request form appears here when I'm Interested from recommendations -->
@@ -483,14 +505,33 @@
                     class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
                 </div>
                 <div class="flex flex-col gap-1"><label
-                    class="text-xs font-semibold text-slate-700">Industry</label><input type="text"
-                    [(ngModel)]="directBuyForm.industryType"
+                    class="text-xs font-semibold text-slate-700">Industry</label>
+                  <select [(ngModel)]="directBuyForm.industryType"
+                    class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                    <option value="">-- Select Industry --</option>
+                    <option *ngFor="let ind of industries" [value]="ind">{{ind}}</option>
+                  </select>
+                </div>
+                <div *ngIf="directBuyForm.industryType === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Specify Industry</label>
+                  <input type="text" [(ngModel)]="directBuyForm.customIndustry"
                     class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
                 </div>
                 <div class="flex flex-col gap-1"><label
-                    class="text-xs font-semibold text-slate-700">Location</label><input type="text"
-                    [(ngModel)]="directBuyForm.location"
-                    class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+                    class="text-xs font-semibold text-slate-700">Location</label>
+                  <select [(ngModel)]="directBuyForm.location" (change)="onLocationChange(directBuyForm)"
+                    class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                    <option value="">-- Select Location --</option>
+                    <option *ngFor="let loc of locations" [value]="loc.name">{{loc.name}}</option>
+                  </select>
+                </div>
+                <div *ngIf="directBuyForm.location === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location Category</label>
+                  <select [(ngModel)]="directBuyForm.locationCategory"
+                    class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+                    <option value="">-- Select Category --</option>
+                    <option value="Metropolitan">Metropolitan</option>
+                    <option value="Urban">Urban</option>
+                    <option value="Semi-Urban">Semi-Urban</option>
+                  </select>
                 </div>
                 <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact
                     Name</label><input type="text" [(ngModel)]="directBuyForm.contactName"
@@ -500,14 +541,8 @@
                     Email</label><input type="email" [(ngModel)]="directBuyForm.contactEmail"
                     class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
                 </div>
-                <div class="flex flex-col gap-1 col-span-2">
-                  <label class="text-xs font-semibold text-slate-700">Contact Phone</label>
-                  <p *ngIf="directBuyForm.contactPhone && directBuyForm.contactPhone.replace(/\D/g,'').length !== 10"
-                    class="text-xs text-amber-600 font-medium">
-                    ⚠ Phone number must be 10 digits
-                  </p>
-                  <input type="text" [(ngModel)]="directBuyForm.contactPhone" placeholder="9876543210" maxlength="10"
-                    [class.border-amber-400]="directBuyForm.contactPhone && directBuyForm.contactPhone.replace(/\D/g,'').length !== 10"
+                <div class="flex flex-col gap-1 col-span-2"><label class="text-xs font-semibold text-slate-700">Contact
+                    Phone</label><input type="text" [(ngModel)]="directBuyForm.contactPhone"
                     class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
                 </div>
               </div>
@@ -739,7 +774,8 @@
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">ID</th>
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Employee</th>
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Type</th>
-                <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Amount</th>
+                <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Req. Amount</th>
+                <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Appr. Amount</th>
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Date</th>
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Status</th>
                 <th class="text-left py-4 px-5 text-xs font-bold text-slate-400 uppercase tracking-wide">Document</th>
@@ -756,10 +792,22 @@
                     [class.bg-blue-50]="c.claimType==='Health'" [class.text-blue-700]="c.claimType==='Health'"
                     [class.bg-purple-50]="c.claimType==='TermLife'" [class.text-purple-700]="c.claimType==='TermLife'"
                     [class.bg-orange-50]="c.claimType==='Accident'" [class.text-orange-700]="c.claimType==='Accident'">
-                    {{c.claimType==='Health' ? '🏥 Health' : c.claimType==='TermLife' ? '💀 Term Life' : '⚡ Accident'}}
+                    <div class="flex items-center gap-1.5">
+                      <svg *ngIf="c.claimType==='Health'" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                      <svg *ngIf="c.claimType==='TermLife'" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <svg *ngIf="c.claimType==='Accident'" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      {{c.claimType==='Health' ? 'Health' : c.claimType==='TermLife' ? 'Term Life' : 'Accident'}}
+                    </div>
                   </span>
                 </td>
-                <td class="py-4 px-5 font-bold text-slate-700">{{formatCurrency(c.claimAmount)}}</td>
+                <td class="py-4 px-5 font-bold text-slate-700">{{formatCurrency(c.requestedAmount || c.claimAmount || 0)}}</td>
+                <td class="py-4 px-5 font-bold text-green-600">{{c.status === 'Approved' ? formatCurrency(c.finalApprovedAmount || c.claimAmount || 0) : '-'}}</td>
                 <td class="py-4 px-5 text-slate-500">{{formatDate(c.createdAt)}}</td>
                 <td class="py-4 px-5">
                   <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold"
@@ -774,7 +822,7 @@
                   </div>
                 </td>
                 <td class="py-4 px-5 text-slate-500">
-                  <a *ngIf="c.documentUrl" [href]="c.documentUrl" target="_blank"
+                  <a *ngIf="c.documentUrl || c.firDocumentUrl" [href]="c.documentUrl || c.firDocumentUrl" target="_blank"
                     class="text-orange-500 hover:text-orange-600 font-semibold text-xs flex items-center gap-1">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -784,7 +832,7 @@
                       <polyline points="10 9 9 9 8 9" />
                     </svg> View
                   </a>
-                  <span *ngIf="!c.documentUrl">—</span>
+                  <span *ngIf="!(c.documentUrl || c.firDocumentUrl)">—</span>
                 </td>
               </tr>
             </tbody>
@@ -854,6 +902,14 @@
                     <p class="font-bold text-slate-900">{{formatCurrency(claimForm.employee.salary)}} <span
                         class="text-xs font-normal text-slate-500">/year</span></p>
                   </div>
+                  <div>
+                    <p class="text-slate-400 text-xs mb-1">Date of Birth</p>
+                    <p class="font-medium text-slate-900">{{formatDate(claimForm.employee.dateOfBirth)}}</p>
+                  </div>
+                  <div>
+                    <p class="text-slate-400 text-xs mb-1">Date of Joining</p>
+                    <p class="font-medium text-slate-900">{{formatDate(claimForm.employee.employeeJoinDate)}}</p>
+                  </div>
                   <div class="col-span-2 border-t border-slate-200 mt-2 pt-4">
                     <p class="text-slate-400 text-xs mb-1">Nominee</p>
                     <p class="font-medium text-slate-900">{{claimForm.employee.nomineeName}}
@@ -882,7 +938,11 @@
                   [class.bg-orange-50]="claimForm.claimType==='Health'"
                   [class.border-gray-100]="claimForm.claimType!=='Health'"
                   [class.hover:border-orange-200]="claimForm.claimType!=='Health'">
-                  <div class="text-3xl mb-3">🏥</div>
+                                  <div class="text-orange-500 mb-3">
+                  <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
                   <h4 class="font-bold text-slate-900 mb-1">Health Claim</h4>
                   <p class="text-xs text-slate-500 font-medium">Medical expenses</p>
                 </button>
@@ -894,7 +954,11 @@
                   [class.bg-orange-50]="claimForm.claimType==='TermLife'"
                   [class.border-gray-100]="claimForm.claimType!=='TermLife'"
                   [class.hover:border-orange-200]="claimForm.claimType!=='TermLife'">
-                  <div class="text-3xl mb-3">💀</div>
+                                  <div class="text-orange-500 mb-3">
+                  <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
                   <h4 class="font-bold text-slate-900 mb-1">Term Life Claim</h4>
                   <p class="text-xs text-slate-500 font-medium">Death or terminal illness</p>
                 </button>
@@ -906,7 +970,11 @@
                   [class.bg-orange-50]="claimForm.claimType==='Accident'"
                   [class.border-gray-100]="claimForm.claimType!=='Accident'"
                   [class.hover:border-orange-200]="claimForm.claimType!=='Accident'">
-                  <div class="text-3xl mb-3">⚡</div>
+                                  <div class="text-orange-500 mb-3">
+                  <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
                   <h4 class="font-bold text-slate-900 mb-1">Accident Claim</h4>
                   <p class="text-xs text-slate-500 font-medium">Disability coverage</p>
                 </button>
@@ -939,11 +1007,18 @@
                     class="mt-2 text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-2"
                     [class.bg-red-50]="isHealthAmountExceeded" [class.text-red-700]="isHealthAmountExceeded"
                     [class.bg-green-50]="!isHealthAmountExceeded" [class.text-green-700]="!isHealthAmountExceeded">
-                    <span *ngIf="isHealthAmountExceeded">⚠️ {{formatCurrency(claimForm.requestedAmount)}} exceeds
-                      remaining coverage of {{formatCurrency(remainingHealthCoverage)}}. Claim will be
-                      auto-rejected.</span>
-                    <span *ngIf="!isHealthAmountExceeded">✅ Within limit ({{formatCurrency(remainingHealthCoverage)}}
-                      remaining)</span>
+                    <span *ngIf="isHealthAmountExceeded" class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      {{formatCurrency(claimForm.requestedAmount)}} exceeds remaining coverage of {{formatCurrency(remainingHealthCoverage)}}. Claim will be auto-rejected.
+                    </span>
+                    <span *ngIf="!isHealthAmountExceeded" class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      Within limit ({{formatCurrency(remainingHealthCoverage)}} remaining)
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -955,7 +1030,27 @@
 
               <!-- 3B — TERM LIFE -->
               <div *ngIf="claimForm.claimType==='TermLife'" class="flex flex-col gap-6 mb-8">
-                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-2">Date of Death</label>
+                  <input type="date" [(ngModel)]="claimForm.dateOfDeath"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-2">Reason of Death</label>
+                  <select [(ngModel)]="claimForm.causeOfDeath"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
+                    <option value="">-- Select Reason --</option>
+                    <option value="Natural">Natural</option>
+                    <option value="Suicide">Suicide</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div *ngIf="claimForm.causeOfDeath==='Other'">
+                  <label class="block text-xs font-semibold text-slate-700 mb-2">Please Specify</label>
+                  <input type="text" [(ngModel)]="claimForm.causeOfDeathDescription" placeholder="Brief description..."
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5" *ngIf="claimForm.dateOfDeath && claimForm.causeOfDeath && (claimForm.causeOfDeath!=='Other' || claimForm.causeOfDeathDescription)">
                   <h4
                     class="text-xs font-bold tracking-widest text-slate-400 uppercase mb-4 border-b border-slate-200 pb-2">
                     Payout Calculation</h4>
@@ -972,15 +1067,16 @@
                       class="font-bold text-slate-900">Final Payout</span><span
                       class="font-black text-orange-500">{{formatCurrency(cappedLifePayout)}}</span></div>
                 </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-2">Reason</label>
-                  <textarea [(ngModel)]="claimForm.reason" rows="3" placeholder="Describe the reason for this claim..."
-                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 resize-none"></textarea>
-                </div>
               </div>
 
               <!-- 3C — ACCIDENT -->
               <div *ngIf="claimForm.claimType==='Accident'" class="flex flex-col gap-5 mb-8">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-2">Date of Accident</label>
+                  <input type="date" [(ngModel)]="claimForm.accidentDate"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm bg-gray-50 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
+                </div>
+
                 <div>
                   <label class="block text-xs font-semibold text-slate-700 mb-2">Accident Type</label>
                   <select [(ngModel)]="claimForm.accidentType"
@@ -1015,7 +1111,7 @@
               </div>
 
               <!-- FILE UPLOAD PORTION (Shared for all) -->
-              <div class="border-t border-gray-100 pt-6 mb-8">
+              <div class="border-t border-gray-100 pt-6 mb-8" *ngIf="claimForm.claimType !== 'Accident'">
                 <label class="block text-xs font-semibold text-slate-700 mb-3">Supporting Document (required)</label>
 
                 <div *ngIf="!claimForm.file"
@@ -1051,14 +1147,61 @@
                 </div>
               </div>
 
+              <!-- ACCIDENT FILE UPLOADS -->
+              <div class="border-t border-gray-100 pt-6 mb-8" *ngIf="claimForm.claimType === 'Accident'">
+                <div class="mb-6">
+                  <label class="block text-xs font-semibold text-slate-700 mb-3">FIR Document (required)</label>
+                  <div *ngIf="!claimForm.firFile"
+                    class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 hover:border-orange-300 transition-colors relative cursor-pointer">
+                    <input type="file" (change)="onFirFileSelected($event)" accept=".pdf,.png,.jpg,.jpeg"
+                      class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <p class="text-sm font-bold text-slate-600">Click to upload FIR document</p>
+                    <p class="text-xs text-slate-400 mt-1">PDF, JPG, PNG up to 5MB</p>
+                  </div>
+                  <div *ngIf="claimForm.firFile"
+                    class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div>
+                        <p class="text-sm font-bold text-slate-900 truncate max-wxs">{{claimForm.firFileName}}</p>
+                        <p class="text-xs text-slate-500">{{claimForm.firFileSize}}</p>
+                      </div>
+                    </div>
+                    <button (click)="removeFirFile()"
+                      class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">✕</button>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-3">Hospital Report (required)</label>
+                  <div *ngIf="!claimForm.hospitalFile"
+                    class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 hover:border-orange-300 transition-colors relative cursor-pointer">
+                    <input type="file" (change)="onHospitalFileSelected($event)" accept=".pdf,.png,.jpg,.jpeg"
+                      class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <p class="text-sm font-bold text-slate-600">Click to upload Hospital Report</p>
+                    <p class="text-xs text-slate-400 mt-1">PDF, JPG, PNG up to 5MB</p>
+                  </div>
+                  <div *ngIf="claimForm.hospitalFile"
+                    class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div>
+                        <p class="text-sm font-bold text-slate-900 truncate max-wxs">{{claimForm.hospitalFileName}}</p>
+                        <p class="text-xs text-slate-500">{{claimForm.hospitalFileSize}}</p>
+                      </div>
+                    </div>
+                    <button (click)="removeHospitalFile()"
+                      class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">✕</button>
+                  </div>
+                </div>
+              </div>
+
               <div class="flex justify-between">
                 <button (click)="goToStep(2)"
                   class="text-slate-500 hover:text-slate-800 font-bold px-6 py-3 rounded-xl transition-colors bg-gray-100">←
                   Back</button>
 
-                <!-- Disable if: (health & no amt/exceeded) OR (accident missing info) OR no file -->
+                <!-- Disable if: (health & no amt/exceeded) OR (term life missing reason/date) OR (accident missing info) OR no file -->
                 <button (click)="goToStep(4)"
-                  [disabled]="!claimForm.file || (claimForm.claimType==='Health' && (!claimForm.requestedAmount || isHealthAmountExceeded)) || (claimForm.claimType==='Accident' && !claimForm.accidentType) || (claimForm.claimType==='Accident' && claimForm.accidentType==='Partial' && !claimForm.accidentPercentage)"
+                  [disabled]="(claimForm.claimType!=='Accident' && !claimForm.file) || (claimForm.claimType==='Accident' && (!claimForm.firFile || !claimForm.hospitalFile)) || (claimForm.claimType==='Health' && (!claimForm.requestedAmount || isHealthAmountExceeded)) || (claimForm.claimType==='TermLife' && (!claimForm.causeOfDeath || !claimForm.dateOfDeath || (claimForm.causeOfDeath==='Other' && !claimForm.causeOfDeathDescription))) || (claimForm.claimType==='Accident' && (!claimForm.accidentDate || !claimForm.accidentType || (claimForm.accidentType==='Partial' && !claimForm.accidentPercentage)))"
                   class="bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold px-8 py-3 rounded-xl transition-colors">
                   Review Claim →
                 </button>
@@ -1429,13 +1572,32 @@
           Employees</label><input type="number" [(ngModel)]="recommendationForm.numberOfEmployees" min="1"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
-      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label><input
-          type="text" [(ngModel)]="recommendationForm.industryType"
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Industry</label>
+        <select [(ngModel)]="recommendationForm.industryType"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="">-- Select Industry --</option>
+          <option *ngFor="let ind of industries" [value]="ind">{{ind}}</option>
+        </select>
+      </div>
+      <div *ngIf="recommendationForm.industryType === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Specify Industry</label>
+        <input type="text" [(ngModel)]="recommendationForm.customIndustry"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
-      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label><input
-          type="text" [(ngModel)]="recommendationForm.location"
-          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+      <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location</label>
+        <select [(ngModel)]="recommendationForm.location" (change)="onLocationChange(recommendationForm)"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="">-- Select Location --</option>
+          <option *ngFor="let loc of locations" [value]="loc.name">{{loc.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="recommendationForm.location === 'Other'" class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Location Category</label>
+        <select [(ngModel)]="recommendationForm.locationCategory"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400">
+          <option value="">-- Select Category --</option>
+          <option value="Metropolitan">Metropolitan</option>
+          <option value="Urban">Urban</option>
+          <option value="Semi-Urban">Semi-Urban</option>
+        </select>
       </div>
       <div class="flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Contact Name</label><input
           type="text" [(ngModel)]="recommendationForm.contactName"
@@ -1447,12 +1609,9 @@
       </div>
       <div class="col-span-2 flex flex-col gap-1">
         <label class="text-xs font-semibold text-slate-700">Contact Phone</label>
-        <p *ngIf="recommendationForm.contactPhone && recommendationForm.contactPhone.replace(/\D/g,'').length !== 10"
-          class="text-xs text-amber-600 font-medium">
-          ⚠ Phone number must be 10 digits
-        </p>
-        <input type="text" [(ngModel)]="recommendationForm.contactPhone" placeholder="9876543210" maxlength="10"
-          [class.border-amber-400]="recommendationForm.contactPhone && recommendationForm.contactPhone.replace(/\D/g,'').length !== 10"
+        <p *ngIf="phoneErrors.recommendation" class="text-xs text-red-500 font-semibold mb-1">{{phoneErrors.recommendation}}</p>
+        <input type="text" [(ngModel)]="recommendationForm.contactPhone"
+          (input)="onPhoneInput($event, recommendationForm, 'contactPhone', 'recommendation')"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
     </div>
@@ -1505,12 +1664,31 @@
         </select>
       </div>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-semibold text-slate-700">Annual Salary (₹)</label>
-        <p *ngIf="addEmployeeForm.salary > maxSalaryCap" class="text-xs text-amber-600 font-medium">
-          ⚠ Only values up to {{formatCurrency(maxSalaryCap)}} are preferred
-        </p>
-        <input type="number" [(ngModel)]="addEmployeeForm.salary" placeholder="500000"
-          [class.border-amber-400]="addEmployeeForm.salary > maxSalaryCap"
+        <label class="text-xs font-semibold text-slate-700">Annual Salary (₹) <span class="text-red-500">*</span></label>
+        <input type="text" [(ngModel)]="addEmployeeForm.salary" placeholder="500000"
+          (input)="onSalaryInput('addEmployee', $event, addEmployeeForm)"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+        <div *ngIf="addEmployeeForm.salary !== null && addEmployeeForm.salary !== undefined" class="px-3 py-2 rounded-lg" [ngClass]="addEmployeeForm.salary <= salaryMaxCap ? 'bg-green-50' : 'bg-red-50'">
+           <p *ngIf="addEmployeeForm.salary <= salaryMaxCap" class="text-xs font-semibold text-green-700 flex items-center gap-1.5">
+             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+             Within limit ({{formatCurrency(salaryMaxCap - addEmployeeForm.salary)}} remaining)
+           </p>
+           <p *ngIf="addEmployeeForm.salary > salaryMaxCap" class="text-xs font-semibold text-red-700 flex items-center gap-1.5">
+             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+             Max allowed is {{formatCurrency(salaryMaxCap)}}
+           </p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-slate-700">Date of Birth <span class="text-red-500">*</span></label>
+        <p *ngIf="employeeFormErrors.addEmployee.dob" class="text-xs text-red-500 font-semibold mb-1">{{employeeFormErrors.addEmployee.dob}}</p>
+        <input type="date" [(ngModel)]="addEmployeeForm.dateOfBirth" (change)="validateDob('addEmployee', addEmployeeForm.dateOfBirth)"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-slate-700">Date of Joining <span class="text-red-500">*</span></label>
+        <p *ngIf="employeeFormErrors.addEmployee.doj" class="text-xs text-red-500 font-semibold mb-1">{{employeeFormErrors.addEmployee.doj}}</p>
+        <input type="date" [(ngModel)]="addEmployeeForm.employeeJoinDate" (change)="validateDoj('addEmployee', addEmployeeForm.employeeJoinDate)"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
     </div>
@@ -1535,12 +1713,9 @@
       </div>
       <div class="flex flex-col gap-1">
         <label class="text-xs font-semibold text-slate-700">Nominee Phone</label>
-        <p *ngIf="addEmployeeForm.nomineePhone && addEmployeeForm.nomineePhone.replace(/\D/g,'').length !== 10"
-          class="text-xs text-amber-600 font-medium">
-          ⚠ Phone number must be 10 digits
-        </p>
-        <input type="text" [(ngModel)]="addEmployeeForm.nomineePhone" placeholder="9876543210" maxlength="10"
-          [class.border-amber-400]="addEmployeeForm.nomineePhone && addEmployeeForm.nomineePhone.replace(/\D/g,'').length !== 10"
+        <p *ngIf="phoneErrors.addEmployee" class="text-xs text-red-500 font-semibold mb-1">{{phoneErrors.addEmployee}}</p>
+        <input type="text" [(ngModel)]="addEmployeeForm.nomineePhone" placeholder="9876543210"
+          (input)="onPhoneInput($event, addEmployeeForm, 'nomineePhone', 'addEmployee')"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
     </div>
@@ -1585,12 +1760,31 @@
         </select>
       </div>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-semibold text-slate-700">Annual Salary (₹)</label>
-        <p *ngIf="editEmployeeForm.salary > maxSalaryCap" class="text-xs text-amber-600 font-medium">
-          ⚠ Only values up to {{formatCurrency(maxSalaryCap)}} are preferred
-        </p>
-        <input type="number" [(ngModel)]="editEmployeeForm.salary"
-          [class.border-amber-400]="editEmployeeForm.salary > maxSalaryCap"
+        <label class="text-xs font-semibold text-slate-700">Annual Salary (₹) <span class="text-red-500">*</span></label>
+        <input type="text" [(ngModel)]="editEmployeeForm.salary"
+          (input)="onSalaryInput('editEmployee', $event, editEmployeeForm)"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+        <div *ngIf="editEmployeeForm.salary !== null && editEmployeeForm.salary !== undefined" class="px-3 py-2 rounded-lg" [ngClass]="editEmployeeForm.salary <= salaryMaxCap ? 'bg-green-50' : 'bg-red-50'">
+           <p *ngIf="editEmployeeForm.salary <= salaryMaxCap" class="text-xs font-semibold text-green-700 flex items-center gap-1.5">
+             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+             Within limit ({{formatCurrency(salaryMaxCap - editEmployeeForm.salary)}} remaining)
+           </p>
+           <p *ngIf="editEmployeeForm.salary > salaryMaxCap" class="text-xs font-semibold text-red-700 flex items-center gap-1.5">
+             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+             Max allowed is {{formatCurrency(salaryMaxCap)}}
+           </p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-slate-700">Date of Birth</label>
+        <p *ngIf="employeeFormErrors.editEmployee.dob" class="text-xs text-red-500 font-semibold mb-1">{{employeeFormErrors.editEmployee.dob}}</p>
+        <input type="date" [(ngModel)]="editEmployeeForm.dateOfBirth" (change)="validateDob('editEmployee', editEmployeeForm.dateOfBirth)"
+          class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-slate-700">Date of Joining</label>
+        <p *ngIf="employeeFormErrors.editEmployee.doj" class="text-xs text-red-500 font-semibold mb-1">{{employeeFormErrors.editEmployee.doj}}</p>
+        <input type="date" [(ngModel)]="editEmployeeForm.employeeJoinDate" (change)="validateDoj('editEmployee', editEmployeeForm.employeeJoinDate)"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
     </div>
@@ -1615,12 +1809,9 @@
       </div>
       <div class="flex flex-col gap-1">
         <label class="text-xs font-semibold text-slate-700">Nominee Phone</label>
-        <p *ngIf="editEmployeeForm.nomineePhone && editEmployeeForm.nomineePhone.replace(/\D/g,'').length !== 10"
-          class="text-xs text-amber-600 font-medium">
-          ⚠ Phone number must be 10 digits
-        </p>
-        <input type="text" [(ngModel)]="editEmployeeForm.nomineePhone" placeholder="9876543210" maxlength="10"
-          [class.border-amber-400]="editEmployeeForm.nomineePhone && editEmployeeForm.nomineePhone.replace(/\D/g,'').length !== 10"
+        <p *ngIf="phoneErrors.editEmployee" class="text-xs text-red-500 font-semibold mb-1">{{phoneErrors.editEmployee}}</p>
+        <input type="text" [(ngModel)]="editEmployeeForm.nomineePhone"
+          (input)="onPhoneInput($event, editEmployeeForm, 'nomineePhone', 'editEmployee')"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
     </div>
@@ -1659,30 +1850,23 @@
       </div>
       <div class="col-span-2 flex flex-col gap-1">
         <label class="text-xs font-semibold text-slate-700">Card Number</label>
-        <p *ngIf="paymentForm.cardNumber && paymentForm.cardNumber.replace(/\D/g,'').length !== 12"
-          class="text-xs text-amber-600 font-medium">
-          ⚠ Card number must be 12 digits
-        </p>
-        <input type="text" [(ngModel)]="paymentForm.cardNumber" placeholder="1234 5678 9012" maxlength="12"
-          [class.border-amber-400]="paymentForm.cardNumber && paymentForm.cardNumber.replace(/\D/g,'').length !== 12"
+        <p *ngIf="paymentErrors.cardNumber" class="text-xs text-red-500 font-semibold mb-1">{{paymentErrors.cardNumber}}</p>
+        <input type="text" [(ngModel)]="paymentForm.cardNumber" placeholder="1234 5678 9012 3456"
+          maxlength="19" (input)="onCardNumberInput($event)"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-semibold text-slate-700">Expiry Date</label>
-        <p *ngIf="paymentForm.expiry && isCardExpired(paymentForm.expiry)" class="text-xs text-amber-600 font-medium">
-          ⚠ Card must not be expired
-        </p>
-        <input type="date" [(ngModel)]="paymentForm.expiry"
-          [class.border-amber-400]="paymentForm.expiry && isCardExpired(paymentForm.expiry)"
+        <label class="text-xs font-semibold text-slate-700">Expiry (MM/YY)</label>
+        <p *ngIf="paymentErrors.expiry" class="text-xs text-red-500 font-semibold mb-1">{{paymentErrors.expiry}}</p>
+        <input
+          type="text" [(ngModel)]="paymentForm.expiry" placeholder="MM/YY" maxlength="5" (input)="onExpiryInput($event)"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
       <div class="flex flex-col gap-1">
         <label class="text-xs font-semibold text-slate-700">CVV</label>
-        <p *ngIf="paymentForm.cvv && paymentForm.cvv.length !== 3" class="text-xs text-amber-600 font-medium">
-          ⚠ CVV must be 3 digits
-        </p>
-        <input type="password" [(ngModel)]="paymentForm.cvv" placeholder="•••" maxlength="3"
-          [class.border-amber-400]="paymentForm.cvv && paymentForm.cvv.length !== 3"
+        <p *ngIf="paymentErrors.cvv" class="text-xs text-red-500 font-semibold mb-1">{{paymentErrors.cvv}}</p>
+        <input
+          type="password" [(ngModel)]="paymentForm.cvv" placeholder="•••" maxlength="3" (input)="onCvvInput($event)"
           class="border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:border-orange-400" />
       </div>
       <div class="col-span-2 flex flex-col gap-1"><label class="text-xs font-semibold text-slate-700">Payment
@@ -1798,6 +1982,12 @@
   [class.pointer-events-none]="!showToast">
   <div class="px-5 py-3 rounded-xl text-white text-sm font-medium shadow-2xl flex items-center gap-2"
     [class.bg-slate-900]="toastType==='success'" [class.bg-red-600]="toastType==='error'">
-    <span>{{toastType==='success'?'✓':'✕'}}</span>{{toastMessage}}
+        <svg *ngIf="toastType==='success'" class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+    <svg *ngIf="toastType==='error'" class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+    <span>{{toastMessage}}</span>
   </div>
 </div>

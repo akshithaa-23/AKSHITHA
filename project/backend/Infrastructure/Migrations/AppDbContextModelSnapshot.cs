@@ -65,11 +65,26 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AccidentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal?>("AccidentPercentage")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("AccidentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("AdjustedPayout")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("AgeFactor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CauseOfDeath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CauseOfDeathDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ClaimAmount")
@@ -95,11 +110,32 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DateOfDeath")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DaysInCompany")
+                        .HasColumnType("int");
+
                     b.Property<string>("DocumentUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("FinalApprovedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("FirDocumentPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("FrequencyFactor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("HospitalReportPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("NormalPayout")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("ProcessedAt")
                         .HasColumnType("datetime2");
@@ -110,6 +146,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("SuicideExclusionFlag")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -247,6 +286,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("EmployeeCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EmployeeJoinDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -529,6 +571,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AgentId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("BaseQuote")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -537,6 +583,18 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("EmployeeCount")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("GeographyFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("IndustryFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("PlanRiskFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("PolicyId")
                         .HasColumnType("int");
@@ -603,8 +661,19 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CustomIndustry")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("GeographyFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal?>("IndustryFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("IndustryType")
                         .IsRequired()
@@ -614,8 +683,15 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LocationCategory")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("NumberOfEmployees")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("PlanRiskFactor")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int?>("PolicyId")
                         .HasColumnType("int");

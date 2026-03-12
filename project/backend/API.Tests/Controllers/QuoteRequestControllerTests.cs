@@ -13,7 +13,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
-
+using Moq;
+using Application.Interfaces;
 namespace API.Tests.Controllers
 {
     public class QuoteRequestControllerTests
@@ -55,7 +56,8 @@ namespace API.Tests.Controllers
             context.Users.Add(new User { Id = agentId, Email = "a@example.com", PasswordHash = "h", FullName = "Agent One", Role = UserRole.Agent, IsActive = true, CreatedAt = DateTime.UtcNow });
             await context.SaveChangesAsync();
 
-            var quoteRequestService = new QuoteRequestService(context);
+            var mockPremiumCalc = new Mock<IPremiumCalculationService>();
+            var quoteRequestService = new QuoteRequestService(context, mockPremiumCalc.Object);
             var controller = new QuoteRequestController(quoteRequestService);
             SetupControllerUser(controller, customerId, "Customer");
 
@@ -99,7 +101,8 @@ namespace API.Tests.Controllers
             context.CompanyPolicies.Add(new CompanyPolicy { Id = 1, CompanyId = 10, PolicyId = 1, Status = "Active", CreatedAt = DateTime.UtcNow });
             await context.SaveChangesAsync();
 
-            var quoteRequestService = new QuoteRequestService(context);
+            var mockPremiumCalc = new Mock<IPremiumCalculationService>();
+            var quoteRequestService = new QuoteRequestService(context, mockPremiumCalc.Object);
             var controller = new QuoteRequestController(quoteRequestService);
             SetupControllerUser(controller, customerId, "Customer");
 
@@ -124,7 +127,8 @@ namespace API.Tests.Controllers
             context.QuoteRequests.Add(new QuoteRequest { Id = 50, CustomerId = customerId, RequestType = "Recommendation", CompanyName = "C3 Co", CreatedAt = DateTime.UtcNow });
             await context.SaveChangesAsync();
 
-            var quoteRequestService = new QuoteRequestService(context);
+            var mockPremiumCalc = new Mock<IPremiumCalculationService>();
+            var quoteRequestService = new QuoteRequestService(context, mockPremiumCalc.Object);
             var controller = new QuoteRequestController(quoteRequestService);
             SetupControllerUser(controller, customerId, "Customer");
 

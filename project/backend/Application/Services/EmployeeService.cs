@@ -29,6 +29,7 @@ namespace Application.Services
             }
 
             var employees = await _context.Employees
+                .Include(e => e.Claims)
                 .Where(e => e.CompanyId == company.Id)
                 .OrderBy(e => e.FullName)
                 .Select(e => new EmployeeDto
@@ -41,9 +42,13 @@ namespace Application.Services
                     Salary = e.Salary,
                     IsActive = e.IsActive,
                     CoverageStartDate = e.CoverageStartDate,
+                    DateOfBirth = e.DateOfBirth,
+                    EmployeeJoinDate = e.EmployeeJoinDate,
+                    Age = DateTime.UtcNow.Year - e.DateOfBirth.Year - (DateTime.UtcNow.DayOfYear < e.DateOfBirth.DayOfYear ? 1 : 0),
                     NomineeName = e.NomineeName,
                     NomineeRelationship = e.NomineeRelationship,
                     NomineePhone = e.NomineePhone,
+                    HasPendingClaim = e.Claims != null && e.Claims.Any(c => c.Status == "Pending"),
                     CreatedAt = e.CreatedAt
                 })
                 .ToListAsync();
@@ -79,6 +84,8 @@ namespace Application.Services
                 Salary = dto.Salary,
                 CompanyId = company.Id,
                 IsActive = true,
+                DateOfBirth = dto.DateOfBirth,
+                EmployeeJoinDate = dto.EmployeeJoinDate,
                 NomineeName = dto.NomineeName,
                 NomineeRelationship = dto.NomineeRelationship,
                 NomineePhone = dto.NomineePhone,

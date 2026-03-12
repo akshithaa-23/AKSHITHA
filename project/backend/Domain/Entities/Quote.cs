@@ -15,6 +15,10 @@ namespace Domain.Entities
         public int PolicyId { get; set; }
         public int EmployeeCount { get; set; }
         public decimal PremiumPerEmployee { get; set; }
+        public decimal BaseQuote { get; set; }
+        public decimal IndustryFactor { get; set; }
+        public decimal GeographyFactor { get; set; }
+        public decimal PlanRiskFactor { get; set; }
         public decimal TotalPremium { get; set; }       // EmployeeCount × PremiumPerEmployee
         public string Status { get; set; } = "Pending"; // Pending, Accepted, Rejected, Paid
         public DateTime ValidUntil { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
     public class Claim
     {
@@ -21,6 +21,28 @@
 
         // For partial accident: 0-100
         public decimal? AccidentPercentage { get; set; }
+
+        // ── Health Claim specific fields ──
+        public decimal? AgeFactor { get; set; } // E.g. 0.95 for 5% reduction
+        public decimal? FrequencyFactor { get; set; } // E.g. 0.90 for 10% reduction
+        public decimal? FinalApprovedAmount { get; set; } // Calculated approved amount
+
+        // ── Term Life Claim specific fields ──
+        // "Natural Causes" | "Suicide" | "Other"
+        public string? CauseOfDeath { get; set; } 
+        public string? CauseOfDeathDescription { get; set; }
+        public DateTime? DateOfDeath { get; set; }
+        public decimal? NormalPayout { get; set; }
+        public decimal? AdjustedPayout { get; set; }
+        public bool? SuicideExclusionFlag { get; set; }
+        public int? DaysInCompany { get; set; }
+
+        // ── Accident Claim specific fields ──
+        public DateTime? AccidentDate { get; set; }
+
+        // Accident claim documents
+        public string? FirDocumentPath { get; set; }
+        public string? HospitalReportPath { get; set; }
 
         // "Pending" | "Approved" | "Rejected"
         public string Status { get; set; } = "Pending";

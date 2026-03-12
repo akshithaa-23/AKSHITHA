@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|solutionrelative:api\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|solutionrelative:api\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api\\controllers\\claimcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|solutionrelative:api\\controllers\\claimcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C1AD8716-123C-43F1-B887-21C82863AF59}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2330D3EB-2B9E-480A-96AA-A61A6F5769AC}|API.Tests\\API.Tests.csproj|c:\\users\\rohan\\onedrive\\desktop\\akshitha\\akshitha\\project\\backend\\api.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,11 +59,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\Controllers\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\EmployeeController.cs",
+              "ToolTip": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\Controllers\\EmployeeController.cs",
+              "RelativeToolTip": "API\\Controllers\\EmployeeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T03:46:04.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ClaimController.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\Controllers\\ClaimController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ClaimController.cs",
@@ -71,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PaymentController.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\Controllers\\PaymentController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\PaymentController.cs",
@@ -79,24 +96,24 @@
               "RelativeToolTip": "API\\Controllers\\PaymentController.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAkwD8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-04T10:36:27.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-04T10:36:27.117Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\appsettings.json",
               "RelativeDocumentMoniker": "API\\appsettings.json",
               "ToolTip": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\appsettings.json",
               "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-03T05:21:45.49Z"
+              "WhenOpened": "2026-03-03T05:21:45.49Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GlobalExceptionMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API\\Middleware\\GlobalExceptionMiddleware.cs",
               "RelativeDocumentMoniker": "API\\Middleware\\GlobalExceptionMiddleware.cs",
@@ -108,7 +125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "UnitTest1.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\API.Tests\\UnitTest1.cs",
               "RelativeDocumentMoniker": "API.Tests\\UnitTest1.cs",
@@ -120,7 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "dbo.Users.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/EmpDB/True/SqlTable/dbo.Users.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/EmpDB/True/SqlTable/dbo.Users.sql",
@@ -129,7 +146,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "20260303082752_intital.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Migrations\\20260303082752_intital.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20260303082752_intital.cs",
@@ -141,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "20260303074354_passhash1.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Migrations\\20260303074354_passhash1.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20260303074354_passhash1.cs",
@@ -152,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Domain\\Entities\\User.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\User.cs",
@@ -164,7 +181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "dbo.Users.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/GrpEmpInsuraceDB/True/SqlTable/dbo.Users.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/GrpEmpInsuraceDB/True/SqlTable/dbo.Users.sql",
@@ -173,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "20260303072143_passhash.cs",
               "DocumentMoniker": "C:\\Users\\rohan\\OneDrive\\Desktop\\Akshitha\\AKSHITHA\\project\\backend\\Infrastructure\\Migrations\\20260303072143_passhash.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20260303072143_passhash.cs",
@@ -184,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "dbo.Users.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/GroupEmpInsuraceDB/True/SqlTable/dbo.Users.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/GroupEmpInsuraceDB/True/SqlTable/dbo.Users.sql",

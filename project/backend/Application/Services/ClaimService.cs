@@ -42,28 +42,81 @@ namespace Application.Services
             return manager.Id;
         }
 
-        private static ClaimResponseDto MapClaim(Claim c) => new()
+        private async Task<object?> CheckPendingClaimsAsync(int employeeId)
         {
-            Id = c.Id,
-            ClaimType = c.ClaimType,
-            ClaimAmount = c.ClaimAmount,
-            AccidentType = c.AccidentType,
-            AccidentPercentage = c.AccidentPercentage,
-            Status = c.Status,
-            ClaimsManagerNote = c.ClaimsManagerNote,
-            EmployeeId = c.EmployeeId,
-            EmployeeName = c.Employee.FullName,
-            EmployeeCode = c.Employee.EmployeeCode,
-            EmployeeSalary = c.Employee.Salary,
-            HealthCoverageRemaining = c.Employee.HealthCoverageRemaining,
-            DocumentUrl = c.DocumentUrl,
-            PolicyName = c.CompanyPolicy.Policy.Name,
-            CompanyName = c.CompanyPolicy.Company.CompanyName,
-            CustomerName = c.Customer.FullName,
-            ClaimsManagerName = c.ClaimsManager.FullName,
-            CreatedAt = c.CreatedAt,
-            ProcessedAt = c.ProcessedAt
-        };
+            var pendingClaim = await _context.Claims
+                .Include(c => c.Employee)
+                .FirstOrDefaultAsync(c => c.EmployeeId == employeeId && c.Status == "Pending");
+
+            if (pendingClaim != null)
+            {
+                var employeeName = pendingClaim.Employee?.FullName ?? "Unknown";
+                return new
+                {
+                    message = $"Employee {employeeName} already has a claim pending review. Please wait for the current claim to be approved or rejected before raising a new claim.",
+                    reason = "PendingClaimExists",
+                    pendingClaimId = pendingClaim.Id,
+                    pendingClaimType = pendingClaim.ClaimType,
+                    employeeId = employeeId,
+                    autoRejected = true
+                };
+            }
+
+            return null;
+        }
+
+        private static ClaimResponseDto MapClaim(Claim c)
+        {
+            int? daysSince = c.ClaimType == "Accident" && c.AccidentDate.HasValue
+                ? (int)(DateTime.UtcNow - c.AccidentDate.Value).TotalDays
+                : null;
+
+            return new()
+            {
+                Id = c.Id,
+                ClaimType = c.ClaimType,
+                ClaimAmount = c.ClaimAmount,
+                AccidentType = c.AccidentType,
+                AccidentPercentage = c.AccidentPercentage,
+                AgeFactor = c.AgeFactor,
+                FrequencyFactor = c.FrequencyFactor,
+                FinalApprovedAmount = c.FinalApprovedAmount,
+                CauseOfDeath = c.CauseOfDeath,
+                CauseOfDeathDescription = c.CauseOfDeathDescription,
+                DateOfDeath = c.DateOfDeath,
+                NormalPayout = c.NormalPayout,
+                AdjustedPayout = c.AdjustedPayout,
+                SuicideExclusionFlag = c.SuicideExclusionFlag,
+                DaysInCompany = c.DaysInCompany,
+                EmployeeJoinDate = c.Employee?.EmployeeJoinDate,
+                AccidentDate = c.AccidentDate,
+                DaysSinceAccident = daysSince,
+                ClaimDeadline = c.AccidentDate.HasValue ? c.AccidentDate.Value.AddDays(90) : null,
+                FirDocumentUrl = c.FirDocumentPath,
+                HospitalReportUrl = c.HospitalReportPath,
+                RequestedAmount = c.ClaimAmount,
+                EmployeeAge = c.ClaimType == "Health" && c.Employee != null && c.Employee.DateOfBirth != default
+                    ? DateTime.UtcNow.Year - c.Employee.DateOfBirth.Year - (DateTime.UtcNow.DayOfYear < c.Employee.DateOfBirth.DayOfYear ? 1 : 0)
+                    : null,
+                ClaimNumberInYear = c.ClaimType == "Health" && c.FrequencyFactor.HasValue
+                    ? (c.FrequencyFactor.Value == 1.0m ? 1 : (c.FrequencyFactor.Value == 0.90m ? 2 : 3))
+                    : null,
+                Status = c.Status,
+                ClaimsManagerNote = c.ClaimsManagerNote,
+                EmployeeId = c.EmployeeId,
+                EmployeeName = c.Employee?.FullName ?? "Unknown",
+                EmployeeCode = c.Employee?.EmployeeCode ?? "Unknown",
+                EmployeeSalary = c.Employee?.Salary ?? 0,
+                HealthCoverageRemaining = c.Employee?.HealthCoverageRemaining,
+                DocumentUrl = c.DocumentUrl,
+                PolicyName = c.CompanyPolicy?.Policy?.Name ?? "Unknown Policy",
+                CompanyName = c.CompanyPolicy?.Company?.CompanyName ?? "Unknown Company",
+                CustomerName = c.Customer?.FullName ?? string.Empty,
+                ClaimsManagerName = c.ClaimsManager?.FullName ?? string.Empty,
+                CreatedAt = c.CreatedAt,
+                ProcessedAt = c.ProcessedAt
+            };
+        }
 
         public async Task<object> GetAllowedClaimTypesAsync(int customerId)
         {
@@ -118,15 +171,39 @@ namespace Application.Services
             if (!employee.IsActive)
                 throw new InvalidOperationException("Cannot raise a claim for an inactive employee.");
 
+            var pendingCheck = await CheckPendingClaimsAsync(dto.EmployeeId);
+            if (pendingCheck != null) return pendingCheck;
+
             if (employee.HealthCoverageRemaining == null)
                 employee.HealthCoverageRemaining = policy.HealthCoverage;
 
-            if (dto.RequestedAmount > employee.HealthCoverageRemaining)
+            // Calculate Age Factor
+            int age = DateTime.UtcNow.Year - employee.DateOfBirth.Year - (DateTime.UtcNow.DayOfYear < employee.DateOfBirth.DayOfYear ? 1 : 0);
+            decimal ageFactor = 1.0m;
+            if (age >= 36 && age <= 45) ageFactor = 0.95m; // 5% reduction
+            else if (age >= 46 && age <= 55) ageFactor = 0.90m; // 10% reduction
+            else if (age > 55) ageFactor = 0.85m; // 15% reduction
+
+            decimal ageAdjustedAmount = Math.Round(dto.RequestedAmount * ageFactor, 0);
+
+            // Calculate Frequency Factor
+            var policyStart = companyPolicy.StartDate;
+            var policyEnd = policyStart.AddDays(365);
+            var currentYearClaimsCount = await _context.Claims
+                .CountAsync(c => c.EmployeeId == employee.Id && c.ClaimType == "Health" && c.Status == "Approved" && c.CreatedAt >= policyStart && c.CreatedAt <= policyEnd);
+            
+            decimal frequencyFactor = 1.0m;
+            if (currentYearClaimsCount == 1) frequencyFactor = 0.90m; // 10% reduction for 2nd claim
+            else if (currentYearClaimsCount >= 2) frequencyFactor = 0.80m; // 20% reduction for 3rd+ claim
+
+            decimal finalApprovedAmount = Math.Round(ageAdjustedAmount * frequencyFactor, 0);
+
+            if (finalApprovedAmount > employee.HealthCoverageRemaining)
                 return new
                 {
-                    message = $"Claim amount ₹{dto.RequestedAmount:N0} exceeds remaining health coverage ₹{employee.HealthCoverageRemaining:N0} for this employee. Claim auto-rejected.",
+                    message = $"Approved amount ₹{finalApprovedAmount:N0} exceeds remaining health coverage ₹{employee.HealthCoverageRemaining:N0}",
                     remainingCoverage = employee.HealthCoverageRemaining,
-                    requestedAmount = dto.RequestedAmount,
+                    approvedAmount = finalApprovedAmount,
                     autoRejected = true
                 };
 
@@ -140,6 +217,9 @@ namespace Application.Services
                 ClaimsManagerId = managerId,
                 ClaimType = "Health",
                 ClaimAmount = dto.RequestedAmount,
+                AgeFactor = ageFactor,
+                FrequencyFactor = frequencyFactor,
+                FinalApprovedAmount = finalApprovedAmount,
                 DocumentUrl = dto.DocumentUrl,
                 Status = "Pending",
                 CreatedAt = DateTime.UtcNow
@@ -152,8 +232,11 @@ namespace Application.Services
             {
                 message = "Health claim submitted successfully. Awaiting claims manager review.",
                 claimId = claim.Id,
-                claimAmount = claim.ClaimAmount,
-                remainingCoverageBeforeApproval = employee.HealthCoverageRemaining
+                requestedAmount = claim.ClaimAmount,
+                ageFactor = claim.AgeFactor,
+                frequencyFactor = claim.FrequencyFactor,
+                finalApprovedAmount = claim.FinalApprovedAmount,
+                remainingCoverage = employee.HealthCoverageRemaining
             };
         }
 
@@ -180,7 +263,20 @@ namespace Application.Services
                 throw new KeyNotFoundException("Employee not found in your company.");
 
             if (!employee.IsActive)
-                throw new InvalidOperationException("A Term Life claim already exists for this employee (employee is inactive).");
+                throw new InvalidOperationException("Cannot raise a claim for an inactive employee.");
+            
+            var pendingCheck = await CheckPendingClaimsAsync(dto.EmployeeId);
+            if (pendingCheck != null) return pendingCheck;
+
+            // Age Eligibility Cap (Max 70 years) - Round DOWN calculating total days
+            int age = (int)Math.Floor((DateTime.UtcNow - employee.DateOfBirth).TotalDays / 365.25);
+            if (age > 70)
+                return new
+                {
+                    message = $"Term life coverage is only valid for employees up to age 70. Employee age: {age}",
+                    reason = "AgeEligibilityExceeded",
+                    autoRejected = true
+                };
 
             var existingLifeClaim = await _context.Claims
                 .AnyAsync(c => c.EmployeeId == dto.EmployeeId && c.ClaimType == "TermLife"
@@ -189,10 +285,24 @@ namespace Application.Services
             if (existingLifeClaim)
                 throw new InvalidOperationException("A Term Life claim has already been raised for this employee.");
 
+            if (existingLifeClaim)
+                throw new InvalidOperationException("A Term Life claim has already been raised for this employee.");
+
             decimal rawPayout = employee.Salary * policy.LifeCoverageMultiplier.Value;
-            decimal claimAmount = policy.MaxLifeCoverageLimit.HasValue
+            decimal normalPayout = policy.MaxLifeCoverageLimit.HasValue
                 ? Math.Min(rawPayout, policy.MaxLifeCoverageLimit.Value)
                 : rawPayout;
+
+            // Suicide Exclusion (Within 1 year of policy/employee join date)
+            int daysInCompany = (DateTime.UtcNow - employee.EmployeeJoinDate).Days;
+            bool suicideExclusionFlag = false;
+            decimal adjustedPayout = normalPayout;
+
+            if (dto.CauseOfDeath.Equals("Suicide", StringComparison.OrdinalIgnoreCase) && daysInCompany < 365)
+            {
+                suicideExclusionFlag = true;
+                adjustedPayout = Math.Round(normalPayout * 0.80m, 0);
+            }
 
             int managerId = await GetOrAssignClaimsManagerAsync(companyPolicy.CompanyId);
 
@@ -203,27 +313,43 @@ namespace Application.Services
                 CustomerId = customerId,
                 ClaimsManagerId = managerId,
                 ClaimType = "TermLife",
-                ClaimAmount = claimAmount,
+                ClaimAmount = adjustedPayout,
+                CauseOfDeath = dto.CauseOfDeath,
+                CauseOfDeathDescription = dto.CauseOfDeath.Equals("Other", StringComparison.OrdinalIgnoreCase) ? dto.CauseOfDeathDescription : null,
+                DateOfDeath = dto.DateOfDeath,
+                NormalPayout = normalPayout,
+                AdjustedPayout = adjustedPayout,
+                SuicideExclusionFlag = suicideExclusionFlag,
+                DaysInCompany = daysInCompany,
                 DocumentUrl = dto.DocumentUrl,
                 Status = "Pending",
                 CreatedAt = DateTime.UtcNow
             };
 
             _context.Claims.Add(claim);
+
+            // Inactivate employee IMMEDIATELY
+            employee.IsActive = false;
+
             await _context.SaveChangesAsync();
 
             return new
             {
-                message = "Term Life claim submitted. If approved, the employee will be marked inactive.",
                 claimId = claim.Id,
-                claimAmount = claimAmount,
+                employeeId = employee.Id,
+                causeOfDeath = claim.CauseOfDeath,
+                dateOfDeath = claim.DateOfDeath,
+                daysInCompany = claim.DaysInCompany,
+                suicideExclusionFlag = claim.SuicideExclusionFlag,
+                status = claim.Status,
                 breakdown = new
                 {
                     salary = employee.Salary,
                     multiplier = policy.LifeCoverageMultiplier,
-                    rawPayout,
+                    rawPayout = rawPayout,
                     cappedAt = policy.MaxLifeCoverageLimit,
-                    finalPayout = claimAmount
+                    normalPayout = normalPayout,
+                    adjustedPayout = adjustedPayout
                 }
             };
         }
@@ -253,8 +379,41 @@ namespace Application.Services
             if (!employee.IsActive)
                 throw new InvalidOperationException("Cannot raise a claim for an inactive employee.");
 
+            var pendingCheck = await CheckPendingClaimsAsync(dto.EmployeeId);
+            if (pendingCheck != null) return pendingCheck;
+
             if (employee.AccidentClaimRaised)
                 throw new InvalidOperationException("An accident claim has already been raised for this employee. Only one accident claim is allowed per employee.");
+
+            if (employee.AccidentClaimRaised)
+                throw new InvalidOperationException("An accident claim has already been raised for this employee. Only one accident claim is allowed per employee.");
+
+            // ── 90-Day Claim Window Validation ────────────────────────────────────
+            var today = DateTime.UtcNow.Date;
+            var accidentDate = dto.AccidentDate.Date;
+            var daysSinceAccident = (today - accidentDate).Days;
+            var claimDeadline = accidentDate.AddDays(90);
+
+            if (accidentDate > today)
+                return new
+                {
+                    message = "Accident date cannot be a future date",
+                    reason = "InvalidAccidentDate",
+                    autoRejected = true
+                };
+
+            if (daysSinceAccident > 90)
+                return new
+                {
+                    message = $"Accident claim must be raised within 90 days of the accident date.\n" +
+                              $"Accident date    : {accidentDate:yyyy-MM-dd}\n" +
+                              $"Deadline was     : {claimDeadline:yyyy-MM-dd}\n" +
+                              $"Days since accident: {daysSinceAccident} days",
+                    reason = "ClaimWindowExpired",
+                    deadlineDate = claimDeadline,
+                    autoRejected = true
+                };
+            // ─────────────────────────────────────────────────────────────────────
 
             if (dto.AccidentType != "Complete" && dto.AccidentType != "Partial")
                 throw new InvalidOperationException("AccidentType must be 'Complete' or 'Partial'.");
@@ -281,7 +440,9 @@ namespace Application.Services
                 ClaimAmount = claimAmount,
                 AccidentType = dto.AccidentType,
                 AccidentPercentage = dto.AccidentType == "Partial" ? dto.AccidentPercentage : null,
-                DocumentUrl = dto.DocumentUrl,
+                AccidentDate = dto.AccidentDate,
+                FirDocumentPath = dto.FirDocumentUrl,
+                HospitalReportPath = dto.HospitalReportUrl,
                 Status = "Pending",
                 CreatedAt = DateTime.UtcNow
             };
@@ -296,6 +457,11 @@ namespace Application.Services
                 message = "Accident claim submitted successfully.",
                 claimId = claim.Id,
                 accidentType = dto.AccidentType,
+                accidentDate = claim.AccidentDate,
+                daysSinceAccident,
+                claimDeadline,
+                firDocumentId = dto.FirDocumentUrl,
+                hospitalReportId = dto.HospitalReportUrl,
                 claimAmount,
                 breakdown = dto.AccidentType == "Partial"
                     ? new { accidentCoverage = policy.AccidentCoverage, percentage = dto.AccidentPercentage, payout = claimAmount }
@@ -364,11 +530,11 @@ namespace Application.Services
                         if (employee.HealthCoverageRemaining == null)
                             employee.HealthCoverageRemaining = policy.HealthCoverage;
 
-                        employee.HealthCoverageRemaining -= claim.ClaimAmount;
+                        employee.HealthCoverageRemaining -= claim.FinalApprovedAmount ?? claim.ClaimAmount;
                         break;
 
                     case "TermLife":
-                        employee.IsActive = false;
+                        // Employee is already inactivated at submission logic. No action needed here.
                         break;
 
                     case "Accident":

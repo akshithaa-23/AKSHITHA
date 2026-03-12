@@ -12,12 +12,17 @@
         public string IndustryType { get; set; } = string.Empty;
         public int NumberOfEmployees { get; set; }
         public string Location { get; set; } = string.Empty;
+        public string? LocationCategory { get; set; }
         public string ContactName { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string ContactPhone { get; set; } = string.Empty;
         // Pending → Assigned → RecommendationSent → QuoteSent → Accepted → Completed
         // or Rejected
         public string Status { get; set; } = "Pending";
+        public string? CustomIndustry { get; set; }
+        public decimal? IndustryFactor { get; set; }
+        public decimal? GeographyFactor { get; set; }
+        public decimal? PlanRiskFactor { get; set; }
         public int? AssignedAgentId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

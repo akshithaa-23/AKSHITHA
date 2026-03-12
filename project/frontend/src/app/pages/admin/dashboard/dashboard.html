@@ -10,7 +10,7 @@
           </svg>
         </div>
         <div>
-          <p class="text-white font-bold text-lg">CorpSure</p>
+          <p class="text-white font-bold text-lg">WorkSure</p>
           <p class="text-gray-400 text-xs">Admin Portal</p>
         </div>
       </div>
@@ -31,7 +31,7 @@
 
       <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider px-3 mt-5 mb-3">Operations</p>
 
-      <!-- Register User — now uses setMenu(), no router -->
+      <!-- Register User - now uses setMenu(), no router -->
       <button (click)="setMenu('register')" [class]="activeMenu === 'register' ?
           'w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-orange-500 text-white font-semibold' :
           'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#2a3f6a] transition'">
@@ -135,7 +135,7 @@
     <!-- SCROLLABLE CONTENT -->
     <main class="flex-1 overflow-y-auto p-8">
 
-      <!-- ════════════ DASHBOARD VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; DASHBOARD VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'dashboard'">
 
         <!-- Stats Cards -->
@@ -233,7 +233,7 @@
           <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
             <h2 class="font-bold text-[#1a2b4a]">Recent Users</h2>
             <button (click)="setMenu('users')" class="text-orange-500 text-sm font-medium hover:underline">View All
-              →</button>
+              </button>
           </div>
           <table class="w-full">
             <thead class="bg-gray-50">
@@ -278,7 +278,7 @@
         </div>
       </div>
 
-      <!-- ════════════ REGISTER USER VIEW (INLINE) ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; REGISTER USER VIEW (INLINE) &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'register'">
         <div class="max-w-lg">
           <!-- Back link -->
@@ -341,13 +341,13 @@
                   [class]="registerForm.role === 'Agent' ?
                     'border-2 border-orange-500 bg-orange-50 rounded-lg px-4 py-3 text-sm font-semibold text-orange-600' :
                     'border-2 border-gray-200 rounded-lg px-4 py-3 text-sm font-medium text-gray-600 hover:border-orange-300 transition'">
-                  👤 Agent
+                  Users Agent
                 </button>
                 <button (click)="registerForm.role = 'ClaimsManager'"
                   [class]="registerForm.role === 'ClaimsManager' ?
                     'border-2 border-orange-500 bg-orange-50 rounded-lg px-4 py-3 text-sm font-semibold text-orange-600' :
                     'border-2 border-gray-200 rounded-lg px-4 py-3 text-sm font-medium text-gray-600 hover:border-orange-300 transition'">
-                  📋 Claims Manager
+                  Clipboard Claims Manager
                 </button>
               </div>
             </div>
@@ -360,7 +360,7 @@
         </div>
       </div>
 
-      <!-- ════════════ ALL USERS VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; ALL USERS VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'users'">
         <div class="bg-white rounded-xl shadow-sm border border-gray-100">
           <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center flex-wrap gap-3">
@@ -373,7 +373,7 @@
               </button>
             </div>
             <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()"
-              placeholder="🔍 Search users..."
+              placeholder="Search users..."
               class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 w-52" />
           </div>
           <table class="w-full">
@@ -419,7 +419,7 @@
         </div>
       </div>
 
-      <!-- ════════════ POLICIES VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; POLICIES VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'policies'">
         <div class="flex justify-between items-center mb-6">
           <p class="text-sm text-gray-500">{{ stats.activePolicies }} active policies</p>
@@ -438,7 +438,7 @@
 
             <div *ngIf="policy.isPopular" class="absolute top-4 right-4">
               <span
-                class="flex items-center gap-1 bg-orange-50 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">⭐
+                class="flex items-center gap-1 bg-orange-50 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">
                 Popular</span>
             </div>
             <div *ngIf="!policy.isActive" class="absolute top-4 right-4">
@@ -449,30 +449,30 @@
 
             <div class="space-y-2 mb-5">
               <div class="flex items-center gap-2 text-sm text-gray-600">
-                <span class="text-blue-400">🛡</span>
+                <span class="text-blue-400"></span>
                 Health Coverage: <span class="font-semibold">{{ formatCurrency(policy.healthCoverage) }}</span>
               </div>
               <div *ngIf="policy.lifeCoverageMultiplier" class="flex items-center gap-2 text-sm text-gray-600">
-                <span>❤️</span>
+                <span></span>
                 Life: <span class="font-semibold">{{ policy.lifeCoverageMultiplier }}x salary</span>
                 <span class="text-gray-400">(Cap: {{ formatCurrency(policy.maxLifeCoverageLimit) }})</span>
               </div>
               <div *ngIf="!policy.lifeCoverageMultiplier" class="flex items-center gap-2 text-sm text-gray-400">
-                <span>❤️</span> Life Coverage: Not included
+                <span></span> Life Coverage: Not included
               </div>
               <div *ngIf="policy.accidentCoverage" class="flex items-center gap-2 text-sm text-gray-600">
-                <span class="text-orange-400">⚡</span>
+                <span class="text-orange-400"></span>
                 Accident: <span class="font-semibold">{{ formatCurrency(policy.accidentCoverage) }}</span>
               </div>
               <div *ngIf="!policy.accidentCoverage" class="flex items-center gap-2 text-sm text-gray-400">
-                <span>⚡</span> Accident Coverage: Not included
+                <span></span> Accident Coverage: Not included
               </div>
             </div>
 
             <div class="border-t border-gray-100 pt-4 mb-4">
               <p class="text-2xl font-bold text-orange-500">{{ formatCurrency(policy.premiumPerEmployee) }}</p>
               <p class="text-xs text-gray-400 mt-0.5">per employee / year</p>
-              <p class="text-xs text-gray-500 mt-1">Min. {{ policy.minEmployees }} employees · {{ policy.durationYears
+              <p class="text-xs text-gray-500 mt-1">Min. {{ policy.minEmployees }} employees  {{ policy.durationYears
                 }} yr</p>
             </div>
 
@@ -497,7 +497,7 @@
         </div>
       </div>
 
-      <!-- ════════════ AGENTS VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; AGENTS VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'agents'">
         <div class="space-y-6">
           <div *ngFor="let group of agentGroups"
@@ -563,7 +563,7 @@
         </div>
       </div>
 
-      <!-- ════════════ COMPANIES VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; COMPANIES VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'companies'">
         <div class="bg-white rounded-xl shadow-sm border border-gray-100">
           <div class="px-6 py-4 border-b border-gray-100 flex gap-3">
@@ -608,7 +608,7 @@
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-500">{{ company.createdAt | date:'MMM d, yyyy' }}</td>
                   <td class="px-6 py-4 text-sm text-gray-500">{{ company.activePolicy ? getExpiryDate(company.createdAt)
-                    : '—' }}</td>
+                    : '-' }}</td>
                 </tr>
                 <tr *ngIf="companies.length === 0">
                   <td colspan="8" class="px-6 py-10 text-center text-gray-400 text-sm">No companies registered yet</td>
@@ -639,7 +639,7 @@
                   class="flex items-center justify-between px-5 py-3 border-t border-gray-100 hover:bg-gray-50">
                   <div>
                     <p class="text-sm font-semibold text-[#1a2b4a]">{{ c.companyName }}</p>
-                    <p class="text-xs text-gray-400">{{ c.customerName }} · {{ c.domain }}</p>
+                    <p class="text-xs text-gray-400">{{ c.customerName }}  {{ c.domain }}</p>
                   </div>
                   <span *ngIf="c.activePolicy && c.activePolicy !== 'No active policy'"
                     class="text-orange-600 text-xs font-semibold bg-orange-50 border border-orange-200 px-3 py-1 rounded-full">
@@ -658,7 +658,7 @@
         </div>
       </div>
 
-      <!-- ════════════ CLAIMS VIEW ════════════ -->
+      <!-- &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; CLAIMS VIEW &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; -->
       <div *ngIf="activeMenu === 'claims'">
         <div class="bg-white rounded-xl shadow-sm border border-gray-100">
           <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center flex-wrap gap-4">
@@ -680,7 +680,7 @@
 
               <select [(ngModel)]="selectedClaimCompany" (change)="applyClaimFilters()"
                 class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50 text-[#1a2b4a] font-medium min-w-[180px]">
-                <option *ngFor="let comp of claimsCompanies" [value]="comp">{{ comp === 'All' ? '🏢 All Companies' :
+                <option *ngFor="let comp of claimsCompanies" [value]="comp">{{ comp === 'All' ? ' All Companies' :
                   comp }}</option>
               </select>
             </div>
@@ -691,7 +691,9 @@
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Employee</th>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Company</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Type / Amount</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Req. Amount</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Appr. Amount</th>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Processed By</th>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
@@ -708,7 +710,12 @@
                 </td>
                 <td class="px-6 py-4">
                   <p class="text-sm font-semibold text-[#1a2b4a]">{{ claim.claimType }}</p>
-                  <p class="text-xs font-bold text-orange-500">{{ formatCurrency(claim.claimAmount) }}</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="text-sm font-bold text-gray-700">{{ formatCurrency(claim.requestedAmount || claim.claimAmount || 0) }}</span>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="text-sm font-bold text-green-600">{{ claim.status === 'Approved' ? formatCurrency(claim.finalApprovedAmount || claim.claimAmount || 0) : '-' }}</span>
                 </td>
                 <td class="px-6 py-4">
                   <span *ngIf="claim.status === 'Pending'"
@@ -772,12 +779,12 @@
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Health Coverage (₹) *</label>
+          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Health Coverage (INR ) *</label>
           <input type="number" [(ngModel)]="policyForm.healthCoverage" placeholder="e.g. 300000"
             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
         </div>
         <div>
-          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Premium / Employee (₹) *</label>
+          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Premium / Employee (INR ) *</label>
           <input type="number" [(ngModel)]="policyForm.premiumPerEmployee" placeholder="e.g. 5000"
             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
         </div>
@@ -786,18 +793,18 @@
         <div>
           <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Life Multiplier <span
               class="text-gray-400 font-normal">(optional)</span></label>
-          <input type="number" [(ngModel)]="policyForm.lifeCoverageMultiplier" placeholder="e.g. 3 (= 3× salary)"
+          <input type="number" [(ngModel)]="policyForm.lifeCoverageMultiplier" placeholder="e.g. 3 (= 3- salary)"
             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
         </div>
         <div>
-          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Max Life Limit (₹) <span
+          <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Max Life Limit (INR ) <span
               class="text-gray-400 font-normal">(if multiplier set)</span></label>
           <input type="number" [(ngModel)]="policyForm.maxLifeCoverageLimit" placeholder="e.g. 5000000"
             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
         </div>
       </div>
       <div>
-        <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Accident Coverage (₹) <span
+        <label class="block text-sm font-semibold text-[#1a2b4a] mb-2">Accident Coverage (INR ) <span
             class="text-gray-400 font-normal">(optional)</span></label>
         <input type="number" [(ngModel)]="policyForm.accidentCoverage" placeholder="Leave blank if not included"
           class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
@@ -822,7 +829,7 @@
             'inline-block h-4 w-4 rounded-full bg-white transition-transform translate-x-6' :
             'inline-block h-4 w-4 rounded-full bg-white transition-transform translate-x-1'"></span>
         </button>
-        <span class="text-sm font-medium text-gray-700">Mark as Popular ⭐</span>
+        <span class="text-sm font-medium text-gray-700">Mark as Popular </span>
       </div>
     </div>
     <div class="px-8 py-5 border-t border-gray-100 flex gap-3 justify-end">

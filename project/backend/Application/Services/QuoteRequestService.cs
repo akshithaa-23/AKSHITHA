@@ -13,10 +13,12 @@ namespace Application.Services
     public class QuoteRequestService : IQuoteRequestService
     {
         private readonly IAppDbContext _context;
+        private readonly IPremiumCalculationService _premiumCalculationService;
 
-        public QuoteRequestService(IAppDbContext context)
+        public QuoteRequestService(IAppDbContext context, IPremiumCalculationService premiumCalculationService)
         {
             _context = context;
+            _premiumCalculationService = premiumCalculationService;
         }
 
         private async Task<int?> GetOrAssignAgentAsync(int customerId)
@@ -91,8 +93,12 @@ namespace Application.Services
                 PolicyId = null,
                 CompanyName = dto.CompanyName,
                 IndustryType = dto.IndustryType,
+                CustomIndustry = dto.CustomIndustry,
+                IndustryFactor = _premiumCalculationService.GetIndustryFactor(dto.IndustryType, dto.CustomIndustry),
                 NumberOfEmployees = dto.NumberOfEmployees,
                 Location = dto.Location,
+                LocationCategory = dto.LocationCategory,
+                GeographyFactor = _premiumCalculationService.GetGeographyFactor(dto.Location, dto.LocationCategory),
                 ContactName = dto.ContactName,
                 ContactEmail = dto.ContactEmail,
                 ContactPhone = dto.ContactPhone,
@@ -135,8 +141,13 @@ namespace Application.Services
                 PolicyId = dto.PolicyId,
                 CompanyName = dto.CompanyName,
                 IndustryType = dto.IndustryType,
+                CustomIndustry = dto.CustomIndustry,
+                IndustryFactor = _premiumCalculationService.GetIndustryFactor(dto.IndustryType, dto.CustomIndustry),
+                PlanRiskFactor = _premiumCalculationService.GetPlanRiskFactor(dto.PolicyId),
                 NumberOfEmployees = dto.NumberOfEmployees,
                 Location = dto.Location,
+                LocationCategory = dto.LocationCategory,
+                GeographyFactor = _premiumCalculationService.GetGeographyFactor(dto.Location, dto.LocationCategory),
                 ContactName = dto.ContactName,
                 ContactEmail = dto.ContactEmail,
                 ContactPhone = dto.ContactPhone,
@@ -177,6 +188,11 @@ namespace Application.Services
                     IndustryType = q.IndustryType,
                     NumberOfEmployees = q.NumberOfEmployees,
                     Location = q.Location,
+                    LocationCategory = q.LocationCategory,
+                    CustomIndustry = q.CustomIndustry,
+                    IndustryRiskFactor = q.IndustryFactor,
+                    GeographyRiskFactor = q.GeographyFactor,
+                    PlanRiskFactor = q.PlanRiskFactor,
                     ContactName = q.ContactName,
                     ContactEmail = q.ContactEmail,
                     ContactPhone = q.ContactPhone,
@@ -206,6 +222,11 @@ namespace Application.Services
                     IndustryType = q.IndustryType,
                     NumberOfEmployees = q.NumberOfEmployees,
                     Location = q.Location,
+                    LocationCategory = q.LocationCategory,
+                    CustomIndustry = q.CustomIndustry,
+                    IndustryRiskFactor = q.IndustryFactor,
+                    GeographyRiskFactor = q.GeographyFactor,
+                    PlanRiskFactor = q.PlanRiskFactor,
                     ContactName = q.ContactName,
                     ContactEmail = q.ContactEmail,
                     ContactPhone = q.ContactPhone,
@@ -236,6 +257,11 @@ namespace Application.Services
                     IndustryType = q.IndustryType,
                     NumberOfEmployees = q.NumberOfEmployees,
                     Location = q.Location,
+                    LocationCategory = q.LocationCategory,
+                    CustomIndustry = q.CustomIndustry,
+                    IndustryRiskFactor = q.IndustryFactor,
+                    GeographyRiskFactor = q.GeographyFactor,
+                    PlanRiskFactor = q.PlanRiskFactor,
                     ContactName = q.ContactName,
                     ContactEmail = q.ContactEmail,
                     ContactPhone = q.ContactPhone,

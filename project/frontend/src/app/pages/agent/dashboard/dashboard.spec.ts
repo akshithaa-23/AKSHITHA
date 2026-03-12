@@ -108,13 +108,13 @@ describe('Dashboard Component', () => {
     });
 
     it('should format currency correctly', () => {
-      expect(component.formatCurrency(1500)).toBe('₹1,500');
-      expect(component.formatCurrency(0)).toBe('₹0');
+      expect(component.formatCurrency(1500)).toBe('INR 1,500');
+      expect(component.formatCurrency(0)).toBe('INR 0');
     });
 
     it('should format dates correctly', () => {
       expect(component.formatDate('2026-03-04T10:00:00')).toContain('04');
-      expect(component.formatDate('')).toBe('—');
+      expect(component.formatDate('')).toBe('-');
     });
 
     it('should map display types and statuses', () => {
@@ -248,36 +248,36 @@ describe('Dashboard Component', () => {
     });
 
     describe('Currency Formatting Edge Cases', () => {
-      it('should format currency value 1500 correctly', () => { expect(component.formatCurrency(1500)).toBe('₹1,500'); });
-      it('should format currency value 3000 correctly', () => { expect(component.formatCurrency(3000)).toBe('₹3,000'); });
-      it('should format currency value 4500 correctly', () => { expect(component.formatCurrency(4500)).toBe('₹4,500'); });
-      it('should format currency value 6000 correctly', () => { expect(component.formatCurrency(6000)).toBe('₹6,000'); });
-      it('should format currency value 7500 correctly', () => { expect(component.formatCurrency(7500)).toBe('₹7,500'); });
-      it('should format currency value 9000 correctly', () => { expect(component.formatCurrency(9000)).toBe('₹9,000'); });
-      it('should format currency value 10500 correctly', () => { expect(component.formatCurrency(10500)).toBe('₹10,500'); });
-      it('should format currency value 12000 correctly', () => { expect(component.formatCurrency(12000)).toBe('₹12,000'); });
-      it('should format currency value 13500 correctly', () => { expect(component.formatCurrency(13500)).toBe('₹13,500'); });
-      it('should format currency value 15000 correctly', () => { expect(component.formatCurrency(15000)).toBe('₹15,000'); });
-      it('should format currency value 16500 correctly', () => { expect(component.formatCurrency(16500)).toBe('₹16,500'); });
-      it('should format currency value 18000 correctly', () => { expect(component.formatCurrency(18000)).toBe('₹18,000'); });
-      it('should format currency value 19500 correctly', () => { expect(component.formatCurrency(19500)).toBe('₹19,500'); });
-      it('should format currency value 21000 correctly', () => { expect(component.formatCurrency(21000)).toBe('₹21,000'); });
-      it('should format currency value 22500 correctly', () => { expect(component.formatCurrency(22500)).toBe('₹22,500'); });
-      it('should format currency value 24000 correctly', () => { expect(component.formatCurrency(24000)).toBe('₹24,000'); });
-      it('should format currency value 25500 correctly', () => { expect(component.formatCurrency(25500)).toBe('₹25,500'); });
-      it('should format currency value 27000 correctly', () => { expect(component.formatCurrency(27000)).toBe('₹27,000'); });
-      it('should format currency value 28500 correctly', () => { expect(component.formatCurrency(28500)).toBe('₹28,500'); });
-      it('should format currency value 30000 correctly', () => { expect(component.formatCurrency(30000)).toBe('₹30,000'); });
-      it('should format currency value 31500 correctly', () => { expect(component.formatCurrency(31500)).toBe('₹31,500'); });
-      it('should format currency value 33000 correctly', () => { expect(component.formatCurrency(33000)).toBe('₹33,000'); });
-      it('should format currency value 34500 correctly', () => { expect(component.formatCurrency(34500)).toBe('₹34,500'); });
-      it('should format currency value 36000 correctly', () => { expect(component.formatCurrency(36000)).toBe('₹36,000'); });
-      it('should format currency value 37500 correctly', () => { expect(component.formatCurrency(37500)).toBe('₹37,500'); });
-      it('should format currency value 39000 correctly', () => { expect(component.formatCurrency(39000)).toBe('₹39,000'); });
-      it('should format currency value 40500 correctly', () => { expect(component.formatCurrency(40500)).toBe('₹40,500'); });
-      it('should format currency value 42000 correctly', () => { expect(component.formatCurrency(42000)).toBe('₹42,000'); });
-      it('should format currency value 43500 correctly', () => { expect(component.formatCurrency(43500)).toBe('₹43,500'); });
-      it('should format currency value 45000 correctly', () => { expect(component.formatCurrency(45000)).toBe('₹45,000'); });
+      it('should format currency value 1500 correctly', () => { expect(component.formatCurrency(1500)).toBe('INR 1,500'); });
+      it('should format currency value 3000 correctly', () => { expect(component.formatCurrency(3000)).toBe('INR 3,000'); });
+      it('should format currency value 4500 correctly', () => { expect(component.formatCurrency(4500)).toBe('INR 4,500'); });
+      it('should format currency value 6000 correctly', () => { expect(component.formatCurrency(6000)).toBe('INR 6,000'); });
+      it('should format currency value 7500 correctly', () => { expect(component.formatCurrency(7500)).toBe('INR 7,500'); });
+      it('should format currency value 9000 correctly', () => { expect(component.formatCurrency(9000)).toBe('INR 9,000'); });
+      it('should format currency value 10500 correctly', () => { expect(component.formatCurrency(10500)).toBe('INR 10,500'); });
+      it('should format currency value 12000 correctly', () => { expect(component.formatCurrency(12000)).toBe('INR 12,000'); });
+      it('should format currency value 13500 correctly', () => { expect(component.formatCurrency(13500)).toBe('INR 13,500'); });
+      it('should format currency value 15000 correctly', () => { expect(component.formatCurrency(15000)).toBe('INR 15,000'); });
+      it('should format currency value 16500 correctly', () => { expect(component.formatCurrency(16500)).toBe('INR 16,500'); });
+      it('should format currency value 18000 correctly', () => { expect(component.formatCurrency(18000)).toBe('INR 18,000'); });
+      it('should format currency value 19500 correctly', () => { expect(component.formatCurrency(19500)).toBe('INR 19,500'); });
+      it('should format currency value 21000 correctly', () => { expect(component.formatCurrency(21000)).toBe('INR 21,000'); });
+      it('should format currency value 22500 correctly', () => { expect(component.formatCurrency(22500)).toBe('INR 22,500'); });
+      it('should format currency value 24000 correctly', () => { expect(component.formatCurrency(24000)).toBe('INR 24,000'); });
+      it('should format currency value 25500 correctly', () => { expect(component.formatCurrency(25500)).toBe('INR 25,500'); });
+      it('should format currency value 27000 correctly', () => { expect(component.formatCurrency(27000)).toBe('INR 27,000'); });
+      it('should format currency value 28500 correctly', () => { expect(component.formatCurrency(28500)).toBe('INR 28,500'); });
+      it('should format currency value 30000 correctly', () => { expect(component.formatCurrency(30000)).toBe('INR 30,000'); });
+      it('should format currency value 31500 correctly', () => { expect(component.formatCurrency(31500)).toBe('INR 31,500'); });
+      it('should format currency value 33000 correctly', () => { expect(component.formatCurrency(33000)).toBe('INR 33,000'); });
+      it('should format currency value 34500 correctly', () => { expect(component.formatCurrency(34500)).toBe('INR 34,500'); });
+      it('should format currency value 36000 correctly', () => { expect(component.formatCurrency(36000)).toBe('INR 36,000'); });
+      it('should format currency value 37500 correctly', () => { expect(component.formatCurrency(37500)).toBe('INR 37,500'); });
+      it('should format currency value 39000 correctly', () => { expect(component.formatCurrency(39000)).toBe('INR 39,000'); });
+      it('should format currency value 40500 correctly', () => { expect(component.formatCurrency(40500)).toBe('INR 40,500'); });
+      it('should format currency value 42000 correctly', () => { expect(component.formatCurrency(42000)).toBe('INR 42,000'); });
+      it('should format currency value 43500 correctly', () => { expect(component.formatCurrency(43500)).toBe('INR 43,500'); });
+      it('should format currency value 45000 correctly', () => { expect(component.formatCurrency(45000)).toBe('INR 45,000'); });
     });
 
     describe('Tier Label Boundary Tests', () => {

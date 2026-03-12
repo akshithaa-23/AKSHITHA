@@ -83,6 +83,14 @@ namespace API.Controllers
             return Ok(requests);
         }
 
+        [HttpGet("debug/latest")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DebugLatest()
+        {
+            var result = await _quoteRequestService.GetAllAsync();
+            return Ok(result);
+        }
+
         private int GetUserId() =>
             int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
     }

@@ -12,6 +12,8 @@ namespace Application.DTOs
         public string IndustryType { get; set; } = string.Empty;
         public int NumberOfEmployees { get; set; }
         public string Location { get; set; } = string.Empty;
+        public string LocationCategory { get; set; } = string.Empty;
+        public string? CustomIndustry { get; set; }
         public string ContactName { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string ContactPhone { get; set; } = string.Empty;
@@ -23,6 +25,8 @@ namespace Application.DTOs
         public string IndustryType { get; set; } = string.Empty;
         public int NumberOfEmployees { get; set; }
         public string Location { get; set; } = string.Empty;
+        public string LocationCategory { get; set; } = string.Empty;
+        public string? CustomIndustry { get; set; }
         public string ContactName { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string ContactPhone { get; set; } = string.Empty;
@@ -37,6 +41,11 @@ namespace Application.DTOs
         public string IndustryType { get; set; } = string.Empty;
         public int NumberOfEmployees { get; set; }
         public string Location { get; set; } = string.Empty;
+        public string? LocationCategory { get; set; }
+        public string? CustomIndustry { get; set; }
+        public decimal? IndustryRiskFactor { get; set; }
+        public decimal? GeographyRiskFactor { get; set; }
+        public decimal? PlanRiskFactor { get; set; }
         public string ContactName { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string ContactPhone { get; set; } = string.Empty;
@@ -64,10 +73,26 @@ namespace Application.DTOs
         public int PolicyId { get; set; }
         public int EmployeeCount { get; set; }
         public decimal PremiumPerEmployee { get; set; }
+        public decimal BaseQuote { get; set; }
+        public decimal IndustryFactor { get; set; }
+        public decimal GeographyFactor { get; set; }
+        public decimal PlanRiskFactor { get; set; }
         public decimal TotalPremium { get; set; }
+        public PremiumBreakdownDto Breakdown { get; set; } = null!;
         public string Status { get; set; } = string.Empty;
         public string AgentName { get; set; } = string.Empty;
         public DateTime ValidUntil { get; set; }
         public DateTime CreatedAt { get; set; }
+    }
+
+    public class PremiumBreakdownDto
+    {
+        public decimal PerEmployeePremium { get; set; }
+        public int EmployeeCount { get; set; }
+        public decimal BaseQuote { get; set; }
+        public decimal IndustryMultiplier { get; set; }
+        public decimal GeographyMultiplier { get; set; }
+        public decimal PlanMultiplier { get; set; }
+        public decimal FinalPremium { get; set; }
     }
 }

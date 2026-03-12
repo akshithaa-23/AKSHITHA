@@ -29,7 +29,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Customer routes — single dashboard component handles all sections internally
+  // Customer routes - single dashboard component handles all sections internally
   {
     path: 'customer',
     canActivate: [authGuard],

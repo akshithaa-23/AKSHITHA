@@ -64,6 +64,7 @@ namespace API
             builder.Services.AddScoped<IClaimService, ClaimService>();
             builder.Services.AddScoped<IQuoteRequestService, QuoteRequestService>();
             builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+            builder.Services.AddScoped<IPremiumCalculationService, PremiumCalculationService>();
 
             builder.Services.AddCors(options =>
             {

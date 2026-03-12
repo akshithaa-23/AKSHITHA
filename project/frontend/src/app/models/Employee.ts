@@ -9,5 +9,6 @@ export interface Employee {
     nomineeRelationship?: string;
     nomineePhone?: string;
     isActive?: boolean;
+    hasPendingClaim?: boolean;
     [key: string]: any;
 }
